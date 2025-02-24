@@ -1,4 +1,4 @@
-/* root styling -- feel free to adjust as needed colors were just paceholders*/
+/* root styling -- feel free to adjust as needed (everything was a placeholder)*/
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -27,7 +27,6 @@
 a {
   font-weight: 500;
   color: #0F013A;
-  ;
   text-decoration: inherit;
 }
 a:hover {
