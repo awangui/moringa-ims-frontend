@@ -1,11 +1,12 @@
-import './App.css'
+import React from 'react';
+import Team from "./components/Team";
 
-function App() {
-
+const App = () => {
   return (
-        <h1>Moringa IMS</h1>
+    <div>
+      <Team />
+    </div>
+  );
+};
 
-  )
-}
-
-export default App
+export default App;

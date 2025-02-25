@@ -1,6 +1,9 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+.table th {
+  background-color: #007bff;
+  color: white;
 }
