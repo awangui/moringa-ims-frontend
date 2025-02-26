@@ -1,9 +1,53 @@
 .container {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 20px;
+  max-width: 900px; /* Set a max width for the container */
+  margin: auto; /* Center the container */
+  padding: 20px; /* Add some padding */
+  background-color: #ffffff; /* Optional: Add background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
-.table th {
-  background-color: #007bff;
-  color: white;
+
+.table {
+  margin-top: 20px; /* Space above the table */
+}
+
+h2 {
+  flex-grow: 1; /* Allows the title to take available space */
+  text-align: center; /* Center the title text */
+}
+
+.w-50 {
+  width: 50%; /* Adjust the search input width */
+}
+
+.w-75 {
+  width: 75%; /* Adjust the table and pagination width */
+}
+
+
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin-top: 5px;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  text-align: left;
+  cursor: pointer;
+  display: block;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
 }
