@@ -1,46 +1,97 @@
-import React, { useState } from 'react';
-import '../App.css'; // Ensure your custom styles are included.
+import React, { useState, useRef } from 'react';
+import '../App.css';
 
 const Team = () => {
-  const teamMembers = [
+  const [teamMembers, setTeamMembers] = useState([
     {
       name: 'Stephanie Mwoya',
       email: 'stephaniemwoya@gmail.com',
       phone: '+254712598987',
       role: 'superAdmin',
     },
-    // Add more members as needed
-  ];
+    { name: 'John Doe', email: 'john@example.com', phone: '+254712123456', role: 'Admin' },
+    { name: 'Jane Smith', email: 'jane@example.com', phone: '+254712654321', role: 'User' },
+    { name: 'Alice Johnson', email: 'alice@example.com', phone: '+254712789012', role: 'User' },
+    { name: 'Bob Brown', email: 'bob@example.com', phone: '+254712345678', role: 'User' },
+  ]);
 
-  const [showMenuIndex, setShowMenuIndex] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+  });
+  const [message, setMessage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const menuRef = useRef(null);
 
-  const handleMenuClick = (index) => {
-    setShowMenuIndex(showMenuIndex === index ? null : index);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleAddUser = () => {
+    setTeamMembers([...teamMembers, { ...formData, role: 'User' }]);
+    setMessage('User Added');
+    setShowAddModal(false);
+    setFormData({ name: '', email: '', phone: '', password: '' });
   };
 
   const handleEdit = (member) => {
-    // Handle edit action
-    console.log('Edit:', member);
+    setSelectedMember(member);
+    setShowUpdateModal(true);
+    setFormData(member);
+  };
+
+  const handleUpdateUser = () => {
+    setTeamMembers(teamMembers.map((member) => (member === selectedMember ? formData : member)));
+    setMessage('User Updated');
+    setShowUpdateModal(false);
+    setFormData({ name: '', email: '', phone: '', password: '' });
   };
 
   const handleDelete = (member) => {
-    // Handle delete action
-    console.log('Delete:', member);
+    const confirmation = window.confirm(`Are you sure you want to delete ${member.name}?`);
+    if (confirmation) {
+      setTeamMembers(teamMembers.filter(m => m !== member));
+      setMessage('User Deleted');
+    }
   };
 
+  const filteredMembers = teamMembers.filter(member =>
+    member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    member.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="d-flex justify-content-center">
+    <div className="full-screen-container">
       <div className="container mt-4">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <h2>Team</h2>
-          <button className="btn btn-primary">Add User</button>
+        <div className="d-flex justify-content-between mb-3">
+          <h2 style={{ color: '#FF885E' }}>Team</h2>
+          <div className="d-flex align-items-center">
+            <input
+              type="text"
+              className="form-control search-input"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button className="btn btn-custom" onClick={() => setShowAddModal(true)}>Add User</button>
+          </div>
         </div>
-        <input
-          type="text"
-          className="form-control mb-3"
-          placeholder="Search"
-        />
-        <table className="table table-striped">
+
+        {message && (
+          <div className="alert alert-success">
+            {message}
+            <button className="close" onClick={() => setMessage('')}>&times;</button>
+          </div>
+        )}
+
+        <table className="table">
           <thead>
             <tr>
               <th>Name</th>
@@ -51,52 +102,108 @@ const Team = () => {
             </tr>
           </thead>
           <tbody>
-            {teamMembers.map((member, index) => (
+            {filteredMembers.map((member, index) => (
               <tr key={index}>
                 <td>{member.name}</td>
                 <td>{member.email}</td>
                 <td>{member.phone}</td>
                 <td>{member.role}</td>
-                <td>
-                  <div className="dropdown">
-                    <button
-                      className="btn btn-link"
-                      onClick={() => handleMenuClick(index)}
-                    >
-                      &#x22EE; {/* Three dots */}
-                    </button>
-                    {showMenuIndex === index && (
-                      <div className="dropdown-menu">
-                        <button
-                          className="dropdown-item"
-                          onClick={() => handleEdit(member)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="dropdown-item text-danger"
-                          onClick={() => handleDelete(member)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                <td ref={menuRef}>
+                  <button className="btn btn-edit" onClick={() => handleEdit(member)}>Edit</button>
+                  <button className="btn btn-danger" onClick={() => handleDelete(member)}>Delete</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="d-flex justify-content-between align-items-center">
-          <span>Showing 1 to 10 of 57 entries</span>
-          <nav>
-            <ul className="pagination">
-              <li className="page-item"><a className="page-link" href="#">1</a></li>
-              <li className="page-item"><a className="page-link" href="#">2</a></li>
-              {/* Add more pagination as needed */}
-            </ul>
-          </nav>
+
+        <div className="d-flex justify-content-between align-items-center mt-3">
+          <span className="entries-info" style={{ color: 'black' }}>
+            Showing 1 to {Math.min(entriesPerPage, filteredMembers.length)} of {filteredMembers.length} entries
+          </span>
+          <div className="d-flex align-items-center">
+            <div className="pagination">
+              <button className="page-link">&lt;</button>
+              <button className="page-link active">1</button>
+              <button className="page-link">2</button>
+              <button className="page-link">3</button>
+              <button className="page-link">4</button>
+              <button className="page-link">&gt;</button>
+            </div>
+          </div>
         </div>
+
+        <div className="d-flex align-items-center mt-3 justify-content-end">
+          <label htmlFor="entriesPerPage" style={{ marginRight: '10px' }}>Entries per page:</label>
+          <select
+            id="entriesPerPage"
+            className="form-control entries-dropdown"
+            value={entriesPerPage}
+            onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+          </select>
+        </div>
+
+        {/* Add User Modal */}
+        {showAddModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close" onClick={() => setShowAddModal(false)}>&times;</span>
+              <h2>Add New User</h2>
+              <form onSubmit={(e) => { e.preventDefault(); handleAddUser(); }}>
+                <div className="form-group">
+                  <label>Name</label>
+                  <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Eg. John Doe" required />
+                </div>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Eg. johndoe@gmail.com" required />
+                </div>
+                <div className="form-group">
+                  <label>Phone</label>
+                  <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Eg. +254712345678" required />
+                </div>
+                <div className="form-group">
+                  <label>Password</label>
+                  <input type="password" name="password" value={formData.password} onChange={handleInputChange} placeholder="Enter password" required />
+                </div>
+                <button type="submit" className="btn btn-custom">Continue</button>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Edit User Modal */}
+        {showUpdateModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close" onClick={() => setShowUpdateModal(false)}>&times;</span>
+              <h2>Edit User</h2>
+              <form onSubmit={(e) => { e.preventDefault(); handleUpdateUser(); }}>
+                <div className="form-group">
+                  <label>Name</label>
+                  <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+                </div>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
+                </div>
+                <div className="form-group">
+                  <label>Phone</label>
+                  <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required />
+                </div>
+                <div className="form-group">
+                  <label>Password</label>
+                  <input type="password" name="password" value={formData.password} onChange={handleInputChange} />
+                </div>
+                <button type="submit" className="btn btn-custom">Continue</button>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
