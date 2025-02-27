@@ -6,12 +6,26 @@ const Users = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isManagingPermissions, setIsManagingPermissions] = useState(false);
+  
   const [userInfo, setUserInfo] = useState({
     name: 'Anita Kahenya',
     email: 'afiyamahenya@gmail.com',
     phone: '+254 712345678',
     password: '',
   });
+
+  const [permissions, setPermissions] = useState({
+    addUsers: false,
+    deleteUsers: false,
+    editUsers: false,
+    addVendors: false,
+    editVendors: false,
+    deleteVendors: false,
+    activateVendors: false,
+    addInventoryItem: false,
+  });
+
   const [entriesPerPage, setEntriesPerPage] = useState(10);
 
   const toggleDropdown = () => {
@@ -46,10 +60,21 @@ const Users = () => {
   const handleCancel = () => {
     setIsEditing(false);
     setIsDeleting(false);
+    setIsManagingPermissions(false);
   };
 
   const handleDownload = () => {
     console.log('Downloading report...');
+  };
+
+  const handleManagePermissions = () => {
+    setIsManagingPermissions(true);
+    setShowDropdown(false);
+  };
+
+  const handleSavePermissions = () => {
+    console.log('Permissions saved:', permissions);
+    setIsManagingPermissions(false);
   };
 
   return (
@@ -62,6 +87,7 @@ const Users = () => {
             {showDropdown && (
               <div className="dropdown-menu">
                 <button className="dropdown-item" onClick={handleEdit}>Edit User</button>
+                <button className="dropdown-item" onClick={handleManagePermissions}>Manage Permissions</button>
                 <button className="dropdown-item" onClick={handleDelete}>Delete User</button>
                 <button className="dropdown-item" onClick={handleDownload}>Download Report</button>
               </div>
@@ -135,6 +161,82 @@ const Users = () => {
             <h2>Are you sure you want to delete this user?</h2>
             <button className="button delete-btn" onClick={handleConfirmDelete}>Delete</button>
             <button className="button cancel-button" onClick={handleCancel}>Cancel</button>
+          </div>
+        </div>
+      )}
+
+      {isManagingPermissions && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>Manage User Permissions</h2>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={permissions.addUsers}
+                  onChange={() => setPermissions({ ...permissions, addUsers: !permissions.addUsers })}
+                />
+                Add Users
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={permissions.deleteUsers}
+                  onChange={() => setPermissions({ ...permissions, deleteUsers: !permissions.deleteUsers })}
+                />
+                Delete Users
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={permissions.editUsers}
+                  onChange={() => setPermissions({ ...permissions, editUsers: !permissions.editUsers })}
+                />
+                Edit Users
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={permissions.addVendors}
+                  onChange={() => setPermissions({ ...permissions, addVendors: !permissions.addVendors })}
+                />
+                Add Vendors
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={permissions.editVendors}
+                  onChange={() => setPermissions({ ...permissions, editVendors: !permissions.editVendors })}
+                />
+                Edit Vendors
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={permissions.deleteVendors}
+                  onChange={() => setPermissions({ ...permissions, deleteVendors: !permissions.deleteVendors })}
+                />
+                Delete Vendors
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={permissions.activateVendors}
+                  onChange={() => setPermissions({ ...permissions, activateVendors: !permissions.activateVendors })}
+                />
+                Activate Vendors
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={permissions.addInventoryItem}
+                  onChange={() => setPermissions({ ...permissions, addInventoryItem: !permissions.addInventoryItem })}
+                />
+                Add Inventory Item
+              </label>
+            </div>
+            <button onClick={handleSavePermissions}>Save</button>
+            <button onClick={handleCancel}>Cancel</button>
           </div>
         </div>
       )}
