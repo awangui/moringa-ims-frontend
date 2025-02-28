@@ -1,6 +1,9 @@
 import React from 'react';
 import Team from "./components/Team";
 
+import Returns from "./components/Returns";
+
+
 import Users from "./components/Users";
 
 const App = () => {
@@ -8,6 +11,7 @@ const App = () => {
     <div>
       <Team />
       <Users/>
+      <Returns/>
       
       
     </div>
