@@ -17,6 +17,7 @@ const Team = () => {
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -54,12 +55,15 @@ const Team = () => {
     setFormData({ name: '', email: '', phone: '', password: '' });
   };
 
-  const handleDelete = (member) => {
-    const confirmation = window.confirm(`Are you sure you want to delete ${member.name}?`);
-    if (confirmation) {
-      setTeamMembers(teamMembers.filter(m => m !== member));
-      setMessage('User Deleted');
-    }
+  const handleDeleteConfirmation = (member) => {
+    setSelectedMember(member);
+    setShowDeleteModal(true);
+  };
+
+  const handleDelete = () => {
+    setTeamMembers(teamMembers.filter(m => m !== selectedMember));
+    setMessage('User Deleted');
+    setShowDeleteModal(false);
   };
 
   const filteredMembers = teamMembers.filter(member =>
@@ -72,16 +76,17 @@ const Team = () => {
       <div className="container mt-4">
         <div className="d-flex justify-content-between mb-3">
           <h2 style={{ color: '#FF885E' }}>Team</h2>
-          <div className="d-flex align-items-center">
-            <input
-              type="text"
-              className="form-control search-input"
-              placeholder="Search"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button className="btn btn-custom" onClick={() => setShowAddModal(true)}>Add User</button>
-          </div>
+          <button className="btn btn-custom" onClick={() => setShowAddModal(true)}>Add +</button>
+        </div>
+
+        <div className="search-container mb-3">
+          <input
+            type="text"
+            className="form-control search-input"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
 
         {message && (
@@ -110,7 +115,7 @@ const Team = () => {
                 <td>{member.role}</td>
                 <td ref={menuRef}>
                   <button className="btn btn-edit" onClick={() => handleEdit(member)}>Edit</button>
-                  <button className="btn btn-danger" onClick={() => handleDelete(member)}>Delete</button>
+                  <button className="btn btn-danger" onClick={() => handleDeleteConfirmation(member)}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -121,19 +126,17 @@ const Team = () => {
           <span className="entries-info" style={{ color: 'black' }}>
             Showing 1 to {Math.min(entriesPerPage, filteredMembers.length)} of {filteredMembers.length} entries
           </span>
-          <div className="d-flex align-items-center">
-            <div className="pagination">
-              <button className="page-link">&lt;</button>
-              <button className="page-link active">1</button>
-              <button className="page-link">2</button>
-              <button className="page-link">3</button>
-              <button className="page-link">4</button>
-              <button className="page-link">&gt;</button>
-            </div>
+          <div className="pagination">
+            <button className="page-link">&lt;</button>
+            <button className="page-link active">1</button>
+            <button className="page-link">2</button>
+            <button className="page-link">3</button>
+            <button className="page-link">4</button>
+            <button className="page-link">&gt;</button>
           </div>
         </div>
 
-        <div className="d-flex align-items-center mt-3 justify-content-end">
+        <div className="d-flex align-items-center mt-3 justify-content-start">
           <label htmlFor="entriesPerPage" style={{ marginRight: '10px' }}>Entries per page:</label>
           <select
             id="entriesPerPage"
@@ -170,7 +173,8 @@ const Team = () => {
                   <label>Password</label>
                   <input type="password" name="password" value={formData.password} onChange={handleInputChange} placeholder="Enter password" required />
                 </div>
-                <button type="submit" className="btn btn-custom">Continue</button>
+                <button type="submit" className="btn btn-custom btn-small">Continue</button>
+                <button type="button" className="btn btn-orange" onClick={() => setShowAddModal(false)}>Cancel</button>
               </form>
             </div>
           </div>
@@ -199,8 +203,23 @@ const Team = () => {
                   <label>Password</label>
                   <input type="password" name="password" value={formData.password} onChange={handleInputChange} />
                 </div>
-                <button type="submit" className="btn btn-custom">Continue</button>
+                <button type="submit" className="btn btn-custom btn-small">Continue</button>
+                <button type="button" className="btn btn-orange" onClick={() => setShowUpdateModal(false)}>Cancel</button>
               </form>
+            </div>
+          </div>
+        )}
+
+        {/* Delete User Confirmation Modal */}
+        {showDeleteModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close" onClick={() => setShowDeleteModal(false)}>&times;</span>
+              <h2>Are you sure you want to delete this user?</h2>
+              <div className="button-group">
+                <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
+                <button className="btn btn-orange" onClick={() => setShowDeleteModal(false)}>Cancel</button>
+              </div>
             </div>
           </div>
         )}

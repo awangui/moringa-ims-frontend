@@ -26,8 +26,6 @@ const Users = () => {
     addInventoryItem: false,
   });
 
-  const [entriesPerPage, setEntriesPerPage] = useState(10);
-
   const toggleDropdown = () => {
     setShowDropdown(prev => !prev);
   };
@@ -38,11 +36,7 @@ const Users = () => {
   };
 
   const handleDelete = () => {
-    const confirmed = window.confirm(`Are you sure you want to delete ${userInfo.name}?`);
-    if (confirmed) {
-      setIsDeleting(true);
-      console.log('User deleted'); // Replace with actual delete logic
-    }
+    setIsDeleting(true);
     setShowDropdown(false);
   };
 
@@ -63,15 +57,6 @@ const Users = () => {
     setIsManagingPermissions(false);
   };
 
-  const handleDownload = () => {
-    console.log('Downloading report...');
-  };
-
-  const handleManagePermissions = () => {
-    setIsManagingPermissions(true);
-    setShowDropdown(false);
-  };
-
   const handleSavePermissions = () => {
     console.log('Permissions saved:', permissions);
     setIsManagingPermissions(false);
@@ -79,6 +64,8 @@ const Users = () => {
 
   return (
     <div className="users-container">
+      <h1 className="page-title">Users</h1>
+      {/* Single User Card */}
       <div className="user-card">
         <div className="profile-header">
           <img className="user-image" src={userImage} alt="Profile" />
@@ -87,23 +74,26 @@ const Users = () => {
             {showDropdown && (
               <div className="dropdown-menu">
                 <button className="dropdown-item" onClick={handleEdit}>Edit User</button>
-                <button className="dropdown-item" onClick={handleManagePermissions}>Manage Permissions</button>
+                <button className="dropdown-item" onClick={() => { setIsManagingPermissions(true); toggleDropdown(); }}>Manage Permissions</button>
                 <button className="dropdown-item" onClick={handleDelete}>Delete User</button>
-                <button className="dropdown-item" onClick={handleDownload}>Download Report</button>
+                <button className="dropdown-item" onClick={() => console.log('Downloading report...')}>Download Report</button>
               </div>
             )}
           </div>
         </div>
+
         <div className="user-details">
-          <h2 className="user-name">{userInfo.name}</h2>
+          <p><strong>Name:</strong> {userInfo.name}</p>
           <p><strong>Department:</strong> IT</p>
-          <p><strong>Staff Number:</strong> 1012</p>
           <p><strong>Designation:</strong> TM</p>
+          <p><strong>Staff Number:</strong> 1012</p>
         </div>
+
         <div className="upload-section">
           <input type="file" id="file-upload" style={{ display: 'none' }} />
           <label htmlFor="file-upload" className="upload-button">Upload</label>
         </div>
+
         <div className="assessment-history">
           <h3>Assessment History</h3>
           <table>
@@ -125,12 +115,39 @@ const Users = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Footer for Entries and Pagination */}
+        <div className="d-flex justify-content-between align-items-center mt-3">
+          <span className="entries-info" style={{ color: 'black' }}>
+            Showing 1 to 1 of 1 entries
+          </span>
+          <div className="pagination">
+            <button className="page-link">&lt;</button>
+            <button className="page-link active">1</button>
+            <button className="page-link">2</button>
+            <button className="page-link">3</button>
+            <button className="page-link">4</button>
+            <button className="page-link">&gt;</button>
+          </div>
+        </div>
+
+        <div className="d-flex align-items-center mt-3 justify-content-start">
+          <label htmlFor="entriesPerPage" style={{ marginRight: '10px' }}>Entries per page:</label>
+          <select
+            id="entriesPerPage"
+            className="form-control entries-dropdown"
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+          </select>
+        </div>
       </div>
 
       {isEditing && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>Edit User</h2>
+            <h2 className="modal-title">Edit User</h2>
             <form onSubmit={handleContinue}>
               <div className="form-group">
                 <label>Name</label>
@@ -148,9 +165,11 @@ const Users = () => {
                 <label>Password</label>
                 <input type="password" value={userInfo.password} onChange={e => setUserInfo({ ...userInfo, password: e.target.value })} />
               </div>
-              <button type="submit" className="button continue-button">Save Changes</button>
+              <div className="button-group">
+                <button type="submit" className="continue-button">Continue</button>
+                <button type="button" className="cancel-button" onClick={handleCancel}>Cancel</button>
+              </div>
             </form>
-            <button className="button cancel-button" onClick={handleCancel}>Cancel</button>
           </div>
         </div>
       )}
@@ -158,9 +177,11 @@ const Users = () => {
       {isDeleting && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>Are you sure you want to delete this user?</h2>
-            <button className="button delete-btn" onClick={handleConfirmDelete}>Delete</button>
-            <button className="button cancel-button" onClick={handleCancel}>Cancel</button>
+            <h2 className="modal-title">Are you sure you want to delete this user?</h2>
+            <div className="button-group">
+              <button className="button delete-btn" onClick={handleConfirmDelete} style={{ backgroundColor: 'red', color: 'white' }}>Delete</button>
+              <button className="button cancel-button" onClick={handleCancel} style={{ backgroundColor: 'orange', color: 'white' }}>Cancel</button>
+            </div>
           </div>
         </div>
       )}
@@ -170,7 +191,7 @@ const Users = () => {
           <div className="modal">
             <h2>Manage User Permissions</h2>
             <div>
-              <label>
+              <label className="permission-label">
                 <input
                   type="checkbox"
                   checked={permissions.addUsers}
@@ -178,7 +199,7 @@ const Users = () => {
                 />
                 Add Users
               </label>
-              <label>
+              <label className="permission-label">
                 <input
                   type="checkbox"
                   checked={permissions.deleteUsers}
@@ -186,7 +207,7 @@ const Users = () => {
                 />
                 Delete Users
               </label>
-              <label>
+              <label className="permission-label">
                 <input
                   type="checkbox"
                   checked={permissions.editUsers}
@@ -194,7 +215,7 @@ const Users = () => {
                 />
                 Edit Users
               </label>
-              <label>
+              <label className="permission-label">
                 <input
                   type="checkbox"
                   checked={permissions.addVendors}
@@ -202,15 +223,7 @@ const Users = () => {
                 />
                 Add Vendors
               </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={permissions.editVendors}
-                  onChange={() => setPermissions({ ...permissions, editVendors: !permissions.editVendors })}
-                />
-                Edit Vendors
-              </label>
-              <label>
+              <label className="permission-label">
                 <input
                   type="checkbox"
                   checked={permissions.deleteVendors}
@@ -218,7 +231,7 @@ const Users = () => {
                 />
                 Delete Vendors
               </label>
-              <label>
+              <label className="permission-label">
                 <input
                   type="checkbox"
                   checked={permissions.activateVendors}
@@ -226,7 +239,7 @@ const Users = () => {
                 />
                 Activate Vendors
               </label>
-              <label>
+              <label className="permission-label">
                 <input
                   type="checkbox"
                   checked={permissions.addInventoryItem}
@@ -235,37 +248,13 @@ const Users = () => {
                 Add Inventory Item
               </label>
             </div>
-            <button onClick={handleSavePermissions}>Save</button>
-            <button onClick={handleCancel}>Cancel</button>
+            <div className="button-group">
+              <button onClick={handleSavePermissions} className="continue-button">Save</button>
+              <button onClick={handleCancel} className="cancel-button">Cancel</button>
+            </div>
           </div>
         </div>
       )}
-
-      {/* Entries and Pagination Section */}
-      <div className="pagination-section">
-        <span>Showing 1 to 1 of 1 entries</span>
-        <div className="d-flex align-items-center mt-3 justify-content-end">
-          <label htmlFor="entriesPerPage" style={{ marginRight: '10px' }}>Entries per page:</label>
-          <select
-            id="entriesPerPage"
-            className="form-control entries-dropdown"
-            value={entriesPerPage}
-            onChange={(e) => setEntriesPerPage(Number(e.target.value))}
-          >
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={30}>30</option>
-          </select>
-        </div>
-        <div className="pagination">
-          <button className="page-link">&lt;</button>
-          <button className="page-link active">1</button>
-          <button className="page-link">2</button>
-          <button className="page-link">3</button>
-          <button className="page-link">4</button>
-          <button className="page-link">&gt;</button>
-        </div>
-      </div>
     </div>
   );
 };
