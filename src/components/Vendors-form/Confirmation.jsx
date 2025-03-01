@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { VendorContext } from "../../VendorContext";
+import { VendorContext } from "../../pages/VendorContext";
 import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 
 const Confirmation = ({ prevStep, values }) => {

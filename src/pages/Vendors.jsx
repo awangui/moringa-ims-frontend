@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { VendorContext } from "../VendorContext";
+import { VendorContext } from "./VendorContext";
 import { useNavigate } from "react-router-dom";
 import "./Vendors.css";
 

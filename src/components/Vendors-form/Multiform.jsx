@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { VendorContext } from "../../VendorContext";
+import { VendorContext } from "../../pages/VendorContext";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
