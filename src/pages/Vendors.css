@@ -1,0 +1,306 @@
+.page-title {
+  font-weight: 500;
+  margin: 20px 0;
+  text-align: left;
+  color: #ff885e;
+}
+.btn {
+  background-color: #0f0133;
+  color: #f6f6f6;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  margin: 20px auto;
+}
+.btn:hover {
+  background-color: #ff885e;
+  color: #fff;
+}
+.vendors-list {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.vendors-table th {
+  padding: 10px;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+.vendors-table td {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.vendorForm {
+  margin-top: 40px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  padding: 40px;
+}
+.vendorFormSteps {
+  display: flex;
+  background-color: #eaecf0;
+  color: #0f0133;
+  border-bottom: 1px solid #e0e0e0;
+  text-transform: uppercase;
+}
+.vendorFormStep {
+  display: flex;
+  padding: 20px;
+  color: #0f0133;
+}
+.vendorFormStepActive {
+  background-color: #0f0133;
+  color: #f6f6f6;
+  border-left: 1px solid #e0e0e0;
+}
+.vendorForm button {
+  background-color: #0f0133;
+  color: #f6f6f6;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  width: 60%;
+  text-align: center;
+  display: block;
+  margin: 20px auto;
+}
+.backButton {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.vendorForm button:hover {
+  background-color: #ff885e;
+}
+.step2,
+.step4 {
+  width: 50%;
+  margin: 40px auto 0;
+}
+.confirmation-list {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  list-style: none;
+  text-align: left;
+}
+.modal {
+  display: block;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.modal-content {
+  background-color: #f6f6f6;
+  padding: 20px;
+  border-radius: 10px;
+  width: 35%;
+  margin: 0 auto;
+}
+/*vendors page */
+.page-title {
+  font-size: 24px;
+  color: #ff6600;
+}
+
+.filterBar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.search-input {
+  padding: 8px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.filter-btn,
+.report-btn,
+.add-btn {
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-btn, .report-btn {
+  background: #f0f0f0;
+}
+.add-btn {
+  background: #0f0133;
+  color: white;
+}
+.vendors-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.vendors-table {
+  width: 80%;
+  border-collapse: collapse;
+}
+
+.vendors-table th,
+.vendors-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.activated {
+  background: #dff0d8;
+  color: #3c763d;
+}
+
+.deactivated {
+  background: #f2dede;
+  color: #a94442;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.pagination {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.page-btn {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background: #ff885e;
+  color: white;
+}
+.side-filter{
+    width: 20%;
+    margin-right: 20px;
+}
+.filter-options{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.filter-tabs{
+    text-align: left;
+    justify-content: space-between;
+}
+.filter-tabs button{
+    margin: 10px 40px;
+    margin-left: 0;
+    padding: 10px;
+}
+.dropdown-content{
+    display: block;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+/*view vendor page */
+.vendor-container {
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+}
+
+.vendor-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.vendor-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.vendor-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.vendor-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.vendor-info h3 {
+  margin: 0;
+}
+
+/* Vendor Details */
+.vendor-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.detail-box {
+  flex: 1;
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.full-width {
+  flex-basis: 100%;
+}
+
+/* Sections */
+.vendor-section {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.section-box {
+  flex: 1;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+}
+
+/* Documents */
+.vendor-documents {
+  margin-top: 20px;
+}
+
+.add-document-btn {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
