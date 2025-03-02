@@ -38,7 +38,7 @@ function Navigation({ children }) {
   const menuItems = [
     { name: 'Dashboard', icon: FaThLarge, path: '/' },
     { name: 'Vendors', icon: FaUser, path: '/vendors' },
-    { name: 'Inventory', icon: FaTruck, path: '/inventory' },
+    // { name: 'Inventory', icon: FaTruck, path: '/inventory' },
     { name: 'Orders', icon: FaClipboardList, path: '/orders' },
     { name: 'Items', icon: FaBox, path: '/items' },
     { name: 'Requests', icon: FaEnvelope, path: '/requests' },
