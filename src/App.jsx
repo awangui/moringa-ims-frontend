@@ -5,6 +5,7 @@ import SpacesPage from './pages/spaces';
 import EditSpace from './pages/EditSpace';
 import ViewRoom from './pages/ViewRoom';
 import AddRoom from './pages/AddRoom';
+import RequestsPage from './pages/Requests';
 
 function App() {
   const [spaces, setSpaces] = useState([]);
@@ -17,6 +18,7 @@ function App() {
         <Route path="/editSpace/:id" element={<EditSpace spaces={spaces} setSpaces={setSpaces} />} />
         <Route path="/ViewRoom/:id" element={<ViewRoom spaces={spaces} setSpaces={setSpaces} />} />
         <Route path="/AddRoom" element={<AddRoom spaces={spaces} setSpaces={setSpaces}/>} />
+        <Route path="/requests" element={<RequestsPage/>} />
       </Routes>
     </Router>
   );

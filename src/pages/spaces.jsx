@@ -1,9 +1,12 @@
 import Navigation from '../components/navigation';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FiSearch } from 'react-icons/fi'; // Import search icon
 
 function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
+  const [filteredSpaces, setFilteredSpaces] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false); // State for popup
@@ -14,6 +17,7 @@ function SpacesPage() {
         const response = await fetch('http://172.236.2.18:5050/locations'); 
         const data = await response.json();
         setSpaces(data);
+        setFilteredSpaces(data);
       } catch (error) {
         console.error('Failed to fetch spaces:', error);
       }
@@ -22,6 +26,16 @@ function SpacesPage() {
     fetchSpaces();
   }, []);
 
+  const handleSearch = (event) => {
+    const value = event.target.value.toLowerCase();
+    setSearchTerm(value);
+    setFilteredSpaces(
+      spaces.filter((space) =>
+        space.name.toLowerCase().includes(value)
+      )
+    );
+  };
+
   const handleDelete = async () => {
     if (!selectedId) return;
     try {
@@ -29,6 +43,7 @@ function SpacesPage() {
         method: 'DELETE',
       });
       setSpaces(spaces.filter(space => space.id !== selectedId));
+      setFilteredSpaces(filteredSpaces.filter(space => space.id !== selectedId));
       setShowConfirm(false);
       setSelectedId(null);
       
@@ -46,14 +61,19 @@ function SpacesPage() {
         <h1 className="text-2xl font-bold text-[#0D2240] mb-4">Rooms</h1>
         
         {/* Search & Add Room */}
-        <div className="mb-4 flex justify-between">
-          <input 
-            type="text" 
-            placeholder="Search" 
-            className="border border-[#FF6B35] rounded-md p-2 focus:ring-[#FF6B35] focus:outline-none"
-          />
+        <div className="mb-4 flex justify-between items-center">
+          <div className="relative">
+            <input 
+              type="text" 
+              placeholder="Search by Name" 
+              value={searchTerm}
+              onChange={handleSearch}
+              className="border border-[#FF6B35] rounded-md p-2 pl-10 focus:ring-[#FF6B35] focus:outline-none"
+            />
+           
+          </div> <FiSearch className="absolute left-3 top-3 text-gray-500" />
           <button className="bg-[#0D2240] text-white px-4 py-2 rounded-md hover:bg-[#FF6B35]">
-          <Link to={`/AddRoom`} >+ Add Room </Link>
+            <Link to={`/AddRoom`} >+ Add Room </Link>
           </button>
         </div>
 
@@ -68,17 +88,17 @@ function SpacesPage() {
             </tr>
           </thead>
           <tbody>
-            {spaces.map((space) => (
+            {filteredSpaces.map((space) => (
               <tr key={space.id} className="text-center">
                 <td className="border border-gray-200 px-4 py-2">{space.id}</td>
                 <td className="border border-gray-200 px-4 py-2">{space.name}</td>
                 <td className="border border-gray-200 px-4 py-2">{space.description}</td>
                 <td className="border border-gray-200 px-4 py-2 flex justify-center space-x-4">
-                <Link 
+                  <Link 
                     to={`/ViewRoom/${space.id}`} 
                     className="text-[#0D2240] hover:text-[#FF6B35] font-semibold"
                   >
-                    ViewRoom
+                    View Room
                   </Link>
                   <Link 
                     to={`/editSpace/${space.id}`} 
@@ -125,7 +145,8 @@ function SpacesPage() {
           </div>
         </div>
       )}
-     {showSuccess && (
+      
+      {showSuccess && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-md shadow-lg text-center">
             <h2 className="text-lg font-bold text-[#0D2240]">Success</h2>
@@ -139,12 +160,6 @@ function SpacesPage() {
           </div>
         </div>
       )}
-
-      {/* {showSuccess && (
-        <div className="fixed top-10 right-10 bg-green-500 text-white px-4 py-2 rounded-md shadow-md">
-          ✅ Room deleted successfully!
-        </div>
-      )} */}
     </Navigation>
   );
 }
