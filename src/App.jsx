@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
@@ -22,6 +23,33 @@ function App() {
       </Routes>
     </Router>
   );
+=======
+import './App.css'
+import MultiStepForm from './components/Vendors-form/Multiform';
+import Vendors from './pages/Vendors'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { VendorProvider } from './pages/VendorContext';
+import ViewVendor from './components/ViewVendor';
+import EditVendor from './components/EditVendor';
+import UploadDocuments from './components/UploadDocuments';
+import Navigation from './components/Navigation';
+
+function App() {
+  return (
+
+    <VendorProvider>
+    <Router>
+        <Routes>
+          <Route path="/vendors" element={<Vendors />} />
+          <Route path="/vendors/create-vendor" element={<MultiStepForm />} />
+          <Route path="/vendors/:id" element={<ViewVendor />} />
+          <Route path="/vendors/edit/:id" element={<EditVendor />} />
+          <Route path="/vendors/:id/documents" element={<UploadDocuments />} />
+        </Routes>
+    </Router>
+    </VendorProvider>
+  )
+>>>>>>> b4115c27d5989347c2af56e421d09862d87c1da1
 }
 
 export default App;
