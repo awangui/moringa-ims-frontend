@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navigation from "../components/navigation";
+import Navigation from "../components/Navigation";
 
 function AddRoom() {
   const navigate = useNavigate();

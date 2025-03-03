@@ -1,4 +1,4 @@
-import Navigation from '../components/navigation';
+import Navigation from '../components/Navigation';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi'; // Import search icon

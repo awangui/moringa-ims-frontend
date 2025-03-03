@@ -1,4 +1,4 @@
-import Navigation from '../components/navigation';
+import Navigation from '../components/Navigation';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
