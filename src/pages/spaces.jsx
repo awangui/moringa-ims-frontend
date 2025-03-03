@@ -70,8 +70,8 @@ function SpacesPage() {
               onChange={handleSearch}
               className="border border-[#FF6B35] rounded-md p-2 pl-10 focus:ring-[#FF6B35] focus:outline-none"
             />
-           
-          </div> <FiSearch className="absolute left-3 top-3 text-gray-500" />
+            <FiSearch className="absolute right-3 top-3 text-gray-500" />
+          </div>
           <button className="bg-[#0D2240] text-white px-4 py-2 rounded-md hover:bg-[#FF6B35]">
             <Link to={`/AddRoom`} >+ Add Room </Link>
           </button>
