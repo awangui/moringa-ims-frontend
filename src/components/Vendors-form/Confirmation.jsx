@@ -1,45 +1,75 @@
 import React, { useState, useContext } from "react";
-import { VendorContext } from "../../pages/VendorContext";
 import { useNavigate } from "react-router-dom";
 
 const Confirmation = ({ prevStep, values }) => {
   const [modalShow, setModalShow] = useState(false);
-  const { addVendor } = useContext(VendorContext);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    addVendor(values);
-    setModalShow(true);
-    setTimeout(() => {
-      navigate("/vendors"); 
-    }, 1000);
+  const handleSubmit = async () => {
+    try {
+      const vendorData = {
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        address: values.address,
+        postal_code: values.postalCode,
+        county: values.county,
+        country: values.country,
+        kra_pin: values.kraPin,
+        bank_name: values.bankName,
+        account_number: values.accountNumber,
+        mpesa_number: values.mpesaPaybill || "",
+        is_active: values.status === "active",
+      };
+  
+      const response = await fetch("http://172.236.2.18:5555/vendors/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(vendorData),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to add vendor");
+      }
+  
+      setModalShow(true);
+      setTimeout(() => {
+        navigate("/vendors");
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      setError(error.message);
+    }
   };
+  
 
   return (
     <div>
+      <h3>Confirm Vendor Details</h3>
       <ul className="confirmation-list">
-        <li>Name: {values.name}</li>
-        <li>Email: {values.email}</li>
-        <li>Phone: {values.phone}</li>
-        <li>Bio: {values.bio}</li>
-        <li>Kra Pin: {values.kraPin}</li>
-        <li>Status: {values.status}</li>
-        <li>Contact Person Name: {values.contactPersonName}</li>
+        <li><strong>Name:</strong> {values.name}</li>
+        <li><strong>Email:</strong> {values.email}</li>
+        <li><strong>Phone:</strong> {values.phone}</li>
+        <li><strong>Address:</strong> {values.address}</li>
+        {/* <li>Contact Person Name: {values.contactPersonName}</li>
         <li>Contact Person Email: {values.contactPersonEmail}</li>
         <li>Contact Person Phone: {values.contactPersonPhone}</li>
-        <li>Address: {values.address}</li>
-        <li>Country: {values.country}</li>
-        <li>County: {values.county}</li>
-        <li>City: {values.city}</li>
-        <li>Postal Code: {values.postalCode}</li>
-        <li>Bank Name: {values.bankName}</li>
-        <li>Account Number: {values.accountNumber}</li>
-        <li>MPESA Paybill: {values.mpesaPaybill}</li>
-        <li>Buy Goods Till: {values.buyGoodsTill}</li>
-        <li>Vendor Document Name: {values.vendorDocumentName}</li>
-        <li>Vendor Document Type: {values.vendorDocumentType}</li>
-        <li>Vendor Document URL: {values.vendorDocumentURL}</li>
+        <li><strong>Postal Code:</strong> {values.postalCode}</li> */}
+        <li><strong>County:</strong> {values.county}</li>
+        <li><strong>Country:</strong> {values.country}</li>
+        <li><strong>KRA Pin:</strong> {values.kraPin}</li>
+        <li><strong>Bank Name:</strong> {values.bankName}</li>
+        <li><strong>Account Number:</strong> {values.accountNumber}</li>
+        <li><strong>MPESA Paybill:</strong> {values.mpesaPaybill || "N/A"}</li>
+        <li><strong>Status:</strong> {values.status}</li>
       </ul>
+
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+
       <button onClick={prevStep}>Back</button>
       <button onClick={handleSubmit}>Submit</button>
 
