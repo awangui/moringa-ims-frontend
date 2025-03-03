@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Step1 = ({ nextStep, handleChange, values }) => {
   const navigate = useNavigate();
@@ -8,20 +9,9 @@ const Step1 = ({ nextStep, handleChange, values }) => {
     navigate("/vendors");
   };
 
+
   return (
-    <div className="vendors">
-      <h3 className="page-title">Add New Vendor</h3>
-      <div className="vendorFormSteps">
-        <div className="vendorFormStep vendorFormStepActive">
-          Add Vendor Details
-        </div>
-        <div className="vendorFormStep">Add Contact Person</div>
-        <div className="vendorFormStep">Add Vendor Address</div>
-        <div className="vendorFormStep">Add Payment Details</div>
-        <div className="vendorFormStep">Add Vendor Documents</div>
-        <div className="vendorFormStep">Confirm Details</div>
-        <div className="vendorFormStep">Cancel</div>
-      </div>
+    <div className="vendors">     
       <form className="vendorForm row g-3">
         <div className="col-md-6">
           <label htmlFor="inputName" className="form-label">
@@ -106,9 +96,9 @@ const Step1 = ({ nextStep, handleChange, values }) => {
             Activate
           </label>
         </div>
-          <button type="button" onClick={nextStep} className="btn btn-primary">
-            Continue
-          </button>
+        <button type="button" onClick={nextStep} className="btn btn-primary">
+          Continue
+        </button>
       </form>
       <button className="backButton" onClick={handleBackClick}>Back</button>
     </div>

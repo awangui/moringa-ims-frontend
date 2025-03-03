@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { VendorContext } from "../../pages/VendorContext";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 const Confirmation = ({ prevStep, values }) => {
   const [modalShow, setModalShow] = useState(false);
@@ -17,8 +17,7 @@ const Confirmation = ({ prevStep, values }) => {
 
   return (
     <div>
-      <h3 className="page-title">Confirm Details</h3>
-      <ul>
+      <ul className="confirmation-list">
         <li>Name: {values.name}</li>
         <li>Email: {values.email}</li>
         <li>Phone: {values.phone}</li>

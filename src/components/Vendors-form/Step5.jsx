@@ -4,20 +4,6 @@ const Step5 = ({ nextStep, prevStep, handleChange, values }) => {
   return (
     <>
       <div className="vendors">
-        <h3 className="page-title">Upload Vendor Document</h3>
-        <div className="vendorFormSteps">
-          <div className="vendorFormStep vendorFormStepActive">
-            Add Vendor Details
-          </div>
-          <div className="vendorFormStep vendorFormStepActive">
-            Add Contact Person
-          </div>
-          <div className="vendorFormStep vendorFormStepActive">Add Vendor Address</div>
-          <div className="vendorFormStep vendorFormStepActive">Add Payment Details</div>
-          <div className="vendorFormStep vendorFormStepActive">Add Vendor Documents</div>
-          <div className="vendorFormStep">Confirmation</div>
-          <div className="vendorFormStep">Cancel</div>
-        </div>
         <form className="vendorForm step5 row g-3"> <h3 style={{ textAlign: "center" }}></h3>
           <div className="col-md-12">
             <label htmlFor="inputName" className="form-label">

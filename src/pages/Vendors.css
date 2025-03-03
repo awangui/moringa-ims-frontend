@@ -2,8 +2,10 @@
   font-weight: 500;
   margin: 20px 0;
   text-align: left;
-  color: #ff885e;
+  color: #ff6600;
+  font-size: 24px;
 }
+
 .btn {
   background-color: #0f0133;
   color: #f6f6f6;
@@ -13,30 +15,38 @@
   text-align: center;
   margin: 20px auto;
 }
+
 .btn:hover {
   background-color: #ff885e;
   color: #fff;
 }
+
 .vendors-list {
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
   border-collapse: collapse;
   margin-top: 20px;
 }
-.vendors-table th {
-  padding: 10px;
-  font-weight: 400;
-  text-transform: capitalize;
+
+.vendors-table {
+  width: 80%;
+  border-collapse: collapse;
 }
+
+.vendors-table th,
 .vendors-table td {
   padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #ddd;
 }
+
 .vendorForm {
   margin-top: 40px;
   border: 1px solid #e0e0e0;
   text-align: left;
   padding: 40px;
 }
+
 .vendorFormSteps {
   display: flex;
   background-color: #eaecf0;
@@ -44,16 +54,23 @@
   border-bottom: 1px solid #e0e0e0;
   text-transform: uppercase;
 }
+
 .vendorFormStep {
   display: flex;
   padding: 20px;
   color: #0f0133;
+  text-transform: uppercase;
+  background-color: #eaecf0;
+  font-weight: 400;
+  border-radius: 0;
 }
+
 .vendorFormStepActive {
   background-color: #0f0133;
   color: #f6f6f6;
   border-left: 1px solid #e0e0e0;
 }
+
 .vendorForm button {
   background-color: #0f0133;
   color: #f6f6f6;
@@ -65,19 +82,22 @@
   display: block;
   margin: 20px auto;
 }
+
+.vendorForm button:hover {
+  background-color: #ff885e;
+}
+
 .backButton {
   text-align: left;
   justify-content: flex-start;
 }
 
-.vendorForm button:hover {
-  background-color: #ff885e;
-}
 .step2,
 .step4 {
   width: 50%;
   margin: 40px auto 0;
 }
+
 .confirmation-list {
   width: 100%;
   border-collapse: collapse;
@@ -85,6 +105,7 @@
   list-style: none;
   text-align: left;
 }
+
 .modal {
   display: block;
   z-index: 1;
@@ -96,17 +117,13 @@
   top: 0;
   bottom: 0;
 }
+
 .modal-content {
   background-color: #f6f6f6;
   padding: 20px;
   border-radius: 10px;
   width: 35%;
   margin: 0 auto;
-}
-/*vendors page */
-.page-title {
-  font-size: 24px;
-  color: #ff6600;
 }
 
 .filterBar {
@@ -130,29 +147,14 @@
   cursor: pointer;
 }
 
-.filter-btn, .report-btn {
+.filter-btn,
+.report-btn {
   background: #f0f0f0;
 }
+
 .add-btn {
   background: #0f0133;
   color: white;
-}
-.vendors-list {
-    display: flex;
-    flex-wrap: wrap;
-    width: 80%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-.vendors-table {
-  width: 80%;
-  border-collapse: collapse;
-}
-
-.vendors-table th,
-.vendors-table td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
 }
 
 .status-badge {
@@ -196,33 +198,38 @@
   background: #ff885e;
   color: white;
 }
-.side-filter{
-    width: 20%;
-    margin-right: 20px;
+
+.side-filter {
+  width: 20%;
+  margin-right: 20px;
 }
-.filter-options{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.filter-tabs{
-    text-align: left;
-    justify-content: space-between;
+
+.filter-tabs {
+  text-align: left;
+  justify-content: space-between;
 }
-.filter-tabs button{
-    margin: 10px 40px;
-    margin-left: 0;
-    padding: 10px;
+
+.filter-tabs button {
+  margin: 10px 40px;
+  margin-left: 0;
+  padding: 10px;
 }
-.dropdown-content{
-    display: block;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
-/*view vendor page */
+
 .vendor-container {
   padding: 20px;
   font-family: "Arial", sans-serif;
@@ -240,7 +247,6 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Header */
 .vendor-header {
   display: flex;
   align-items: center;
@@ -258,7 +264,6 @@
   margin: 0;
 }
 
-/* Vendor Details */
 .vendor-details {
   display: flex;
   flex-wrap: wrap;
@@ -277,7 +282,6 @@
   flex-basis: 100%;
 }
 
-/* Sections */
 .vendor-section {
   display: flex;
   gap: 15px;
@@ -291,7 +295,6 @@
   border-radius: 6px;
 }
 
-/* Documents */
 .vendor-documents {
   margin-top: 20px;
 }

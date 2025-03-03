@@ -100,7 +100,7 @@ const ViewVendor = () => {
       <div style={{ marginBottom: "24px", padding: "16px", border: "1px solid #ddd", borderRadius: "8px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "16px" }}>
           <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>Vendor Documents</h2>
-          <button style={{ backgroundColor: "#007bff", color: "white", padding: "8px 12px", border: "none", borderRadius: "4px" }}>+ Add Document</button>
+          <button style={{ backgroundColor: "#ff6600", color: "white", padding: "8px 12px", border: "none", borderRadius: "4px" }}>+ Add Document</button>
         </div>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
@@ -130,7 +130,7 @@ const ViewVendor = () => {
       <div style={{ padding: "16px", border: "1px solid #ddd", borderRadius: "8px" }}>
         <h2 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "16px" }}>Vendor Purchase Orders</h2>
         <div>
-          <button onClick={() => setActiveTab("all")} style={{ marginRight: "8px", padding: "8px 12px", border: "none", borderRadius: "4px", backgroundColor: activeTab === "all" ? "#007bff" : "#ddd", color: activeTab === "all" ? "white" : "black" }}>All (200)</button>
+          <button onClick={() => setActiveTab("all")} style={{ marginRight: "8px", padding: "8px 12px", border: "none", borderRadius: "4px", backgroundColor: activeTab === "all" ? "#0f0133" : "#ddd", color: activeTab === "all" ? "white" : "black" }}>All (200)</button>
           <button onClick={() => setActiveTab("pending")} style={{ padding: "8px 12px", border: "none", borderRadius: "4px", backgroundColor: activeTab === "pending" ? "#007bff" : "#ddd", color: activeTab === "pending" ? "white" : "black" }}>Pending Balances (3000)</button>
         </div>
         <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "16px" }}>

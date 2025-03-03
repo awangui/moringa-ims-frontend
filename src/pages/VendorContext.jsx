@@ -3,13 +3,13 @@ import React, { createContext, useState } from "react";
 export const VendorContext = createContext();
 
 export const VendorProvider = ({ children }) => {
-  const [vendors, setVendors] = useState([]); // ✅ Initialize empty array
+  const [vendors, setVendors] = useState([]); 
 
   const addVendor = (newVendor) => {
     setVendors((prevVendors) => {
-      console.log("Previous Vendors:", prevVendors); // ✅ Debugging
+      console.log("Previous Vendors:", prevVendors); 
       console.log("New Vendor:", newVendor);
-      return [...prevVendors, newVendor]; // ✅ Append instead of overwriting
+      return [...prevVendors, newVendor]; 
     });
   };
 

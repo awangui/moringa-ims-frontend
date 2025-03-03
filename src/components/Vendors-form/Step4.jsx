@@ -3,24 +3,6 @@ const Step4 = ({ nextStep, prevStep, handleChange, values }) => {
   return (
     <>
       <div className="vendors">
-        <h3 className="page-title">Add Payment Details</h3>
-        <div className="vendorFormSteps">
-          <div className="vendorFormStep vendorFormStepActive">
-            Add Vendor Details
-          </div>
-          <div className="vendorFormStep vendorFormStepActive">
-            Add Contact Person
-          </div>
-          <div className="vendorFormStep vendorFormStepActive">
-            Add Vendor Address
-          </div>
-          <div className="vendorFormStep vendorFormStepActive">
-            Add Payment Details
-          </div>
-          <div className="vendorFormStep">Add Vendor Documents</div>
-          <div className="vendorFormStep">Confirmation</div>
-          <div className="vendorFormStep">Cancel</div>
-        </div>
         <form className="vendorForm step4 row g-3">
           <div className="col-md-12">
             <label htmlFor="inputBankName" className="form-label">
