@@ -139,7 +139,7 @@ const Vendors = () => {
                       <div className="dropdown-content">
                         <p onClick={() => navigate(`/vendors/edit/${vendor.id}`)}>Edit Vendor</p>
                         <p onClick={() => handleDeleteVendor(vendor)}>Delete Vendor</p>
-                        <p onClick={() => toggleVendorStatus(vendor)}>{vendor.is_active ? "Deactivate Vendor" : "Activate Vendor"} Status</p>
+                        <p onClick={() => toggleVendorStatus(vendor)}>{vendor.is_active ? "Deactivate Vendor" : "Activate Vendor"}</p>
                       </div>
                     )}
                   </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import  Navigation  from "../components/Navigation";
 const EditVendor = () => {
   const { id } = useParams(); 
   const navigate = useNavigate();
@@ -84,6 +84,7 @@ const EditVendor = () => {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
+    <Navigation>
     <div className="editVendor">
       <h3>Edit Vendor Details</h3>
       <form onSubmit={handleSubmit} className="vendorForm row g-3">
@@ -138,6 +139,7 @@ const EditVendor = () => {
         </div>
       </form>
     </div>
+    </Navigation>
   );
 };
 

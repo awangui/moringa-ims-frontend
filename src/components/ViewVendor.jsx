@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { VendorContext } from "../pages/VendorContext";
 import vendorImage from "../assets/undraw_in-the-zone_07y7.svg";
 import { useNavigate } from "react-router-dom";
+import  Navigation  from "../components/Navigation";
 
 const ViewVendor = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const ViewVendor = () => {
   if (!vendor) return <p>Loading vendor details...</p>;
 
   return (
+    <Navigation>
     <div className="vendor-container">
       <h2 className="vendor-title">Vendors / {vendor.name}</h2>
       <div className="vendor-card">
@@ -124,6 +126,7 @@ const ViewVendor = () => {
         </div>
       </div>
     </div>
+    </Navigation>
   );
 }
 
