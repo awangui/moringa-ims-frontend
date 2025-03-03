@@ -13,15 +13,20 @@ import { VendorProvider } from './pages/VendorContext';
 import ViewVendor from './components/ViewVendor';
 import EditVendor from './components/EditVendor';
 import UploadDocuments from './components/UploadDocuments';
+import Login from './pages/Login';
+import FixedAssets from './pages/FixedAssets';
 
 function App() {
   const [spaces, setSpaces] = useState([]);
 
   return (
+    // <Login/>
+    // <FixedAssets/>
     <VendorProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigation><h1>Welcome to the Dashboard</h1></Navigation>} />
+          <Route path="/" element={<Login/>} />
+          <Route path="/dashboard" element={<Navigation><h1>Welcome to the Dashboard</h1></Navigation>} />
           <Route path="/spaces" element={<SpacesPage spaces={spaces} setSpaces={setSpaces} />} />
           <Route path="/editSpace/:id" element={<EditSpace spaces={spaces} setSpaces={setSpaces} />} />
           <Route path="/ViewRoom/:id" element={<ViewRoom spaces={spaces} setSpaces={setSpaces} />} />
@@ -32,6 +37,7 @@ function App() {
           <Route path="/vendors/:id" element={<ViewVendor />} />
           <Route path="/vendors/edit/:id" element={<EditVendor />} />
           <Route path="/vendors/:id/documents" element={<UploadDocuments />} />
+          <Route path="/items" element={<FixedAssets/>} />
         </Routes>
       </Router>
     </VendorProvider>
