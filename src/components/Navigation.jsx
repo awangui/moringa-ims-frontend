@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import {
   FaThLarge,
   FaUser,
-  FaTruck,
   FaClipboardList,
   FaBox,
   FaEnvelope,
