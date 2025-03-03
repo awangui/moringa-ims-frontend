@@ -38,9 +38,9 @@ const Vendors = () => {
   
   return (
     <div className="vendors">
-      <h3 className="page-title">Vendors</h3>
-        {/* Search & Add Vendor Button */}
         <div className="filterBar">
+        <h3 className="page-title">Vendors</h3>
+          <div className="search-bar">
           <input
             type="text"
             placeholder="Search vendors..."
@@ -48,13 +48,8 @@ const Vendors = () => {
             value={search}
             onChange={handleSearchChange}
           />
-          <button className="add-btn" onClick={() => navigate("/vendors/create-vendor")}>
-            + Add Vendor
-          </button>
-        </div>
-
-        {/* Tabs for Filtering */}
-        <div className="filter-tabs">
+          </div>
+          <div className="filter-tabs">
           <button
             className={`tab-btn ${statusFilter === "all" ? "active" : ""}`}
             onClick={() => handleTabChange("all")}
@@ -72,6 +67,10 @@ const Vendors = () => {
             onClick={() => handleTabChange("false")}
           >
             Deactivated
+          </button>
+        </div>
+        <button className="add-btn" onClick={() => navigate("/vendors/create-vendor")}>
+            + Add Vendor
           </button>
         </div>
 
@@ -98,10 +97,8 @@ const Vendors = () => {
                       {vendor.status ? "Activated" : "Deactivated"}
                     </span>
                   </td>
-                  <td>
-                    <p onClick={()=>navigate(`/vendors/view-vendor/`)}>|</p>
-                  </td>
-                  <td>
+                  <td className="actions">
+                  <div className="view" onClick={()=>navigate(`/vendors/view-vendor/`)}>|</div> 
                     <div className="dropdown">
                       <button className="action-btn" onClick={() => handleDropdownToggle(index)}>⋮</button>
                       {dropdownOpen === index && (

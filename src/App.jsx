@@ -13,7 +13,6 @@ function App() {
           <Route path="/vendors" element={<Vendors />} />
           <Route path="/vendors/create-vendor" element={<MultiStepForm />} />
           <Route path="/vendors/view-vendor" element={<ViewVendor />} />
-
         </Routes>
     </Router>
     </VendorProvider>

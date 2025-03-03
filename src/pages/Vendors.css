@@ -21,16 +21,8 @@
   color: #fff;
 }
 
-.vendors-list {
-  display: flex;
-  flex-wrap: wrap;
-  width: 80%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
 .vendors-table {
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
 }
 
@@ -131,6 +123,7 @@
   gap: 10px;
   align-items: center;
   margin-bottom: 15px;
+  justify-content: space-evenly;
 }
 
 .search-input {
@@ -138,18 +131,6 @@
   width: 200px;
   border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-.filter-btn,
-.report-btn,
-.add-btn {
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.filter-btn,
-.report-btn {
-  background: #f0f0f0;
 }
 
 .add-btn {
@@ -172,7 +153,12 @@
   background: #f2dede;
   color: #a94442;
 }
-
+.actions{
+  display: flex;
+  gap: 10px;
+  text-align: center;
+  justify-content: center;
+}
 .action-btn {
   background: none;
   border: none;
@@ -199,26 +185,17 @@
   color: white;
 }
 
-.side-filter {
-  width: 20%;
-  margin-right: 20px;
-}
-
-.filter-options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.filter-tabs {
-  text-align: left;
-  justify-content: space-between;
-}
-
 .filter-tabs button {
   margin: 10px 40px;
   margin-left: 0;
   padding: 10px;
+}
+.filter-tabs button.active {
+  background: #ff885e;
+  color: white;
+}
+.view{
+  margin: auto;
 }
 
 .dropdown-content {
@@ -229,17 +206,6 @@
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
-
-.vendor-container {
-  padding: 20px;
-  font-family: "Arial", sans-serif;
-}
-
-.vendor-title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
 .vendor-card {
   background: white;
   padding: 20px;
