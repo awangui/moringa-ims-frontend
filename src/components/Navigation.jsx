@@ -35,7 +35,7 @@ function Navigation({ children }) {
   }, []);
 
   const menuItems = [
-    { name: 'Dashboard', icon: FaThLarge, path: '/' },
+    { name: 'Dashboard', icon: FaThLarge, path: '/dashboard' },
     { name: 'Vendors', icon: FaUser, path: '/vendors' },
     // { name: 'Inventory', icon: FaTruck, path: '/inventory' },
     { name: 'Orders', icon: FaClipboardList, path: '/orders' },
