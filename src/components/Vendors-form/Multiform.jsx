@@ -6,6 +6,7 @@ import Step3 from "./Step3";
 import Step4 from "./Step4";
 import Step5 from "./Step5";
 import Confirmation from "./Confirmation";
+import Navigation from "../Navigation";
 
 const stepTitles = {
   1: "Add Vendor Details",
@@ -56,6 +57,7 @@ const MultiStepForm = () => {
   };
 
   return (
+    <Navigation>
     <div className="multiStepForm">
       {/* Page Title - Dynamically changes based on step */}
       <h3 className="page-title">{stepTitles[step]}</h3>
@@ -97,6 +99,7 @@ const MultiStepForm = () => {
         })
       )}
     </div>
+    </Navigation>
   );
 };
 

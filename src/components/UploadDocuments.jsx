@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import  Navigation  from "../components/Navigation";
 
 function UploadDocuments() {
     const navigate = useNavigate();
@@ -45,6 +46,7 @@ function UploadDocuments() {
     };
 
     return (
+        <Navigation>        
         <div className="container">
             <form className="vendorForm row g-3" onSubmit={handleUpload} encType="multipart/form-data">
                 <h3 style={{ textAlign: "center" }}>Add Document</h3>
@@ -94,6 +96,7 @@ function UploadDocuments() {
                 </button>
             </form>
         </div>
+        </Navigation>
     );
 }
 
