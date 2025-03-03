@@ -6,9 +6,11 @@ import { VendorProvider } from './pages/VendorContext';
 import ViewVendor from './components/ViewVendor';
 import EditVendor from './components/EditVendor';
 import UploadDocuments from './components/UploadDocuments';
+import Navigation from './components/Navigation';
 
 function App() {
   return (
+
     <VendorProvider>
     <Router>
         <Routes>

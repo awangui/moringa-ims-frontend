@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { VendorContext } from "./VendorContext";
 import { useNavigate } from "react-router-dom";
 import "./Vendors.css";
+import Navigation from "../components/Navigation";
 const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, vendorName }) => {
   if (!isOpen) return null;
 
@@ -85,6 +86,7 @@ const Vendors = () => {
   };
 
   return (
+    <Navigation>
     <div className="vendors">
       <div className="filterBar">
         <h3 className="page-title">Vendors</h3>
@@ -161,6 +163,7 @@ const Vendors = () => {
       />
 
     </div>
+    </Navigation>
   );
 };
 export default Vendors;
