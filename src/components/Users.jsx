@@ -27,7 +27,7 @@ const Users = () => {
   });
 
   const toggleDropdown = () => {
-    setShowDropdown(prev => !prev);
+    setShowDropdown((prev) => !prev);
   };
 
   const handleEdit = () => {
@@ -65,7 +65,6 @@ const Users = () => {
   return (
     <div className="users-container">
       <h1 className="page-title">Users</h1>
-      {/* Single User Card */}
       <div className="user-card">
         <div className="profile-header">
           <img className="user-image" src={userImage} alt="Profile" />
@@ -115,55 +114,29 @@ const Users = () => {
             </tbody>
           </table>
         </div>
-
-        {/* Footer for Entries and Pagination */}
-        <div className="d-flex justify-content-between align-items-center mt-3">
-          <span className="entries-info" style={{ color: 'black' }}>
-            Showing 1 to 1 of 1 entries
-          </span>
-          <div className="pagination">
-            <button className="page-link">&lt;</button>
-            <button className="page-link active">1</button>
-            <button className="page-link">2</button>
-            <button className="page-link">3</button>
-            <button className="page-link">4</button>
-            <button className="page-link">&gt;</button>
-          </div>
-        </div>
-
-        <div className="d-flex align-items-center mt-3 justify-content-start">
-          <label htmlFor="entriesPerPage" style={{ marginRight: '10px' }}>Entries per page:</label>
-          <select
-            id="entriesPerPage"
-            className="form-control entries-dropdown"
-          >
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={30}>30</option>
-          </select>
-        </div>
       </div>
 
+      {/* Edit User Modal */}
       {isEditing && (
         <div className="modal-overlay">
-          <div className="modal">
+          <div className="modal-content">
             <h2 className="modal-title">Edit User</h2>
             <form onSubmit={handleContinue}>
               <div className="form-group">
                 <label>Name</label>
-                <input type="text" value={userInfo.name} onChange={e => setUserInfo({ ...userInfo, name: e.target.value })} required />
+                <input type="text" value={userInfo.name} onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })} required />
               </div>
               <div className="form-group">
                 <label>Email</label>
-                <input type="email" value={userInfo.email} onChange={e => setUserInfo({ ...userInfo, email: e.target.value })} required />
+                <input type="email" value={userInfo.email} onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })} required />
               </div>
               <div className="form-group">
                 <label>Phone</label>
-                <input type="tel" value={userInfo.phone} onChange={e => setUserInfo({ ...userInfo, phone: e.target.value })} required />
+                <input type="tel" value={userInfo.phone} onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })} required />
               </div>
               <div className="form-group">
                 <label>Password</label>
-                <input type="password" value={userInfo.password} onChange={e => setUserInfo({ ...userInfo, password: e.target.value })} />
+                <input type="password" value={userInfo.password} onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })} />
               </div>
               <div className="button-group">
                 <button type="submit" className="continue-button">Continue</button>
@@ -174,9 +147,10 @@ const Users = () => {
         </div>
       )}
 
+      {/* Delete User Confirmation Modal */}
       {isDeleting && (
         <div className="modal-overlay">
-          <div className="modal">
+          <div className="modal-content">
             <h2 className="modal-title">Are you sure you want to delete this user?</h2>
             <div className="button-group">
               <button className="button delete-btn" onClick={handleConfirmDelete} style={{ backgroundColor: 'red', color: 'white' }}>Delete</button>
@@ -186,11 +160,12 @@ const Users = () => {
         </div>
       )}
 
+      {/* Manage Permissions Modal */}
       {isManagingPermissions && (
         <div className="modal-overlay">
-          <div className="modal">
-            <h2>Manage User Permissions</h2>
-            <div>
+          <div className="modal-content">
+            <h2 className="permissions-title">Manage User Permissions</h2>
+            <div className="permissions-list">
               <label className="permission-label">
                 <input
                   type="checkbox"
