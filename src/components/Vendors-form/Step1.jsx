@@ -83,14 +83,15 @@ const Step1 = ({ nextStep, handleChange, values }) => {
         </div>
 
         <div className="col-md-6">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            id="status"
-            name="status"
-            onChange={handleChange}
-            checked={values.status}
-          />
+        <input
+  className="form-check-input"
+  type="checkbox"
+  id="status"
+  name="status"
+  onChange={handleChange}
+  checked={values.status || false}
+/>
+
           <label className="form-check-label" htmlFor="status">
             Activate
           </label>

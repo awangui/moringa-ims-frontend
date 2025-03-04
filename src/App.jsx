@@ -9,7 +9,6 @@ import RequestsPage from './pages/Requests';
 import './App.css'
 import MultiStepForm from './components/Vendors-form/Multiform';
 import Vendors from './pages/Vendors'
-import { VendorProvider } from './pages/VendorContext';
 import ViewVendor from './components/ViewVendor';
 import EditVendor from './components/EditVendor';
 import UploadDocuments from './components/UploadDocuments';
@@ -18,7 +17,6 @@ function App() {
   const [spaces, setSpaces] = useState([]);
 
   return (
-    <VendorProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Navigation><h1>Welcome to the Dashboard</h1></Navigation>} />
@@ -34,7 +32,6 @@ function App() {
           <Route path="/vendors/:id/documents" element={<UploadDocuments />} />
         </Routes>
       </Router>
-    </VendorProvider>
   );
 }
 
