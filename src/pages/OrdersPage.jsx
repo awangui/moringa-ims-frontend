@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Sidebar } from "@/components/ui/sidebar";
-//import { Header } from "@/components/ui/header";
+import Header from "@/components/ui/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
@@ -24,17 +24,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DatePicker } from "@/components/ui/date-picker";
- // Replace with actual imports
-import { Search, ArrowLeft, Filter, Download } from 'lucide-react';
+import { Search, ArrowLeft, Filter, Download, MoreVertical } from 'lucide-react';
 
 // Constants
 const STATUS_COLORS = {
   Pending: 'bg-yellow-100 text-yellow-800',
   Approved: 'bg-green-100 text-green-800',
+  Received: 'bg-blue-100 text-blue-800',
+  Cancelled: 'bg-red-100 text-red-800',
+  'Partially Received': 'bg-purple-100 text-purple-800',
   default: 'bg-gray-100 text-gray-800',
 };
 
-// Orders List Page
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -44,6 +45,10 @@ const OrdersList = () => {
   const [endDate, setEndDate] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState('all');
   const [orderStatus, setOrderStatus] = useState('all');
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [partiallyReceivedQuantities, setPartiallyReceivedQuantities] = useState({});
+  const [isPartiallyReceivedDialogOpen, setIsPartiallyReceivedDialogOpen] = useState(false);
+  const [selectedOrderForPartialReceive, setSelectedOrderForPartialReceive] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,6 +71,41 @@ const OrdersList = () => {
     }
   };
 
+  const handleStatusChange = (orderId, newStatus) => {
+    if (newStatus === 'Partially Received') {
+      const order = orders.find((o) => o.id === orderId);
+      setSelectedOrderForPartialReceive(order);
+      setIsPartiallyReceivedDialogOpen(true);
+    } else {
+      const updatedOrders = orders.map((order) =>
+        order.id === orderId ? { ...order, status: newStatus } : order
+      );
+      setOrders(updatedOrders);
+      localStorage.setItem('orders', JSON.stringify(updatedOrders));
+    }
+  };
+
+  const handlePartiallyReceivedConfirm = () => {
+    const updatedOrders = orders.map((order) => {
+      if (order.id === selectedOrderForPartialReceive.id) {
+        return {
+          ...order,
+          status: 'Partially Received',
+          items: order.items.map((item) => ({
+            ...item,
+            receivedQuantity: partiallyReceivedQuantities[item.id] || 0,
+          })),
+        };
+      }
+      return order;
+    });
+
+    setOrders(updatedOrders);
+    localStorage.setItem('orders', JSON.stringify(updatedOrders));
+    setIsPartiallyReceivedDialogOpen(false);
+    setPartiallyReceivedQuantities({}); // Reset quantities
+  };
+
   const resetFilters = () => {
     setStartDate(null);
     setEndDate(null);
@@ -75,17 +115,14 @@ const OrdersList = () => {
 
   const applyFilters = (orderList) => {
     return orderList.filter((order) => {
-      // Filter by date range
       const orderDate = new Date(order.date);
       const dateInRange = (!startDate || orderDate >= startDate) && 
                           (!endDate || orderDate <= endDate);
       
-      // Filter by payment status
       const isPaidFilter = paymentStatus === 'all' || 
                           (paymentStatus === 'paid' && order.orderDetails?.isPaid) ||
                           (paymentStatus === 'unpaid' && !order.orderDetails?.isPaid);
       
-      // Filter by order status
       const statusFilter = orderStatus === 'all' || 
                           (orderStatus === 'sent' && order.status === 'Approved') ||
                           (orderStatus === 'not-sent' && order.status !== 'Approved');
@@ -94,11 +131,14 @@ const OrdersList = () => {
     });
   };
 
-  const filteredOrders = applyFilters((orders || []).filter((order) =>
-    (order?.name?.toLowerCase().includes(searchQuery.toLowerCase())) ||
-    (order?.id?.toLowerCase().includes(searchQuery.toLowerCase()))
-  ));
+  const filteredOrders = applyFilters(
+    (orders || []).filter((order) =>
+      (order?.name?.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (order?.id?.toLowerCase().includes(searchQuery.toLowerCase()))
+    )
+  );
   
+
   const handlePageChange = (page, pageSize = itemsPerPage) => {
     setCurrentPage(page);
     if (pageSize !== itemsPerPage) {
@@ -114,7 +154,6 @@ const OrdersList = () => {
     <div className="flex h-screen bg-white">
       <Sidebar />
       <div className="flex-1 flex flex-col">
-        {/* <Header title="Purchase Orders" /> */}
         <div className="flex-1 p-6">
           <div className="max-w-5xl mx-auto">
             <div className="flex justify-between items-center mb-6">
@@ -219,7 +258,7 @@ const OrdersList = () => {
                     <TableHead>NAME</TableHead>
                     <TableHead>DATE</TableHead>
                     <TableHead>STATUS</TableHead>
-                    <TableHead></TableHead>
+                    <TableHead>ACTIONS</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -237,13 +276,43 @@ const OrdersList = () => {
                           </span>
                         </TableCell>
                         <TableCell>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleViewOrder(order.id)}
-                          >
-                            View
-                          </Button>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleViewOrder(order.id)}
+                            >
+                              View
+                            </Button>
+                            <Sheet>
+                              <SheetTrigger asChild>
+                                <Button variant="ghost" size="sm" onClick={() => setSelectedOrder(order)}>
+                                  <MoreVertical className="h-4 w-4" />
+                                </Button>
+                              </SheetTrigger>
+                              <SheetContent>
+                                <SheetHeader>
+                                  <SheetTitle>Change Status</SheetTitle>
+                                  <SheetDescription>
+                                    Update the status of this order
+                                  </SheetDescription>
+                                </SheetHeader>
+                                <div className="py-6 space-y-4">
+                                  <Select onValueChange={(value) => handleStatusChange(order.id, value)}>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select status" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="Approved">Approved</SelectItem>
+                                      <SelectItem value="Cancelled">Cancelled</SelectItem>
+                                      <SelectItem value="Received">Received</SelectItem>
+                                      <SelectItem value="Partially Received">Partially Received</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </SheetContent>
+                            </Sheet>
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))
@@ -266,12 +335,47 @@ const OrdersList = () => {
                 onPageChange={handlePageChange}
               />
             )}
+
+            {/* Partially Received Dialog */}
+            <Sheet open={isPartiallyReceivedDialogOpen} onOpenChange={setIsPartiallyReceivedDialogOpen}>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Partially Received</SheetTitle>
+                  <SheetDescription>
+                    Enter the quantities received for each item.
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="py-6 space-y-4">
+                  {selectedOrderForPartialReceive?.items?.map((item, index) => (
+                    <div key={item.id || index} className="space-y-2">
+                      <label className="text-sm font-medium">{item.name}</label>
+                      <Input
+                        type="number"
+                        placeholder="Quantity Received"
+                        value={partiallyReceivedQuantities[item.id] || ''}
+                        onChange={(e) =>
+                          setPartiallyReceivedQuantities((prev) => ({
+                            ...prev,
+                            [item.id]: e.target.value,
+                          }))
+                        }
+                      />
+                    </div>
+                  ))}
+                  <Button onClick={handlePartiallyReceivedConfirm}>Continue</Button>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+
+
+
 
 // View Single Order
 const ViewOrder = () => {
@@ -475,12 +579,12 @@ const ViewOrder = () => {
               >
                 Back to Orders
               </Button>
-              <Button className="bg-blue-600 text-white hover:bg-blue-700">
+              {/* <Button className="bg-blue-600 text-white hover:bg-blue-700">
                 Download PDF
               </Button>
               <Button className="bg-green-600 text-white hover:bg-green-700">
                 Mark as Approved
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Routes, Route, useParams } from 'react-router-dom';
 import {
@@ -89,14 +91,22 @@ const Header = ({ title }) => {
 };
 
 // Common stepper component for navigation
+
+
+
 const OrderStepper = ({ currentStep }) => {
+  const navigate = useNavigate();
   const steps = [
     { id: "add-items", label: "ADD ITEMS", icon: <ShoppingCart size={16} /> },
-    { id: "choose-space", label: "CHOOSE SPACE", icon: <FileText size={16} /> },
+    // { id: "choose-space", label: "CHOOSE SPACE", icon: <FileText size={16} /> },
     { id: "add-order-details", label: "ADD ORDER DETAILS", icon: <Package size={16} /> },
     { id: "add-order-charges", label: "ADD ORDER CHARGES", icon: <MessageSquare size={16} /> },
     { id: "view-order", label: "VIEW ORDER", icon: <User size={16} /> }
   ];
+
+  const handleCancel = () => {
+    navigate('/orders');
+}
 
   return (
     <div className="flex w-full bg-gray-100">
@@ -114,10 +124,11 @@ const OrderStepper = ({ currentStep }) => {
           </div>
         </div>
       ))}
-      <div className="flex items-center justify-center py-2 px-4 bg-gray-200">
+      <button onClick={handleCancel}> <div className="flex items-center justify-center py-2 px-4 bg-gray-200">
         <X size={16} />
-        <span className="ml-1 text-xs font-medium">CANCEL</span>
+        <span  className="ml-1 text-xs font-medium">CANCEL</span>
       </div>
+      </button>
     </div>
   );
 };
@@ -189,11 +200,11 @@ const ChooseItems = () => {
   
   // Sample items for selection
   const availableItems = [
-    { id: 1, name: "Bandages", category: "Medical", type: "Inventory", quantity: 500, unitCost: "Kshs 50,345" },
-    { id: 2, name: "Bandages", category: "Medical", type: "Inventory", quantity: 500, unitCost: "Kshs 50,345" },
-    { id: 3, name: "Bandages", category: "Medical", type: "Inventory", quantity: 500, unitCost: "Kshs 50,345" },
-    { id: 4, name: "Bandages", category: "Medical", type: "Inventory", quantity: 500, unitCost: "Kshs 50,345" },
-    { id: 5, name: "Bandages", category: "Medical", type: "Inventory", quantity: 500, unitCost: "Kshs 50,345" },
+    { id: 1, name: "Bandages", category: "Medical",  quantity: 500, unitCost: "Kshs 50,345" },
+    { id: 2, name: "Bandages", category: "Medical",  quantity: 500, unitCost: "Kshs 50,345" },
+    { id: 3, name: "Bandages", category: "Medical",  quantity: 500, unitCost: "Kshs 50,345" },
+    { id: 4, name: "Bandages", category: "Medical",  quantity: 500, unitCost: "Kshs 50,345" },
+    { id: 5, name: "Bandages", category: "Medical",  quantity: 500, unitCost: "Kshs 50,345" },
   ];
   
   const handleBack = () => {
@@ -209,7 +220,7 @@ const ChooseItems = () => {
   const handleContinue = () => {
     // Add selected items to the order
     const updatedItems = [...items, ...selectedItems];
-    navigate('/create-order/step3/space', { 
+    navigate('/create-order/step3/vendor', { 
       state: { 
         name, 
         description, 
@@ -277,7 +288,7 @@ const ChooseItems = () => {
                     <TableHead className="w-12"></TableHead>
                     <TableHead>ITEM NAME</TableHead>
                     <TableHead>CATEGORY</TableHead>
-                    <TableHead>ITEM TYPE</TableHead>
+                    {/* <TableHead>ITEM TYPE</TableHead> */}
                     <TableHead>QUANTITY</TableHead>
                     <TableHead>UNIT COST</TableHead>
                   </TableRow>
@@ -297,7 +308,7 @@ const ChooseItems = () => {
                       </TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.category}</TableCell>
-                      <TableCell>{item.type}</TableCell>
+                      {/* <TableCell>{item.type}</TableCell> */}
                       <TableCell>{item.quantity}</TableCell>
                       <TableCell>{item.unitCost}</TableCell>
                     </TableRow>
@@ -339,110 +350,56 @@ const ChooseItems = () => {
   );
 };
 
-// Step 4: Choose Space
-const ChooseSpace = () => {
+//Adding a Vendor
+const ChooseVendor = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { name, description, items = [] } = location.state || {};
   
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedSpace, setSelectedSpace] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [selectedVendor, setSelectedVendor] = useState(null);
   
-  // Sample spaces for selection
-  const availableSpaces = [
-    { id: 1, name: "Room...103" },
-    { id: 2, name: "Room...102" },
-    { id: 3, name: "Room...101" },
-    { id: 4, name: "Room..." },
+  const availableVendors = [
+    { id: 1, name: "Vendor A" },
+    { id: 2, name: "Vendor B" },
+    { id: 3, name: "Vendor C" },
   ];
   
   const handleBack = () => {
-    navigate('/create-order/step3/items', { 
-      state: { 
-        name, 
-        description, 
-        items 
-      } 
+    navigate('/create-order/step3/items', {
+      state: { name, description, items }
     });
   };
   
   const handleContinue = () => {
-    navigate('/create-order/step3/details', { 
-      state: { 
-        name, 
-        description, 
-        items,
-        space: selectedSpace
-      } 
+    navigate('/create-order/step3/details', {
+      state: { name, description, items, vendor: selectedVendor }
     });
   };
   
-  const handleSpaceSelection = (space) => {
-    setSelectedSpace(space);
-  };
-
-  const handlePageChange = (page, pageSize = itemsPerPage) => {
-    setCurrentPage(page);
-    if (pageSize !== itemsPerPage) {
-      setItemsPerPage(pageSize);
-    }
-  };
-
   return (
     <div className="flex h-screen bg-white">
       <Sidebar />
-
-      {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        <Header title="Create Order Step 4" />
-
-        {/* Main Content Area */}
+        <Header title="Choose Vendor" />
         <div className="flex-1 p-6">
           <div className="max-w-5xl mx-auto">
-            {/* Title */}
-            <div className="flex justify-between items-center mb-4">
-              <h1 className="text-2xl font-medium text-orange-500">Choose Space</h1>
-              <div className="text-right">
-                <Bell size={24} />
-              </div>
-            </div>
-
-            {/* Stepper */}
-            <OrderStepper currentStep={1} />
-
-            {/* Search Bar */}
-            <div className="my-6">
-              <div className="relative">
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                <Input
-                  type="text"
-                  placeholder="Search"
-                  className="pl-10"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-            </div>
-
-            {/* Spaces Table */}
-            <div className="border rounded-lg overflow-hidden mb-4">
+            <h1 className="text-2xl font-medium text-orange-500">Choose a Vendor</h1>
+            <div className="border rounded-lg overflow-hidden mt-4">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-8/12">NAME</TableHead>
-                    <TableHead className="w-4/12"></TableHead>
+                    <TableHead>Vendor Name</TableHead>
+                    <TableHead>Select</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {availableSpaces.map((space) => (
-                    <TableRow key={space.id}>
-                      <TableCell>{space.name}</TableCell>
+                  {availableVendors.map((vendor) => (
+                    <TableRow key={vendor.id}>
+                      <TableCell>{vendor.name}</TableCell>
                       <TableCell>
                         <Checkbox 
-                          checked={selectedSpace?.id === space.id}
-                          onCheckedChange={() => handleSpaceSelection(space)}
+                          checked={selectedVendor?.id === vendor.id}
+                          onCheckedChange={() => setSelectedVendor(vendor)}
                         />
                       </TableCell>
                     </TableRow>
@@ -450,31 +407,12 @@ const ChooseSpace = () => {
                 </TableBody>
               </Table>
             </div>
-
-            {/* Pagination */}
-            <Pagination 
-              currentPage={currentPage}
-              totalItems={57}
-              itemsPerPage={itemsPerPage}
-              onPageChange={handlePageChange}
-            />
-
-            {/* Navigation Buttons */}
             <div className="flex justify-between mt-8">
-              <Button 
-                variant="outline" 
-                className="flex items-center text-gray-600"
-                onClick={handleBack}
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                BACK
+              <Button variant="outline" className="flex items-center text-gray-600" onClick={handleBack}>
+                <ArrowLeft className="mr-2 h-4 w-4" /> BACK
               </Button>
-              
-              <Button 
-                className="bg-indigo-900 text-white hover:bg-indigo-800"
-                onClick={handleContinue}
-              >
-                Continue <ChevronRight className="ml-1 h-4 w-4" />
+              <Button className="bg-black text-white hover:bg-gray-800" onClick={handleContinue}>
+                Continue
               </Button>
             </div>
           </div>
@@ -483,6 +421,151 @@ const ChooseSpace = () => {
     </div>
   );
 };
+
+// // Step 4: Choose Space
+// const ChooseSpace = () => {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   const { name, description, items = [] } = location.state || {};
+  
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const [selectedSpace, setSelectedSpace] = useState(null);
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [itemsPerPage, setItemsPerPage] = useState(10);
+  
+//   // Sample spaces for selection
+//   const availableSpaces = [
+//     { id: 1, name: "Room...103" },
+//     { id: 2, name: "Room...102" },
+//     { id: 3, name: "Room...101" },
+//     { id: 4, name: "Room..." },
+//   ];
+  
+//   const handleBack = () => {
+//     navigate('/create-order/step3/items', { 
+//       state: { 
+//         name, 
+//         description, 
+//         items 
+//       } 
+//     });
+//   };
+  
+//   const handleContinue = () => {
+//     navigate('/create-order/step3/details', { 
+//       state: { 
+//         name, 
+//         description, 
+//         items,
+//         space: selectedSpace
+//       } 
+//     });
+//   };
+  
+//   const handleSpaceSelection = (space) => {
+//     setSelectedSpace(space);
+//   };
+
+//   const handlePageChange = (page, pageSize = itemsPerPage) => {
+//     setCurrentPage(page);
+//     if (pageSize !== itemsPerPage) {
+//       setItemsPerPage(pageSize);
+//     }
+//   };
+
+//   return (
+//     <div className="flex h-screen bg-white">
+//       <Sidebar />
+
+//       {/* Main Content */}
+//       <div className="flex-1 flex flex-col">
+//         <Header title="Create Order Step 4" />
+
+//         {/* Main Content Area */}
+//         <div className="flex-1 p-6">
+//           <div className="max-w-5xl mx-auto">
+//             {/* Title */}
+//             <div className="flex justify-between items-center mb-4">
+//               <h1 className="text-2xl font-medium text-orange-500">Choose Space</h1>
+//               <div className="text-right">
+//                 <Bell size={24} />
+//               </div>
+//             </div>
+
+//             {/* Stepper */}
+//             <OrderStepper currentStep={1} />
+
+//             {/* Search Bar */}
+//             <div className="my-6">
+//               <div className="relative">
+//                 <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+//                 <Input
+//                   type="text"
+//                   placeholder="Search"
+//                   className="pl-10"
+//                   value={searchQuery}
+//                   onChange={(e) => setSearchQuery(e.target.value)}
+//                 />
+//               </div>
+//             </div>
+
+//             {/* Spaces Table */}
+//             <div className="border rounded-lg overflow-hidden mb-4">
+//               <Table>
+//                 <TableHeader>
+//                   <TableRow>
+//                     <TableHead className="w-8/12">NAME</TableHead>
+//                     <TableHead className="w-4/12"></TableHead>
+//                   </TableRow>
+//                 </TableHeader>
+//                 <TableBody>
+//                   {availableSpaces.map((space) => (
+//                     <TableRow key={space.id}>
+//                       <TableCell>{space.name}</TableCell>
+//                       <TableCell>
+//                         <Checkbox 
+//                           checked={selectedSpace?.id === space.id}
+//                           onCheckedChange={() => handleSpaceSelection(space)}
+//                         />
+//                       </TableCell>
+//                     </TableRow>
+//                   ))}
+//                 </TableBody>
+//               </Table>
+//             </div>
+
+//             {/* Pagination */}
+//             <Pagination 
+//               currentPage={currentPage}
+//               totalItems={57}
+//               itemsPerPage={itemsPerPage}
+//               onPageChange={handlePageChange}
+//             />
+
+//             {/* Navigation Buttons */}
+//             <div className="flex justify-between mt-8">
+//               <Button 
+//                 variant="outline" 
+//                 className="flex items-center text-gray-600"
+//                 onClick={handleBack}
+//               >
+//                 <ArrowLeft className="mr-2 h-4 w-4" />
+//                 BACK
+//               </Button>
+              
+//               <Button 
+//                 className="bg-indigo-900 text-white hover:bg-indigo-800"
+//                 onClick={handleContinue}
+//               >
+//                 Continue <ChevronRight className="ml-1 h-4 w-4" />
+//               </Button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 // Step 5: Enter Purchase Order Details
 const OrderDetails = () => {
@@ -500,7 +583,7 @@ const OrderDetails = () => {
   });
   
   const handleBack = () => {
-    navigate('/create-order/step3/space', { 
+    navigate('/create-order/step3/vendor', { 
       state: { 
         name, 
         description, 
@@ -1055,4 +1138,4 @@ const OrderReview = () => {
     );
   };
 
-  export { ChooseItems, ChooseSpace, OrderDetails, OrderCharges, OrderReview };
+  export { ChooseItems,ChooseVendor,  OrderDetails, OrderCharges, OrderReview };
