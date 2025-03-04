@@ -4,18 +4,18 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation, Routes, Route, useParams } from 'react-router-dom';
 import {
   Button,
-} from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+} from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Checkbox } from "../components/ui/checkbox";
 import { 
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "../components/ui/select";
 import { 
   Table, 
   TableBody, 
@@ -23,7 +23,7 @@ import {
   TableHead, 
   TableHeader, 
   TableRow 
-} from "@/components/ui/table";
+} from "../components/ui/table";
 import { 
   ArrowLeft, 
   Bell, 
@@ -42,37 +42,7 @@ import {
   ChevronLeft
 } from "lucide-react";
 
-// Common sidebar component used across all steps
-const Sidebar = ({ activeIcon = "ShoppingCart" }) => {
-  return (
-    <div className="w-16 bg-white border-r flex flex-col items-center py-4 space-y-8">
-      <div className={`${activeIcon === "Clock" ? "text-blue-600" : "text-gray-500 hover:text-blue-600"}`}>
-        <Clock size={24} />
-      </div>
-      <div className={`${activeIcon === "Users" ? "text-blue-600" : "text-gray-500 hover:text-blue-600"}`}>
-        <Users size={24} />
-      </div>
-      <div className={`${activeIcon === "ShoppingCart" ? "text-blue-600" : "text-gray-500 hover:text-blue-600"}`}>
-        <ShoppingCart size={24} />
-      </div>
-      <div className={`${activeIcon === "FileText" ? "text-blue-600" : "text-gray-500 hover:text-blue-600"}`}>
-        <FileText size={24} />
-      </div>
-      <div className={`${activeIcon === "Package" ? "text-blue-600" : "text-gray-500 hover:text-blue-600"}`}>
-        <Package size={24} />
-      </div>
-      <div className={`${activeIcon === "MessageSquare" ? "text-blue-600" : "text-gray-500 hover:text-blue-600"}`}>
-        <MessageSquare size={24} />
-      </div>
-      <div className={`${activeIcon === "User" ? "text-blue-600" : "text-gray-500 hover:text-blue-600"} mt-auto`}>
-        <User size={24} />
-      </div>
-      <div className={`${activeIcon === "Settings" ? "text-blue-600" : "text-gray-500 hover:text-blue-600"}`}>
-        <Settings size={24} />
-      </div>
-    </div>
-  );
-};
+
 
 // Common header for all steps
 const Header = ({ title }) => {

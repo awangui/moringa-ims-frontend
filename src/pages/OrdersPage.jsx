@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { Sidebar } from "@/components/ui/sidebar";
-import Header from "@/components/ui/header";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { Pagination } from "@/components/ui/pagination";
-import { Card, CardContent } from "@/components/ui/card";
+import { Sidebar } from "../components/ui/sidebar";
+import Header from "../components/ui/header";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "../components/ui/table";
+import { Pagination } from "../components/ui/pagination";
+import { Card, CardContent } from "../components/ui/card";
 import {
   Sheet,
   SheetContent,
@@ -15,16 +15,17 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "../components/ui/sheet";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { DatePicker } from "@/components/ui/date-picker";
+} from "../components/ui/select";
+import { DatePicker } from "../components/ui/date-picker";
 import { Search, ArrowLeft, Filter, Download, MoreVertical } from 'lucide-react';
+import Navigation from "../components/Navigation";
 
 // Constants
 const STATUS_COLORS = {
@@ -151,6 +152,7 @@ const OrdersList = () => {
   const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
 
   return (
+    <Navigation>
     <div className="flex h-screen bg-white">
       <Sidebar />
       <div className="flex-1 flex flex-col">
@@ -370,8 +372,11 @@ const OrdersList = () => {
         </div>
       </div>
     </div>
+    </Navigation>
   );
 };
+
+
 
 
 
@@ -431,6 +436,7 @@ const ViewOrder = () => {
   };
 
   return (
+    <Navigation>
     <div className="flex h-screen bg-white">
       <Sidebar />
       <div className="flex-1 flex flex-col">
@@ -590,6 +596,7 @@ const ViewOrder = () => {
         </div>
       </div>
     </div>
+    </Navigation>
   );
 };
 
