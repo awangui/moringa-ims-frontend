@@ -10,9 +10,7 @@ import Navigation from './components/Navigation';
 
 function App() {
   return (
-
-    <VendorProvider>
-    <Router>
+      <Router>
         <Routes>
           <Route path="/vendors" element={<Vendors />} />
           <Route path="/vendors/create-vendor" element={<MultiStepForm />} />
@@ -20,9 +18,8 @@ function App() {
           <Route path="/vendors/edit/:id" element={<EditVendor />} />
           <Route path="/vendors/:id/documents" element={<UploadDocuments />} />
         </Routes>
-    </Router>
-    </VendorProvider>
-  )
+      </Router>
+  );
 }
 
 export default App
