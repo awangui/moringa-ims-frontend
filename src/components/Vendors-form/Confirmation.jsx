@@ -1,25 +1,35 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const Confirmation = ({ prevStep, values }) => {
   const [modalShow, setModalShow] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+  
     try {
-      const vendorData = {
+      console.log("Submitting values:", values);
+      const formattedValues = {
         name: values.name,
         email: values.email,
         phone: values.phone,
+        bio: values.bio,
+        kra_pin: values.kraPin, 
+        is_active: values.status,
         address: values.address,
+        city: values.city,
         postal_code: values.postalCode,
         county: values.county,
         country: values.country,
-        kra_pin: values.kraPin,
         bank_name: values.bankName,
         account_number: values.accountNumber,
-        mpesa_number: values.mpesaPaybill || "",
-        is_active: values.status === "active",
+        mpesa_paybill: values.mpesaPaybill,
+        buy_goods_till: values.buyGoodsTill,
+        contact_person_name: values.contactPersonName,
+        contact_person_email: values.contactPersonEmail,
+        contact_person_phone: values.contactPersonPhone,
       };
   
       const response = await fetch("http://172.236.2.18:5555/vendors/", {
@@ -27,53 +37,58 @@ const Confirmation = ({ prevStep, values }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(vendorData),
+        body: JSON.stringify(formattedValues),
       });
   
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to add vendor");
+        let errorMessage = "Failed to add vendor.";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorMessage;
+        } catch (error) {
+          console.error("Error parsing JSON response", error);
+        }
+        throw new Error(errorMessage);
       }
   
       setModalShow(true);
       setTimeout(() => {
         navigate("/vendors");
-        window.location.reload();
       }, 1000);
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      console.error("Error:", err.message);
+      setError(err.message);
     }
   };
   
 
   return (
-    <div>
+    <div className="confirmation-container">
+      <h3>Confirm Vendor Details</h3>
+      
+      {/* Display the details being submitted */}
       <ul className="confirmation-list">
-        <li><strong>Name:</strong> {values.name}</li>
-        <li><strong>Email:</strong> {values.email}</li>
-        <li><strong>Phone:</strong> {values.phone}</li>
-        <li><strong>Address:</strong> {values.address}</li>
-        {/* <li>Contact Person Name: {values.contactPersonName}</li>
-        <li>Contact Person Email: {values.contactPersonEmail}</li>
-        <li>Contact Person Phone: {values.contactPersonPhone}</li>
-        <li><strong>Postal Code:</strong> {values.postalCode}</li> */}
-        <li><strong>County:</strong> {values.county}</li>
-        <li><strong>Country:</strong> {values.country}</li>
-        <li><strong>KRA Pin:</strong> {values.kraPin}</li>
-        <li><strong>Bank Name:</strong> {values.bankName}</li>
-        <li><strong>Account Number:</strong> {values.accountNumber}</li>
-        <li><strong>MPESA Paybill:</strong> {values.mpesaPaybill || "N/A"}</li>
-        <li><strong>Status:</strong> {values.status}</li>
+        {Object.entries(values).map(([key, value]) => (
+          <li key={key}>
+            <strong>{key}:</strong>{" "}
+            {key === "status" ? (value ? "Active" : "Inactive") : value || "N/A"}
+          </li>        
+        ))}
       </ul>
 
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
-      <button onClick={prevStep}>Back</button>
-      <button onClick={handleSubmit}>Submit</button>
+      <div className="button-group">
+        <button className="btn btn-secondary" onClick={prevStep}>Back</button>
+        <button className="btn btn-primary" onClick={handleFormSubmit}>Submit</button>
+      </div>
 
       {modalShow && (
-        <div className="modal">
-          <p>Vendor successfully added!</p>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <span className="close" onClick={() => navigate("/vendors")}>&times;</span>
+            <p>Vendor successfully added!</p>
+          </div>
         </div>
       )}
     </div>
