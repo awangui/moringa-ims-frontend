@@ -11,6 +11,8 @@ import {
   FaBars,
   FaSignOutAlt,
   FaBuilding,
+  FaUndoAlt,
+  FaUserFriends,
 } from 'react-icons/fa';
 
 function Navigation({ children }) {
@@ -42,7 +44,9 @@ function Navigation({ children }) {
     { name: 'Items', icon: FaBox, path: '/items' },
     { name: 'Requests', icon: FaEnvelope, path: '/requests' },
     { name: 'Users', icon: FaUsers, path: '/users' },
+    { name: 'Returns', icon: FaUndoAlt, path: '/returns' },
     { name: 'Spaces', icon: FaBuilding, path: '/spaces' },
+    { name: 'Teams', icon: FaUserFriends, path: '/teams' },
   ];
 
   return (
@@ -104,3 +108,4 @@ function Navigation({ children }) {
 }
 
 export default Navigation;
+
