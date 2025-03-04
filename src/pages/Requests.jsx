@@ -190,7 +190,7 @@ const RequestsPage = () => {
   return (
     <Navigation>
       <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-4">Assets</h1>
+        <h1 className="text-2xl font-semibold mb-4">REQUESTS</h1>
 
         {notification && (
           <div className="bg-green-100 text-green-800 p-2 rounded mb-4">
