@@ -6,10 +6,10 @@ import { IoClose } from 'react-icons/io5';
 const RequestsPage = () => {
   const [assets, setAssets] = useState([]);
   const [filteredAssets, setFilteredAssets] = useState([]);
-  const [requests, setRequests] = useState([]); // State to store assignment requests
+  const [requests, setRequests] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [itemTypes, setItemTypes] = useState([]); // State to store unique item types
-  const [statuses, setStatuses] = useState([]); // State to store unique statuses
+  const [itemTypes, setItemTypes] = useState([]); 
+  const [statuses, setStatuses] = useState([]); 
   const [showFilter, setShowFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLocations, setSelectedLocations] = useState([]);
@@ -17,10 +17,10 @@ const RequestsPage = () => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedStatus, setSelectedStatus] = useState([]);
   const [notification, setNotification] = useState('');
-  const [showAssignmentForm, setShowAssignmentForm] = useState(false); // State to show/hide assignment form
-  const [selectedRequest, setSelectedRequest] = useState(null); // State to store the selected request
-  const [locationId, setLocationId] = useState(''); // State for location ID input
-  const [returnDate, setReturnDate] = useState(''); // State for return date input
+  const [showAssignmentForm, setShowAssignmentForm] = useState(false); 
+  const [selectedRequest, setSelectedRequest] = useState(null); 
+  const [locationId, setLocationId] = useState(''); 
+  const [returnDate, setReturnDate] = useState(''); 
 
   useEffect(() => {
     const fetchAssets = async () => {
@@ -30,11 +30,11 @@ const RequestsPage = () => {
         setAssets(data);
         setFilteredAssets(data);
 
-        // Extract unique item types from assets
+        
         const uniqueItemTypes = [...new Set(data.map((asset) => asset.item))];
         setItemTypes(uniqueItemTypes);
 
-        // Extract unique statuses from assets
+      
         const uniqueStatuses = [...new Set(data.map((asset) => asset.status))];
         setStatuses(uniqueStatuses);
       } catch (error) {
@@ -156,7 +156,7 @@ const RequestsPage = () => {
         setNotification('Asset successfully assigned');
         setTimeout(() => setNotification(''), 3000);
 
-        // Update the local state to reflect the assignment
+      
         const updatedAssets = assets.map((asset) =>
           asset.id === selectedRequest.asset_id
             ? { ...asset, status: 'Assigned', location_id: locationId }
@@ -165,13 +165,12 @@ const RequestsPage = () => {
         setAssets(updatedAssets);
         setFilteredAssets(updatedAssets);
 
-        // Remove the assigned request from the requests list
+     
         const updatedRequests = requests.filter(
           (request) => request.asset_id !== selectedRequest.asset_id
         );
         setRequests(updatedRequests);
 
-        // Reset form and selected request
         setShowAssignmentForm(false);
         setSelectedRequest(null);
         setLocationId('');
