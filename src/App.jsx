@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+<<<<<<< HEAD
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Team from "./components/Team";
 import Returns from "./components/Returns";
@@ -9,27 +10,38 @@ import EditSpace from './pages/EditSpace';
 import ViewRoom from './pages/ViewRoom';
 import AddRoom from './pages/AddRoom';
 import RequestsPage from './pages/Requests';
-import Vendors from './pages/Vendors';
-import MultiStepForm from './components/Vendors-form/Multiform';
-import ViewVendor from './components/ViewVendor';
-import EditVendor from './components/EditVendor';
-import UploadDocuments from './components/UploadDocuments';
-import { VendorProvider } from './pages/VendorContext';
 
-const App = () => {
+function App() {
   const [spaces, setSpaces] = useState([]);
 
   return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigation><h1>Welcome to the Dashboard</h1></Navigation>} />
+        <Route path="/spaces" element={<SpacesPage spaces={spaces} setSpaces={setSpaces} />} />
+        <Route path="/editSpace/:id" element={<EditSpace spaces={spaces} setSpaces={setSpaces} />} />
+        <Route path="/ViewRoom/:id" element={<ViewRoom spaces={spaces} setSpaces={setSpaces} />} />
+        <Route path="/AddRoom" element={<AddRoom spaces={spaces} setSpaces={setSpaces}/>} />
+        <Route path="/requests" element={<RequestsPage/>} />
+      </Routes>
+    </Router>
+  );
+=======
+import './App.css'
+import MultiStepForm from './components/Vendors-form/Multiform';
+import Vendors from './pages/Vendors'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { VendorProvider } from './pages/VendorContext';
+import ViewVendor from './components/ViewVendor';
+import EditVendor from './components/EditVendor';
+import UploadDocuments from './components/UploadDocuments';
+import Navigation from './components/Navigation';
+
+function App() {
+  return (
     <VendorProvider>
-      <Router>
-        <Navigation />
+    <Router>
         <Routes>
-          <Route path="/" element={<h1>Welcome to the Dashboard</h1>} />
-          <Route path="/spaces" element={<SpacesPage spaces={spaces} setSpaces={setSpaces} />} />
-          <Route path="/editSpace/:id" element={<EditSpace spaces={spaces} setSpaces={setSpaces} />} />
-          <Route path="/ViewRoom/:id" element={<ViewRoom spaces={spaces} setSpaces={setSpaces} />} />
-          <Route path="/AddRoom" element={<AddRoom spaces={spaces} setSpaces={setSpaces}/>} />
-          <Route path="/requests" element={<RequestsPage />} />
           <Route path="/vendors" element={<Vendors />} />
           <Route path="/vendors/create-vendor" element={<MultiStepForm />} />
           <Route path="/vendors/:id" element={<ViewVendor />} />
@@ -38,7 +50,8 @@ const App = () => {
         </Routes>
       </Router>
     </VendorProvider>
-  );
-};
+  )
+>>>>>>> b4115c27d5989347c2af56e421d09862d87c1da1
+}
 
 export default App;

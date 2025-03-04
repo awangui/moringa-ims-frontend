@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
 const Confirmation = ({ prevStep, values }) => {
   const [modalShow, setModalShow] = useState(false);
   const [error, setError] = useState(null);
@@ -49,7 +48,6 @@ const Confirmation = ({ prevStep, values }) => {
 
   return (
     <div>
-      <h3>Confirm Vendor Details</h3>
       <ul className="confirmation-list">
         <li><strong>Name:</strong> {values.name}</li>
         <li><strong>Email:</strong> {values.email}</li>
