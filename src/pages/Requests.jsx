@@ -218,7 +218,7 @@ const RequestsPage = () => {
         {/* Filter Sidebar */}
         {showFilter && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-end">
-            <div className="w-1/4 bg-white p-6 shadow-lg h-full relative">
+            <div className={`bg-white p-6 shadow-lg relative overflow-y-auto ${locations.length > 10 || itemTypes.length > 10 ? 'w-3/4 h-3/4' : 'w-1/4 h-full'}`} style={{ maxHeight: '90vh', minWidth: '300px', width: 'auto', maxWidth: '90vw' }}>
               <button
                 className="absolute top-4 right-4 text-xl"
                 onClick={() => setShowFilter(false)}
@@ -231,37 +231,41 @@ const RequestsPage = () => {
                 {/* Locations */}
                 <div>
                   <label className="block mb-2 font-semibold">Location</label>
-                  {locations.length > 0 ? (
-                    locations.map((location) => (
-                      <div key={location.id}>
-                        <input
-                          type="checkbox"
-                          className="mr-2"
-                          checked={selectedLocations.includes(location.name)}
-                          onChange={() => toggleLocation(location.name)}
-                        />
-                        <label>{location.name}</label>
-                      </div>
-                    ))
-                  ) : (
-                    <p>Loading locations...</p>
-                  )}
+                  <div className="grid grid-cols-2 gap-2">
+                    {locations.length > 0 ? (
+                      locations.map((location) => (
+                        <div key={location.id} className="flex items-center break-words">
+                          <input
+                            type="checkbox"
+                            className="mr-2"
+                            checked={selectedLocations.includes(location.name)}
+                            onChange={() => toggleLocation(location.name)}
+                          />
+                          <label className="break-words">{location.name}</label>
+                        </div>
+                      ))
+                    ) : (
+                      <p>Loading locations...</p>
+                    )}
+                  </div>
                 </div>
 
                 {/* Type */}
                 <div>
                   <label className="block mb-2 font-semibold">Type</label>
-                  {itemTypes.map((type) => (
-                    <div key={type}>
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={selectedTypes.includes(type)}
-                        onChange={() => toggleType(type)}
-                      />
-                      <label>{type}</label>
-                    </div>
-                  ))}
+                  <div className="grid grid-cols-2 gap-2">
+                    {itemTypes.map((type) => (
+                      <div key={type} className="flex items-center break-words">
+                        <input
+                          type="checkbox"
+                          className="mr-2"
+                          checked={selectedTypes.includes(type)}
+                          onChange={() => toggleType(type)}
+                        />
+                        <label className="break-words">{type}</label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Purchase Date */}
@@ -278,17 +282,19 @@ const RequestsPage = () => {
                 {/* Status */}
                 <div>
                   <label className="block mb-2 font-semibold">Status</label>
-                  {statuses.map((status) => (
-                    <div key={status}>
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={selectedStatus.includes(status)}
-                        onChange={() => toggleStatus(status)}
-                      />
-                      <label>{status}</label>
-                    </div>
-                  ))}
+                  <div className="grid grid-cols-2 gap-2">
+                    {statuses.map((status) => (
+                      <div key={status} className="flex items-center break-words">
+                        <input
+                          type="checkbox"
+                          className="mr-2"
+                          checked={selectedStatus.includes(status)}
+                          onChange={() => toggleStatus(status)}
+                        />
+                        <label className="break-words">{status}</label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -301,6 +307,7 @@ const RequestsPage = () => {
             </div>
           </div>
         )}
+
 
         {/* Requests Section */}
         <div className="mb-8">
