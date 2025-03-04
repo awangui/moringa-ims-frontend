@@ -13,6 +13,7 @@ import {
   FaBuilding,
   FaUndoAlt,
   FaUserFriends,
+  FaSpinner,
 } from 'react-icons/fa';
 
 function Navigation({ children }) {
@@ -39,7 +40,6 @@ function Navigation({ children }) {
   const menuItems = [
     { name: 'Dashboard', icon: FaThLarge, path: '/' },
     { name: 'Vendors', icon: FaUser, path: '/vendors' },
-    // { name: 'Inventory', icon: FaTruck, path: '/inventory' },
     { name: 'Orders', icon: FaClipboardList, path: '/orders' },
     { name: 'Items', icon: FaBox, path: '/items' },
     { name: 'Requests', icon: FaEnvelope, path: '/requests' },
@@ -53,59 +53,73 @@ function Navigation({ children }) {
     <div className="flex min-h-screen">
       {/* Sidebar */}
       <div className={`sidebar ${isCollapsed ? 'w-20' : 'w-64'} bg-[#FDF6F0] p-4 transition-all duration-300`}>
-        <div className="logo text-center mb-4">
-          <button onClick={toggleSidebar} className="text-xl text-[#0D2240]">
-            <FaBars />
+        <div className="logo text-center mb-6">
+          <button
+            onClick={toggleSidebar}
+            className="p-2 bg-[#0D2240] text-white rounded-md hover:bg-[#FF6B35] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF6B35]"
+          >
+            <FaBars className="text-xl" />
           </button>
         </div>
 
         <ul className="menu space-y-2">
           {menuItems.map((item) => (
-            <Link to={item.path} key={item.name}>
+            <Link to={item.path} key={item.name} className="no-underline">
               <li
-                className={`menu-item flex items-center p-2 rounded-lg ${
+                className={`menu-item flex items-center p-3 rounded-md transition-colors duration-200 ${
                   isCollapsed ? 'justify-center' : 'space-x-3'
                 } ${
                   location.pathname === item.path
                     ? 'bg-[#0D2240] text-white'
-                    : 'hover:bg-[#FF6B35] hover:text-white text-[#0D2240]'
+                    : 'text-[#0D2240] hover:bg-[#FF6B35] hover:text-white'
                 }`}
               >
                 <item.icon className="text-lg" />
-                {!isCollapsed && <span className="text-sm">{item.name}</span>}
+                {!isCollapsed && <span className="text-sm font-medium">{item.name}</span>}
               </li>
             </Link>
           ))}
         </ul>
 
+
         {/* Profile */}
-        <div className={`profile mt-8 flex items-center text-[#0D2240] ${isCollapsed ? 'justify-center' : 'space-x-3'}`}>
-          <FaUser className="text-xl" />
+        <div className={`profile mt-8 flex items-center p-3 rounded-lg bg-gray-50 shadow-sm text-[#0D2240] ${isCollapsed ? 'justify-center' : 'space-x-4'}`}>
+          <div className="p-2 bg-[#0D2240] rounded-full">
+            <FaUser className="text-xl text-white" />
+          </div>
           {!isCollapsed && (
             <div>
-              <h3 className="text-sm font-bold">{profile.name}</h3>
-              <p className="text-xs text-gray-600">{profile.email}</p>
+              {profile.name === 'Loading...' ? (
+                <div className="flex items-center space-x-2">
+                  <FaSpinner className="animate-spin text-xs text-gray-500" />
+                  <span className="text-xs font-medium text-gray-500">Loading...</span>
+                </div>
+              ) : (
+                <>
+                  <h3 className="text-sm font-bold">{profile.name}</h3>
+                  <p className="text-xs text-gray-600">{profile.email}</p>
+                </>
+              )}
             </div>
           )}
         </div>
 
         {/* Settings & Logout */}
         <div className={`settings mt-4 flex items-center cursor-pointer ${isCollapsed ? 'justify-center' : 'space-x-3'}`}>
-          <FaCog className="text-lg text-[#0D2240] hover:text-[#FF6B35]" />
-          {!isCollapsed && <span className="text-sm text-[#0D2240] hover:text-[#FF6B35]">Settings</span>}
+          <FaCog className="text-lg text-[#0D2240] hover:text-[#FF6B35] transition-colors duration-200" />
+          {!isCollapsed && <span className="text-sm font-medium text-[#0D2240] hover:text-[#FF6B35] transition-colors duration-200">Settings</span>}
         </div>
 
         <div className={`logout mt-4 flex items-center cursor-pointer ${isCollapsed ? 'justify-center' : 'space-x-3'}`}>
-          <FaSignOutAlt className="text-lg text-red-500 hover:text-[#FF6B35]" />
-          {!isCollapsed && <span className="text-sm text-red-500 hover:text-[#FF6B35]">Logout</span>}
+          <FaSignOutAlt className="text-lg text-red-500 hover:text-[#FF6B35] transition-colors duration-200" />
+          {!isCollapsed && <span className="text-sm font-medium text-red-500 hover:text-[#FF6B35] transition-colors duration-200">Logout</span>}
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 bg-gray-50 overflow-y-auto">{children}</div>
+      <div className="flex-1 bg-gray-50 overflow-y-auto p-4">{children}</div>
     </div>
   );
 }
 
 export default Navigation;
-

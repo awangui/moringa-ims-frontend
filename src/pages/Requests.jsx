@@ -22,6 +22,9 @@ const RequestsPage = () => {
   const [locationId, setLocationId] = useState(''); 
   const [returnDate, setReturnDate] = useState(''); 
 
+  const buttonClass = "bg-[#FF6B35] text-white px-4 py-2 rounded hover:bg-[#e65a2c] transition";
+
+
   useEffect(() => {
     const fetchAssets = async () => {
       try {
@@ -197,8 +200,7 @@ const RequestsPage = () => {
           </div>
         )}
 
-        {/* Search & Filter */}
-        <div className="mb-4 flex justify-between">
+        <div className="mb-4 flex justify-end">
           <input
             type="text"
             placeholder="Search by Item or Status"
@@ -207,106 +209,108 @@ const RequestsPage = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button
-            className="bg-[#FF6B35] text-white px-4 py-2 rounded flex items-center"
+            className="bg-[#FF6B35] text-white px-4 py-2 rounded flex items-center ml-4"
             onClick={() => setShowFilter(!showFilter)}
           >
             {showFilter ? <IoClose size={20} /> : <FiFilter size={20} />} Filter
           </button>
         </div>
 
-        {/* Filter Sidebar */}
         {showFilter && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-end">
-            <div className={`bg-white p-6 shadow-lg relative overflow-y-auto ${locations.length > 10 || itemTypes.length > 10 ? 'w-3/4 h-3/4' : 'w-1/4 h-full'}`} style={{ maxHeight: '90vh', minWidth: '300px', width: 'auto', maxWidth: '90vw' }}>
-              <button
-                className="absolute top-4 right-4 text-xl"
-                onClick={() => setShowFilter(false)}
-              >
-                <IoClose />
-              </button>
-              <h2 className="text-xl font-bold mb-4">Filter</h2>
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-end">
+    <div className={`bg-white p-6 shadow-lg relative overflow-y-auto ${locations.length > 10 || itemTypes.length > 10 ? 'w-3/4 h-3/4' : 'w-1/4 h-full'}`} style={{ maxHeight: '90vh', minWidth: '300px', maxWidth: '90vw' }}>
+      
+      <h2 className="text-2xl font-semibold mb-4 flex justify-between items-center text-[#FF6B35]">
+        Filter 
+        <button
+          className="text-xl text-[#FF6B35]"
+          onClick={() => setShowFilter(false)}
+        >
+          <IoClose />
+        </button>
+      </h2>
 
-              <div className="grid grid-cols-2 gap-4">
-                {/* Locations */}
-                <div>
-                  <label className="block mb-2 font-semibold">Location</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {locations.length > 0 ? (
-                      locations.map((location) => (
-                        <div key={location.id} className="flex items-center break-words">
-                          <input
-                            type="checkbox"
-                            className="mr-2"
-                            checked={selectedLocations.includes(location.name)}
-                            onChange={() => toggleLocation(location.name)}
-                          />
-                          <label className="break-words">{location.name}</label>
-                        </div>
-                      ))
-                    ) : (
-                      <p>Loading locations...</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Type */}
-                <div>
-                  <label className="block mb-2 font-semibold">Type</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {itemTypes.map((type) => (
-                      <div key={type} className="flex items-center break-words">
-                        <input
-                          type="checkbox"
-                          className="mr-2"
-                          checked={selectedTypes.includes(type)}
-                          onChange={() => toggleType(type)}
-                        />
-                        <label className="break-words">{type}</label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Purchase Date */}
-                <div>
-                  <label className="block mb-2 font-semibold">Purchase Date</label>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        
+        {/* Locations */}
+        <div>
+          <label className="block mb-2 font-semibold text-[#FF6B35]">Location</label>
+          <div className="grid grid-cols-1 gap-2">
+            {locations.length > 0 ? (
+              locations.map((location) => (
+                <div key={location.id} className="flex items-center">
                   <input
-                    type="date"
-                    className="w-full p-2 border rounded"
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
+                    type="checkbox"
+                    className="mr-2"
+                    checked={selectedLocations.includes(location.name)}
+                    onChange={() => toggleLocation(location.name)}
                   />
+                  <label className="break-words">{location.name}</label>
                 </div>
-
-                {/* Status */}
-                <div>
-                  <label className="block mb-2 font-semibold">Status</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {statuses.map((status) => (
-                      <div key={status} className="flex items-center break-words">
-                        <input
-                          type="checkbox"
-                          className="mr-2"
-                          checked={selectedStatus.includes(status)}
-                          onChange={() => toggleStatus(status)}
-                        />
-                        <label className="break-words">{status}</label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <button
-                className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded w-full"
-                onClick={() => setShowFilter(false)}
-              >
-                Apply Filters
-              </button>
-            </div>
+              ))
+            ) : (
+              <p>Loading locations...</p>
+            )}
           </div>
-        )}
+        </div>
 
+        {/* Type */}
+        <div>
+          <label className="block mb-2 font-semibold text-[#FF6B35]">Type</label>
+          <div className="grid grid-cols-1 gap-2">
+            {itemTypes.map((type) => (
+              <div key={type} className="flex items-center">
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  checked={selectedTypes.includes(type)}
+                  onChange={() => toggleType(type)}
+                />
+                <label className="break-words">{type}</label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Purchase Date */}
+        <div>
+          <label className="block mb-2 font-semibold text-[#FF6B35]">Purchase Date</label>
+          <input
+            type="date"
+            className="w-full p-2 border border-[#FF6B35] rounded focus:ring-[#FF6B35] focus:outline-none"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
+        </div>
+
+        {/* Status */}
+        <div>
+          <label className="block mb-2 font-semibold text-[#FF6B35]">Status</label>
+          <div className="grid grid-cols-1 gap-2">
+            {statuses.map((status) => (
+              <div key={status} className="flex items-center">
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  checked={selectedStatus.includes(status)}
+                  onChange={() => toggleStatus(status)}
+                />
+                <label className="break-words">{status}</label>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <button
+        className="mt-4 bg-[#FF6B35] text-white px-4 py-2 rounded w-full hover:bg-[#FF6B35]/80 transition"
+        onClick={() => setShowFilter(false)}
+      >
+        Apply Filters
+      </button>
+    </div>
+  </div>
+)}
 
         {/* Requests Section */}
         <div className="mb-8">
