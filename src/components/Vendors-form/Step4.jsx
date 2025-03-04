@@ -49,16 +49,17 @@ const Step4 = ({ nextStep, prevStep, handleChange, values }) => {
             />
           </div>
           <div className="col-12">
-            <label htmlFor="inputBuyGoodsTill" className="form-label">
+            <label htmlFor="BuyGoodsTill" className="form-label">
               MPESA Buy Goods Till No
             </label>
             <input
-              className="form-control"
-              id="BuyGoodsTill"
-              rows="5"
-                onChange={handleChange}
-                value={values.buyGoodsTill}
-           />
+  className="form-control"
+  id="BuyGoodsTill"
+  name="buyGoodsTill" 
+  onChange={handleChange}
+  value={values.buyGoodsTill} 
+/>
+
           </div>
           <div className="col-12">
             <button

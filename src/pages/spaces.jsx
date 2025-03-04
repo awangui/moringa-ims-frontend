@@ -1,7 +1,7 @@
 import Navigation from '../components/Navigation';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiSearch } from 'react-icons/fi'; // Import search icon
+import { FiSearch } from 'react-icons/fi'; 
 
 function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
@@ -9,7 +9,7 @@ function SpacesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
-  const [showSuccess, setShowSuccess] = useState(false); // State for popup
+  const [showSuccess, setShowSuccess] = useState(false); 
 
   useEffect(() => {
     const fetchSpaces = async () => {
@@ -47,9 +47,8 @@ function SpacesPage() {
       setShowConfirm(false);
       setSelectedId(null);
       
-      // Show success message
       setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 3000); // Hide after 3s
+      setTimeout(() => setShowSuccess(false), 3000); 
     } catch (error) {
       console.error('Failed to delete space:', error);
     }

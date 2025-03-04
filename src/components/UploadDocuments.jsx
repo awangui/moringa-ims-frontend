@@ -91,7 +91,7 @@ function UploadDocuments() {
                     <button type="submit" className="btn btn-primary">Upload Document</button>
                 </div>
 
-                <button type="button" className="btn btn-secondary" onClick={() => navigate(`/vendors/${id}`)}>
+                <button type="button" className="btn btn-secondary" onClick={() => { navigate(`/vendors/${id}`); window.location.reload(); }}>
                     Back
                 </button>
             </form>

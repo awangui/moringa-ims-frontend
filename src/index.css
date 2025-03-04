@@ -86,7 +86,9 @@ button:focus-visible {
 
 
 
-
+:root {
+  --border: 214.3 31.8% 91.4%;
+}
 
 
 
@@ -292,7 +294,6 @@ button:focus-visible {
     --chart-5: 340 75% 55%
   }
 }
-
 
 
 
