@@ -17,11 +17,13 @@ import { OrdersList, ViewOrder } from './pages/OrdersPage';
 import CreateOrderPage from './pages/CreateOrderPage';
 import CreateOrderStep2 from './pages/CreateOrderStep2';
 import { ChooseItems, ChooseVendor,  OrderDetails, OrderCharges, OrderReview } from './pages/CreateOrderStep3';
-
+import { SidebarProvider } from './components/ui/sidebar';
+import AssignRequests from './pages/AssignRequests';
 function App() {
   const [spaces, setSpaces] = useState([]);
 
   return (
+    <SidebarProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Navigation><h1>Welcome to the Dashboard</h1></Navigation>} />
@@ -30,6 +32,7 @@ function App() {
           <Route path="/ViewRoom/:id" element={<ViewRoom spaces={spaces} setSpaces={setSpaces} />} />
           <Route path="/AddRoom" element={<AddRoom spaces={spaces} setSpaces={setSpaces}/>} />
           <Route path="/requests" element={<RequestsPage/>} />
+          <Route path="/AssignRequests" element={<AssignRequests/>} />
           <Route path="/vendors" element={<Vendors />} />
           <Route path="/vendors/create-vendor" element={<MultiStepForm />} />
           <Route path="/vendors/:id" element={<ViewVendor />} />
@@ -62,6 +65,7 @@ function App() {
           
         </Routes>
       </Router>
+      </SidebarProvider>
   );
 }
 

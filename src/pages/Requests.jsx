@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Navigation from '../components/Navigation';
 import { FiFilter } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
@@ -8,8 +9,8 @@ const RequestsPage = () => {
   const [filteredAssets, setFilteredAssets] = useState([]);
   const [requests, setRequests] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [itemTypes, setItemTypes] = useState([]); 
-  const [statuses, setStatuses] = useState([]); 
+  const [itemTypes, setItemTypes] = useState([]);
+  const [statuses, setStatuses] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLocations, setSelectedLocations] = useState([]);
@@ -17,12 +18,10 @@ const RequestsPage = () => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedStatus, setSelectedStatus] = useState([]);
   const [notification, setNotification] = useState('');
-  const [showAssignmentForm, setShowAssignmentForm] = useState(false); 
-  const [selectedRequest, setSelectedRequest] = useState(null); 
-  const [locationId, setLocationId] = useState(''); 
-  const [returnDate, setReturnDate] = useState(''); 
 
 
+
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     const fetchAssets = async () => {
@@ -32,11 +31,9 @@ const RequestsPage = () => {
         setAssets(data);
         setFilteredAssets(data);
 
-        
         const uniqueItemTypes = [...new Set(data.map((asset) => asset.item))];
         setItemTypes(uniqueItemTypes);
 
-      
         const uniqueStatuses = [...new Set(data.map((asset) => asset.status))];
         setStatuses(uniqueStatuses);
       } catch (error) {
@@ -56,8 +53,9 @@ const RequestsPage = () => {
 
     const fetchRequests = async () => {
       try {
-        const response = await fetch('http://172.236.2.18:5050/requests');
+        const response = await fetch('http://172.236.2.18:6010/requests');
         const data = await response.json();
+        console.log(data);
         setRequests(data);
       } catch (error) {
         console.error('Error fetching requests:', error);
@@ -69,7 +67,7 @@ const RequestsPage = () => {
     fetchRequests();
   }, []);
 
-  // Handle search input and filters
+  // Filter assets based on search and other filters
   useEffect(() => {
     let filtered = assets.filter(
       (asset) =>
@@ -77,7 +75,6 @@ const RequestsPage = () => {
         asset.status.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    // Apply filters
     if (selectedLocations.length > 0) {
       filtered = filtered.filter((asset) => selectedLocations.includes(asset.location_name));
     }
@@ -97,93 +94,95 @@ const RequestsPage = () => {
     setFilteredAssets(filtered);
   }, [searchQuery, selectedLocations, selectedTypes, selectedDate, selectedStatus, assets]);
 
-  // Handle location filter change
   const toggleLocation = (location) => {
     setSelectedLocations((prev) =>
       prev.includes(location) ? prev.filter((loc) => loc !== location) : [...prev, location]
     );
   };
 
-  // Handle type filter change
   const toggleType = (type) => {
     setSelectedTypes((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     );
   };
 
-  // Handle status filter change
   const toggleStatus = (status) => {
     setSelectedStatus((prev) =>
       prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]
     );
   };
 
-  // Handle assignment request selection
+  // If needed, you can use handleRequestSelection to select a request and then navigate
   const handleRequestSelection = (request) => {
     setSelectedRequest(request);
-    setShowAssignmentForm(true);
+    // Navigate immediately to the assign page with the request data
+    navigate('/assignRequests', { state: { selectedRequest: request } });
   };
 
-  // Handle assignment form submission
-  const handleAssignment = async () => {
-    if (!selectedRequest || !locationId || !returnDate) {
-      setNotification('Please fill in all fields');
-      setTimeout(() => setNotification(''), 3000);
-      return;
-    }
-
-    const confirmAssignment = window.confirm(
-      `Are you sure you want to assign this asset to ${selectedRequest.assigned_to} at the selected location?`
-    );
-    if (!confirmAssignment) return;
-
-    const assignment = {
-      asset_id: selectedRequest.asset_id,
-      location_id: locationId,
-      assigned_to: selectedRequest.assigned_to,
-      assigned_date: selectedRequest.assignment_date,
-      return_date: returnDate,
-    };
-
+  // This function now is used for approving a request and then navigating to the AssignRequests page
+  const approveRequest = async (requestId) => {
     try {
-      const response = await fetch('http://172.236.2.18:5050/assignments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(assignment),
+      const response = await fetch(`http://172.236.2.18:6010/requests/${requestId}/approve`, {
+        method: 'PATCH',
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Failed to approve request:', errorData);
+        setNotification('Failed to approve request');
+        setTimeout(() => setNotification(''), 3000);
+        return;
+      }
+
+      setNotification('Request approved successfully');
+      setTimeout(() => setNotification(''), 3000);
+
+      // Update the request status using the updated array
+      const updatedRequests = requests.map((request) =>
+        request.id === requestId ? { ...request, status: 'Approved' } : request
+      );
+      setRequests(updatedRequests);
+
+      // Find the approved request in the updated list
+      const updatedRequest = updatedRequests.find((request) => request.id === requestId);
+      if (!updatedRequest) {
+        setNotification('Request not found');
+        setTimeout(() => setNotification(''), 3000);
+        return;
+      }
+
+      // Navigate to the AssignRequests page, passing the approved request via state
+      navigate('/assignRequests', { state: { selectedRequest: updatedRequest } });
+    } catch (error) {
+      console.error('Error approving request:', error);
+      setNotification('Error approving request');
+      setTimeout(() => setNotification(''), 3000);
+    }
+  };
+
+  const rejectRequest = async (requestId) => {
+    try {
+      const response = await fetch(`http://172.236.2.18:6010/requests/${requestId}/reject`, {
+        method: 'PATCH',
       });
 
       if (response.ok) {
-        setNotification('Asset successfully assigned');
+        setNotification('Request rejected successfully');
         setTimeout(() => setNotification(''), 3000);
 
-      
-        const updatedAssets = assets.map((asset) =>
-          asset.id === selectedRequest.asset_id
-            ? { ...asset, status: 'Assigned', location_id: locationId }
-            : asset
-        );
-        setAssets(updatedAssets);
-        setFilteredAssets(updatedAssets);
-
-     
-        const updatedRequests = requests.filter(
-          (request) => request.asset_id !== selectedRequest.asset_id
+        const updatedRequests = requests.map((request) =>
+          request.id === requestId ? { ...request, status: 'Rejected' } : request
         );
         setRequests(updatedRequests);
-
-        setShowAssignmentForm(false);
-        setSelectedRequest(null);
-        setLocationId('');
-        setReturnDate('');
       } else {
-        setNotification('Failed to assign asset');
+        const errorData = await response.json();
+        console.error('Failed to reject request:', errorData);
+        setNotification('Failed to reject request');
         setTimeout(() => setNotification(''), 3000);
       }
     } catch (error) {
-      console.error('Error assigning asset:', error);
-      setNotification('Error assigning asset');
+      console.error('Error rejecting request:', error);
+      setNotification('Error rejecting request');
       setTimeout(() => setNotification(''), 3000);
     }
   };
@@ -194,9 +193,7 @@ const RequestsPage = () => {
         <h1 className="text-2xl font-semibold mb-4">REQUESTS</h1>
 
         {notification && (
-          <div className="bg-green-100 text-green-800 p-2 rounded mb-4">
-            {notification}
-          </div>
+          <div className="bg-green-100 text-green-800 p-2 rounded mb-4">{notification}</div>
         )}
 
         <div className="mb-4 flex justify-end">
@@ -216,125 +213,125 @@ const RequestsPage = () => {
         </div>
 
         {showFilter && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-end">
-    <div className={`bg-white p-6 shadow-lg relative overflow-y-auto ${locations.length > 10 || itemTypes.length > 10 ? 'w-3/4 h-3/4' : 'w-1/4 h-full'}`} style={{ maxHeight: '90vh', minWidth: '300px', maxWidth: '90vw' }}>
-      
-      <h2 className="text-2xl font-semibold mb-4 flex justify-between items-center text-[#FF6B35]">
-        Filter 
-        <button
-          className="text-xl text-[#FF6B35]"
-          onClick={() => setShowFilter(false)}
-        >
-          <IoClose />
-        </button>
-      </h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        
-        {/* Locations */}
-        <div>
-          <label className="block mb-2 font-semibold text-[#FF6B35]">Location</label>
-          <div className="grid grid-cols-1 gap-2">
-            {locations.length > 0 ? (
-              locations.map((location) => (
-                <div key={location.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    className="mr-2"
-                    checked={selectedLocations.includes(location.name)}
-                    onChange={() => toggleLocation(location.name)}
-                  />
-                  <label className="break-words">{location.name}</label>
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-end">
+            <div
+              className={`bg-white p-6 shadow-lg relative overflow-y-auto ${
+                locations.length > 10 || itemTypes.length > 10 ? 'w-3/4 h-3/4' : 'w-1/4 h-full'
+              }`}
+              style={{ maxHeight: '90vh', minWidth: '300px', maxWidth: '90vw' }}
+            >
+              <h2 className="text-2xl font-semibold mb-4 flex justify-between items-center text-[#FF6B35]">
+                Filter
+                <button className="text-xl text-[#FF6B35]" onClick={() => setShowFilter(false)}>
+                  <IoClose />
+                </button>
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div>
+                  <label className="block mb-2 font-semibold text-[#FF6B35]">Location</label>
+                  <div className="grid grid-cols-1 gap-2">
+                    {locations.length > 0 ? (
+                      locations.map((location) => (
+                        <div key={location.id} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            className="mr-2"
+                            checked={selectedLocations.includes(location.name)}
+                            onChange={() => toggleLocation(location.name)}
+                          />
+                          <label className="break-words">{location.name}</label>
+                        </div>
+                      ))
+                    ) : (
+                      <p>Loading locations...</p>
+                    )}
+                  </div>
                 </div>
-              ))
-            ) : (
-              <p>Loading locations...</p>
-            )}
-          </div>
-        </div>
-
-        {/* Type */}
-        <div>
-          <label className="block mb-2 font-semibold text-[#FF6B35]">Type</label>
-          <div className="grid grid-cols-1 gap-2">
-            {itemTypes.map((type) => (
-              <div key={type} className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  checked={selectedTypes.includes(type)}
-                  onChange={() => toggleType(type)}
-                />
-                <label className="break-words">{type}</label>
+                <div>
+                  <label className="block mb-2 font-semibold text-[#FF6B35]">Type</label>
+                  <div className="grid grid-cols-1 gap-2">
+                    {itemTypes.map((type) => (
+                      <div key={type} className="flex items-center">
+                        <input
+                          type="checkbox"
+                          className="mr-2"
+                          checked={selectedTypes.includes(type)}
+                          onChange={() => toggleType(type)}
+                        />
+                        <label className="break-words">{type}</label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="block mb-2 font-semibold text-[#FF6B35]">Purchase Date</label>
+                  <input
+                    type="date"
+                    className="w-full p-2 border border-[#FF6B35] rounded focus:ring-[#FF6B35] focus:outline-none"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 font-semibold text-[#FF6B35]">Status</label>
+                  <div className="grid grid-cols-1 gap-2">
+                    {statuses.map((status) => (
+                      <div key={status} className="flex items-center">
+                        <input
+                          type="checkbox"
+                          className="mr-2"
+                          checked={selectedStatus.includes(status)}
+                          onChange={() => toggleStatus(status)}
+                        />
+                        <label className="break-words">{status}</label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            ))}
+              <button
+                className="mt-4 bg-[#FF6B35] text-white px-4 py-2 rounded w-full hover:bg-[#FF6B35]/80 transition"
+                onClick={() => setShowFilter(false)}
+              >
+                Apply Filters
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Purchase Date */}
-        <div>
-          <label className="block mb-2 font-semibold text-[#FF6B35]">Purchase Date</label>
-          <input
-            type="date"
-            className="w-full p-2 border border-[#FF6B35] rounded focus:ring-[#FF6B35] focus:outline-none"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-          />
-        </div>
-
-        {/* Status */}
-        <div>
-          <label className="block mb-2 font-semibold text-[#FF6B35]">Status</label>
-          <div className="grid grid-cols-1 gap-2">
-            {statuses.map((status) => (
-              <div key={status} className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  checked={selectedStatus.includes(status)}
-                  onChange={() => toggleStatus(status)}
-                />
-                <label className="break-words">{status}</label>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <button
-        className="mt-4 bg-[#FF6B35] text-white px-4 py-2 rounded w-full hover:bg-[#FF6B35]/80 transition"
-        onClick={() => setShowFilter(false)}
-      >
-        Apply Filters
-      </button>
-    </div>
-  </div>
-)}
-
-        {/* Requests Section */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4">Assignment Requests</h2>
           <table className="w-full text-left border-collapse">
             <thead>
               <tr>
                 <th className="border-b p-2">ITEM</th>
-                <th className="border-b p-2">ASSIGNED TO</th>
-                <th className="border-b p-2">ASSIGNMENT DATE</th>
+                <th className="border-b p-2">ASSET NAME</th>
+                <th className="border-b p-2">REQUESTED BY</th>
+                <th className="border-b p-2">REQUESTED AT</th>
+                <th className="border-b p-2">STATUS</th>
                 <th className="border-b p-2">ACTION</th>
               </tr>
             </thead>
             <tbody>
               {requests.map((request) => (
-                <tr key={request.asset_id}>
-                  <td className="border-b p-2">{request.item}</td>
-                  <td className="border-b p-2">{request.assigned_to}</td>
-                  <td className="border-b p-2">{request.assignment_date}</td>
+                <tr key={`${request.id}-${request.asset_id}`}>
+                  <td className="border-b p-2">{request.asset_id}</td>
+                  <td className="border-b p-2">{request.asset_name}</td>
+                  <td className="border-b p-2">{request.user_name}</td>
+                  <td className="border-b p-2">{request.requested_at}</td>
+                  <td className="border-b p-2">{request.status}</td>
                   <td className="border-b p-2">
                     <button
-                      className="bg-indigo-600 text-white px-4 py-1 rounded"
-                      onClick={() => handleRequestSelection(request)}
+                      className="bg-green-600 text-white px-4 py-1 rounded mr-2"
+                      onClick={() => approveRequest(request.id)}
                     >
-                      Assign
+                      Approve
+                    </button>
+                    <button
+                      className="bg-red-600 text-white px-4 py-1 rounded"
+                      onClick={() => rejectRequest(request.id)}
+                    >
+                      Reject
                     </button>
                   </td>
                 </tr>
@@ -342,81 +339,6 @@ const RequestsPage = () => {
             </tbody>
           </table>
         </div>
-
-        {/* Assignment Form */}
-        {showAssignmentForm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-lg w-1/3">
-              <h2 className="text-xl font-bold mb-4">Assign Asset</h2>
-              <div className="mb-4">
-                <label className="block mb-2 font-semibold">Location</label>
-                <select
-                  className="w-full p-2 border rounded"
-                  value={locationId}
-                  onChange={(e) => setLocationId(e.target.value)}
-                >
-                  <option value="">Select Location</option>
-                  {locations.map((location) => (
-                    <option key={location.id} value={location.id}>
-                      {location.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="mb-4">
-                <label className="block mb-2 font-semibold">Return Date</label>
-                <input
-                  type="date"
-                  className="w-full p-2 border rounded"
-                  value={returnDate}
-                  onChange={(e) => setReturnDate(e.target.value)}
-                />
-              </div>
-              <div className="flex justify-end">
-                <button
-                  className="bg-gray-300 text-black px-4 py-2 rounded mr-2"
-                  onClick={() => setShowAssignmentForm(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="bg-indigo-600 text-white px-4 py-2 rounded"
-                  onClick={handleAssignment}
-                >
-                  Assign
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Assets Table */}
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr>
-              <th className="border-b p-2">ITEM</th>
-              <th className="border-b p-2">SPECIFICATIONS</th>
-              <th className="border-b p-2">SERIAL NO</th>
-              <th className="border-b p-2">PURCHASE DATE</th>
-              <th className="border-b p-2">STATUS</th>
-              <th className="border-b p-2">LOCATION</th>
-              <th className="border-b p-2">ASSIGNED TO</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredAssets.map((asset) => (
-              <tr key={asset.id}>
-                <td className="border-b p-2">{asset.item}</td>
-                <td className="border-b p-2">{asset.specifications}</td>
-                <td className="border-b p-2">{asset.serial_no}</td>
-                <td className="border-b p-2">{asset.purchase_date}</td>
-                <td className="border-b p-2">{asset.status}</td>
-                <td className="border-b p-2">{asset.location_name}</td>
-                <td className="border-b p-2">{asset.assigned_to}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </Navigation>
   );
