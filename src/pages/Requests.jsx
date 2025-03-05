@@ -22,7 +22,6 @@ const RequestsPage = () => {
   const [locationId, setLocationId] = useState(''); 
   const [returnDate, setReturnDate] = useState(''); 
 
-  const buttonClass = "bg-[#FF6B35] text-white px-4 py-2 rounded hover:bg-[#e65a2c] transition";
 
 
   useEffect(() => {
