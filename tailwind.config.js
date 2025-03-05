@@ -43,8 +43,7 @@ export default {
 			DEFAULT: 'hsl(var(--destructive))',
 			foreground: 'hsl(var(--destructive-foreground))',
 		  },
-		  // Renamed from "border" to "customBorder" to avoid conflict:
-		  customBorder: 'hsl(var(--border))',
+		  customBorder: 'hsl(var(--border))', // Custom border color
 		  input: 'hsl(var(--input))',
 		  ring: 'hsl(var(--ring))',
 		  chart: {
@@ -55,8 +54,11 @@ export default {
 			'5': 'hsl(var(--chart-5))',
 		  },
 		},
+		borderColor: {
+		  DEFAULT: 'hsl(var(--border))', // Add this line to use customBorder as the default border color
+		},
+	   
 	  },
 	},
 	plugins: [require("tailwindcss-animate")],
   };
-  

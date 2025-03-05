@@ -302,7 +302,7 @@ button:focus-visible {
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border outline-ring/50; /* Use 'border' instead of 'border-customBorder' */
   }
   body {
     @apply bg-background text-foreground;
