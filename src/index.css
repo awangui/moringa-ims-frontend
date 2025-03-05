@@ -86,7 +86,7 @@ button:focus-visible {
 
 
 
-:root {
+/* :root {
   --border: 214.3 31.8% 91.4%;
 }
 
@@ -302,9 +302,9 @@ button:focus-visible {
 
 @layer base {
   * {
-    @apply border outline-ring/50; /* Use 'border' instead of 'border-customBorder' */
+    @apply border outline-ring/50; 
   }
   body {
     @apply bg-background text-foreground;
   }
-}
+} */

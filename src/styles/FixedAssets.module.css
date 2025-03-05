@@ -146,7 +146,7 @@ header span{
     /* position: relative; */
 }
 
-header span:hover{
+header span:hover, #table-body tr:hover{
     color: #E38E49;
 }
 
@@ -199,7 +199,8 @@ header span:hover{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     width: 50%;
-    height: 70%;
+    /* height: 70%; */
+    height: 75%;
     position: relative;
 }
 .close-btn {

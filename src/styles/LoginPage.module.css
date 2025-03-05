@@ -170,3 +170,71 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
 }
+
+/* form  i{
+    position: absolute;
+    right: 15px;
+    top: 70%;
+    color: #ccc;
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+
+form  i.active::before{
+    color: #333;
+    content: "\f070";
+} */
+
+/* .input-container {
+    position: relative;
+    width: 100%;
+}
+
+.input-container input {
+    width: 100%;
+    padding-right: 40px;  
+}
+
+.input-container i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #E38E49;
+    cursor: pointer;
+}
+
+.input-container i.active::before{
+    color: #333;
+    content: "\f070";
+  } */
+
+/* .input-container i:hover {
+    color: #333;
+} */
+
+/* New container for password input and icon */
+.passwordContainer {
+    position: relative;
+  }
+  
+  .passwordContainer input {
+    width: 100%;
+    padding-right: 40px; /* space for the icon */
+  }
+  
+  .passwordContainer i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #ccc;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  /* Optional: Hover effect for the icon */
+  .passwordContainer i:hover {
+    color: #333;
+  }

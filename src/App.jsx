@@ -18,50 +18,106 @@ import CreateOrderPage from './pages/CreateOrderPage';
 import CreateOrderStep2 from './pages/CreateOrderStep2';
 import { ChooseItems, ChooseVendor,  OrderDetails, OrderCharges, OrderReview } from './pages/CreateOrderStep3';
 
+import Login from './pages/Login';
+import ProtectedRoute from './components/ProtectedRoute';
+import FixedAssets from './pages/FixedAssets';
+import AssetDetails from './pages/AssetDetails';
+import Dashboard from './pages/Dashboard';
+
 function App() {
   const [spaces, setSpaces] = useState([]);
 
   return (
+    <>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigation><h1>Welcome to the Dashboard</h1></Navigation>} />
-          <Route path="/spaces" element={<SpacesPage spaces={spaces} setSpaces={setSpaces} />} />
-          <Route path="/editSpace/:id" element={<EditSpace spaces={spaces} setSpaces={setSpaces} />} />
-          <Route path="/ViewRoom/:id" element={<ViewRoom spaces={spaces} setSpaces={setSpaces} />} />
-          <Route path="/AddRoom" element={<AddRoom spaces={spaces} setSpaces={setSpaces}/>} />
-          <Route path="/requests" element={<RequestsPage/>} />
-          <Route path="/vendors" element={<Vendors />} />
-          <Route path="/vendors/create-vendor" element={<MultiStepForm />} />
-          <Route path="/vendors/:id" element={<ViewVendor />} />
-          <Route path="/vendors/edit/:id" element={<EditVendor />} />
-          <Route path="/vendors/:id/documents" element={<UploadDocuments />} />
+          <Route path="/login" element={<Login />} />
+          <Route element={<ProtectedRoute />}>
+              {/* <Route path="/" element={<Navigation><h1>Welcome to the Dashboard</h1></Navigation>} /> */}
+              <Route path="/" element={<Dashboard/>} />
+              <Route path="/spaces" element={<SpacesPage spaces={spaces} setSpaces={setSpaces} />} />
+              <Route path="/editSpace/:id" element={<EditSpace spaces={spaces} setSpaces={setSpaces} />} />
+              <Route path="/ViewRoom/:id" element={<ViewRoom spaces={spaces} setSpaces={setSpaces} />} />
+              <Route path="/AddRoom" element={<AddRoom spaces={spaces} setSpaces={setSpaces}/>} />
+              <Route path="/requests" element={<RequestsPage/>} />
+              <Route path="/vendors" element={<Vendors />} />
+              <Route path="/vendors/create-vendor" element={<MultiStepForm />} />
+              <Route path="/vendors/:id" element={<ViewVendor />} />
+              <Route path="/vendors/edit/:id" element={<EditVendor />} />
+              <Route path="/vendors/:id/documents" element={<UploadDocuments />} />
 
+              {/* Orders List & View */}
+              <Route path="/orders" element={<OrdersList />} />
+              <Route path="/orders/:orderId" element={<ViewOrder />} />
 
-          {/* Orders List & View */}
-          <Route path="/orders" element={<OrdersList />} />
-          <Route path="/orders/:orderId" element={<ViewOrder />} />
+              {/* Order Creation Flow */}
+              <Route path="/create-order" element={<CreateOrderPage />} />
+              <Route path="/create-order/step1" element={<CreateOrderPage />} />
+              <Route path="/create-order/step2" element={<CreateOrderStep2 />} />
 
-          {/* Order Creation Flow */}
-          <Route path="/create-order" element={<CreateOrderPage />} />
-          <Route path="/create-order/step1" element={<CreateOrderPage />} />
-          <Route path="/create-order/step2" element={<CreateOrderStep2 />} />
+              {/* Step 3 - Order Configuration */}
+              <Route path="/create-order/step3" element={<Navigate to="/create-order/step3/items" replace />} />
+              <Route path="/create-order/step3/items" element={<ChooseItems />} />
+              <Route path="/create-order/step3/vendor" element={<ChooseVendor />} /> {/*  New Step Added */}
+              {/* <Route path="/create-order/step3/space" element={<ChooseSpace />} /> */}
+              <Route path="/create-order/step3/details" element={<OrderDetails />} />
+              <Route path="/create-order/step3/charges" element={<OrderCharges />} />
+              <Route path="/create-order/step3/review" element={<OrderReview />} />
 
-          {/* Step 3 - Order Configuration */}
-          <Route path="/create-order/step3" element={<Navigate to="/create-order/step3/items" replace />} />
-          <Route path="/create-order/step3/items" element={<ChooseItems />} />
-          <Route path="/create-order/step3/vendor" element={<ChooseVendor />} /> {/*  New Step Added */}
-          {/* <Route path="/create-order/step3/space" element={<ChooseSpace />} /> */}
-          <Route path="/create-order/step3/details" element={<OrderDetails />} />
-          <Route path="/create-order/step3/charges" element={<OrderCharges />} />
-          <Route path="/create-order/step3/review" element={<OrderReview />} />
+              {/* Fixed Assets */}
+              <Route path="/items" element={<FixedAssets/>} />
+              <Route path="/asset-details/:assetId" element={<AssetDetails/>} />
 
-          {/* Default & Catch-All Routes */}
-          <Route path="/" element={<Navigate to="/orders" replace />} />
-          <Route path="*" element={<Navigate to="/orders" replace />} />
-
+              {/* Default & Catch-All Routes */}
+              {/* <Route path="/" element={<Navigate to="/orders" replace />} />
+              <Route path="*" element={<Navigate to="/orders" replace />} /> */}
           
+          </Route>
         </Routes>
       </Router>
+    </>
+    // <Router>
+      //   <Routes>
+      //     <Route path="/" element={<Navigation><h1>Welcome to the Dashboard</h1></Navigation>} />
+      //     <Route path="/spaces" element={<SpacesPage spaces={spaces} setSpaces={setSpaces} />} />
+      //     <Route path="/editSpace/:id" element={<EditSpace spaces={spaces} setSpaces={setSpaces} />} />
+      //     <Route path="/ViewRoom/:id" element={<ViewRoom spaces={spaces} setSpaces={setSpaces} />} />
+      //     <Route path="/AddRoom" element={<AddRoom spaces={spaces} setSpaces={setSpaces}/>} />
+      //     <Route path="/requests" element={<RequestsPage/>} />
+      //     <Route path="/vendors" element={<Vendors />} />
+      //     <Route path="/vendors/create-vendor" element={<MultiStepForm />} />
+      //     <Route path="/vendors/:id" element={<ViewVendor />} />
+      //     <Route path="/vendors/edit/:id" element={<EditVendor />} />
+      //     <Route path="/vendors/:id/documents" element={<UploadDocuments />} />
+
+
+      //     {/* Orders List & View */}
+      //     <Route path="/orders" element={<OrdersList />} />
+      //     <Route path="/orders/:orderId" element={<ViewOrder />} />
+
+      //     {/* Order Creation Flow */}
+      //     <Route path="/create-order" element={<CreateOrderPage />} />
+      //     <Route path="/create-order/step1" element={<CreateOrderPage />} />
+      //     <Route path="/create-order/step2" element={<CreateOrderStep2 />} />
+
+      //     {/* Step 3 - Order Configuration */}
+      //     <Route path="/create-order/step3" element={<Navigate to="/create-order/step3/items" replace />} />
+      //     <Route path="/create-order/step3/items" element={<ChooseItems />} />
+      //     <Route path="/create-order/step3/vendor" element={<ChooseVendor />} /> {/*  New Step Added */}
+      //     {/* <Route path="/create-order/step3/space" element={<ChooseSpace />} /> */}
+      //     <Route path="/create-order/step3/details" element={<OrderDetails />} />
+      //     <Route path="/create-order/step3/charges" element={<OrderCharges />} />
+      //     <Route path="/create-order/step3/review" element={<OrderReview />} />
+
+      //     {/* Default & Catch-All Routes */}
+      //     {/*
+      //       <Route path="/" element={<Navigate to="/orders" replace />} />
+      //       <Route path="*" element={<Navigate to="/orders" replace />} />
+      //     */}
+
+          
+      //   </Routes>
+      // </Router>
   );
 }
 
