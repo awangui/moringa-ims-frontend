@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import vendorImage from "../assets/vendor.svg";
 import locationImage from "../assets/location.svg";
+import  profileImage from "../assets/profile.svg";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import { FaTrash } from "react-icons/fa";
 import { FaDownload } from "react-icons/fa";
+import paymentImage from "../assets/credit-card.svg";
 
 const ViewVendor = () => {
   const { id } = useParams();
@@ -43,6 +45,7 @@ const ViewVendor = () => {
                 <h3>{vendor.name}</h3>
               </div>
               <div>
+                <h3 className="label">Status</h3>
                 <span
                   className={`status-badge ${
                     vendor.is_active ? "activated" : "deactivated"
@@ -71,10 +74,10 @@ const ViewVendor = () => {
           </div>
 
           {/* Address, Contact, Payment */}
-          <div className="row vendor-section">
-            <div className="location-section-box col col-lg-4">
-              <div>
-                <h3>Vendor Address</h3>
+          <div className="vendor-section">
+            <div className="section-box">
+              <div className="image-box">
+                <h2 style={{ fontSize: "16px", fontWeight: "bold" }}>Vendor Address</h2>
                 <img
                   src={locationImage}
                   alt="Location"
@@ -98,28 +101,37 @@ const ViewVendor = () => {
                 <strong>Postal Code</strong> {vendor.postal_code}
               </p>
             </div>
-            <div className="section-box col-md-auto">
-              <h4>Contact Person</h4>
-              <p><strong>Name:</strong> {vendor.contact_person_name}</p>
-              <p><strong>Email:</strong> {vendor.contact_person_email}</p>
-              <p><strong>Phone:</strong> {vendor.contact_person_phone}</p>
+            <div className="payments-details">
+            <div className="section-box">
+              <div className="image-box">
+              <h2 style={{ fontSize: "16px", fontWeight: "bold" }}>Contact Person</h2>
+              <img src={profileImage} alt="Contact" className="profile-image" />
+              </div>
+              <p><strong>Name</strong> {vendor.contact_person_name}</p>
+              <p><strong>Email</strong> {vendor.contact_person_email}</p>
+              <p><strong>Phone</strong> {vendor.contact_person_phone}</p>
             </div>
-            <div className="section-box col col-lg-2">
-              <h4>Payment Details</h4>
+            <div className="section-box">
+            <div className="image-box">
+            <h2 style={{ fontSize: "16px", fontWeight: "bold" }}>Payment Details</h2>
+              <img src={paymentImage} alt="Payment" className="payment-image" />
+              </div>
               <p>
-                <strong>Bank Name:</strong> {vendor.bank_name}
+                <strong>Bank Name</strong> {vendor.bank_name}
               </p>
               <p>
-                <strong>Account Number:</strong> {vendor.account_number}
+                <strong>Account Number</strong> {vendor.account_number}
               </p>
               <p>
-                <strong>MPESAPaybill:</strong> {vendor.mpesa_paybill}
+                <strong>MPESAPaybill</strong> {vendor.mpesa_paybill}
               </p>
               <p>
-                <strong>Buy Goods Till:</strong> {vendor.buy_goods_till}
+                <strong>Buy Goods Till</strong> {vendor.buy_goods_till}
               </p>
             </div>
           </div>
+          </div>
+
 
           <div style={{ padding: "24px" }}></div>
           <div
@@ -175,7 +187,7 @@ const ViewVendor = () => {
             </table>
           </div>
           <div className="purchase-orders-section">
-            <h2>Vendor Purchase Orders</h2>
+            <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>Vendor Purchase Orders</h2>
             <div>
               <button onClick={() => setActiveTab("all")}>All</button>
               <button onClick={() => setActiveTab("pending")}>Pending</button>
