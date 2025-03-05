@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Navigation from '../components/Navigation';
 
 const Team = () => {
   const [teamMembers, setTeamMembers] = useState([]);
@@ -148,6 +149,7 @@ const Team = () => {
   );
 
   return (
+    <Navigation>
     <div className="container mx-auto p-4">
       <div className="flex justify-between mb-4">
         <h2 className="text-2xl text-orange-500">Team</h2>
@@ -237,6 +239,7 @@ const Team = () => {
         </div>
       )}
     </div>
+    </Navigation>
   );
 };
 

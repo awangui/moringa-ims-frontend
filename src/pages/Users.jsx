@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import userImage from '../assets/user.jpg'; // Correct import path to the JPG file
+import Navigation from "../components/Navigation";
 
 const Users = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -101,6 +102,7 @@ const Users = () => {
   };
 
   return (
+    <Navigation>
     <div className="max-w-2xl mx-auto p-5">
       <h1 className="text-2xl font-bold mb-5">Users</h1>
       <div className="bg-gray-100 rounded-lg shadow-md p-5 text-center relative">
@@ -291,6 +293,7 @@ const Users = () => {
         </div>
       )}
     </div>
+    </Navigation>
   );
 };
 
