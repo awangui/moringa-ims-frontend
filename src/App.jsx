@@ -1,9 +1,9 @@
+
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import MultiStepForm from './components/Vendors-form/Multiform';
 import Vendors from './pages/Vendors';
-import { VendorProvider } from './pages/VendorContext';
 import ViewVendor from './components/ViewVendor';
 import EditVendor from './components/EditVendor';
 import UploadDocuments from './components/UploadDocuments';
@@ -17,6 +17,9 @@ import { OrdersList, ViewOrder } from './pages/OrdersPage';
 import CreateOrderPage from './pages/CreateOrderPage';
 import CreateOrderStep2 from './pages/CreateOrderStep2';
 import { ChooseItems, ChooseVendor, OrderDetails, OrderCharges, OrderReview } from './pages/CreateOrderStep3';
+import Team from './pages/Team'; // Import Team
+import Users from './pages/Users'; // Import Users
+import Returns from './pages/Returns'; // Import Returns
 
 function App() {
   const [spaces, setSpaces] = useState([]);
@@ -53,8 +56,13 @@ function App() {
           <Route path="/create-order/step3/charges" element={<OrderCharges />} />
           <Route path="/create-order/step3/review" element={<OrderReview />} />
 
+          {/* New Routes for Team, Users, and Returns */}
+          <Route path="/team" element={<Team />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/returns" element={<Returns />} />
+
           {/* Default & Catch-All Routes */}
-          <Route path="/" element={<Navigate to="/orders" replace />} />
+          <Route path="/" element={<Navigate to="/vendors" replace />} />
           <Route path="*" element={<Navigate to="/orders" replace />} />
         </Routes>
       </Router>
