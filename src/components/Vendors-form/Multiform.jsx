@@ -32,6 +32,9 @@ const MultiStepForm = () => {
     accountNumber: "",
     mpesaPaybill: "",
     buyGoodsTill: "",
+    contactPersonName: "",
+    contactPersonEmail: "",
+    contactPersonPhone: "",
   });
 
   const nextStep = () => setStep((prevStep) => prevStep + 1);

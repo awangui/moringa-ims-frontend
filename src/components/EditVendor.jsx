@@ -85,7 +85,7 @@ const EditVendor = () => {
 
   return (
     <Navigation>
-      <div className="editVendor">
+      <div className="vendor-card">
         <h3 className="page-title" style={{ padding: "40px" }}>
           Edit Vendor {formData.name}
         </h3>

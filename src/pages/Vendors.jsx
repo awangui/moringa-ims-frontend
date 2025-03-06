@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Vendors.css";
+import "../styles/Vendors.css";
 import Navigation from "../components/Navigation";
 
 const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, vendorName }) => {
@@ -94,8 +94,8 @@ const Vendors = () => {
   return (
     <Navigation>
       <div className="vendors">
+      <h3 className="vendors-page-title">Vendors</h3>
         <div className="filterBar">
-          <h3 className="page-title">Vendors</h3>
           <div className="search-bar">
             <input
               type="text"
@@ -106,6 +106,7 @@ const Vendors = () => {
             />
           </div>
           <div className="filter-tabs">
+            <h3 style={{color:"#0f0133"}}>Filter By Status</h3>
             <button className={`tab-btn ${statusFilter === "all" ? "active" : ""}`} onClick={() => handleTabChange("all")}>All</button>
             <button className={`tab-btn ${statusFilter === "true" ? "active" : ""}`} onClick={() => handleTabChange("true")}>Activated</button>
             <button className={`tab-btn ${statusFilter === "false" ? "active" : ""}`} onClick={() => handleTabChange("false")}>Deactivated</button>

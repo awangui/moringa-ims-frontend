@@ -10,8 +10,7 @@ const Confirmation = ({ prevStep, values }) => {
     e.preventDefault();
   
     try {
-      console.log("Submitting values:", values);
-      const formattedValues = {
+      const formValues = {
         name: values.name,
         email: values.email,
         phone: values.phone,
@@ -37,11 +36,11 @@ const Confirmation = ({ prevStep, values }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formattedValues),
+        body: JSON.stringify(formValues),
       });
   
       if (!response.ok) {
-        let errorMessage = "Failed to add vendor.";
+        let errorMessage = "Failed to add vendor.";//default error message
         try {
           const errorData = await response.json();
           errorMessage = errorData.error || errorMessage;

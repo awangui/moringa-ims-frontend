@@ -5,10 +5,17 @@
   color: #ff6600;
   font-size: 24px;
 }
+.vendors-page-title{
+  margin: 20px 0;
+  text-align: left;
+  color: #ff6600;
+  font-size: 26px;
+  margin-left: 150px;
+}
 
 .btn,
 .vendorForm button,
-.add-document-btn {
+.add-document-btn{
   background-color: #0f0133;
   color: #f6f6f6;
   padding: 10px 20px;
@@ -17,6 +24,9 @@
   text-align: center;
   display: block;
   margin: 20px auto;
+}
+.add-document-btn{
+  display: inline-block;
 }
 
 .btn:hover,
@@ -118,8 +128,10 @@
 }
 
 .add-btn {
-  background: #0f0133;
+  background-color: #0f0133;
   color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
 }
 
 .status-badge {
@@ -176,6 +188,7 @@
   margin: 10px 40px;
   margin-left: 0;
   padding: 10px;
+  border-radius: 4px;
 }
 
 .filter-tabs button.active {
@@ -195,8 +208,10 @@
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
+.vendors{
+  margin-top:80px;
+}
 
-.vendors,
 .multiStepForm {
   width: 90%;
   margin: 0 auto;
@@ -207,6 +222,8 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  width: 95%;
 }
 
 .vendor-header {
@@ -214,30 +231,65 @@
   align-items: center;
   gap: 40px;
   margin-bottom: 20px;
+  background: #ffffff;
+  border: 1px solid #f6f6f6;
+  padding: 20px;
+
 }
 
 .vendor-image {
-  width: 400px;
-  height: 400px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .vendor-info h3 {
   margin: 0;
 }
 
-.vendor-details {
+.vendor-info .label {
+  font-size: 14px;
+  color: #6a6868;
+  margin-bottom: 5px;
+}
+
+.vendor-details,
+.vendor-section {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 20px;
 }
 
-.detail-box {
+.detail-box,
+.section-box {
   flex: 1;
   background: #f8f9fa;
-  padding: 10px;
+  padding: 20px;
   border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.section-box{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.image-box{
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+}
+.image-box h2{
+  font-size: 20px;
+  margin:auto;
+}
+.location-image,
+.profile-image,
+.payment-image {
+  border-radius: 4px;
+  width: 150px;
+  height: 150px;
 }
 
 .full-width {
@@ -246,8 +298,12 @@
 
 .vendor-documents {
   margin-top: 20px;
+  background-color: #f6f6f6;
+  padding: 20px;
 }
-
+.vendor-docs{
+  width: 100%;
+}
 .add-document-btn {
   padding: 8px 12px;
   border-radius: 4px;
@@ -267,40 +323,20 @@
   padding: 5px;
 }
 
-.location-image,
-.profile-image,
-.payment-image {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-}
-
-.section-box {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.vendor-section {
- display: grid;
- grid-template-columns: 1fr 1fr;
-}
-
-.vendor-section strong {
-  text-transform: uppercase;
-  display: block;
-  color: #6a6868;
-  font-weight: 400;
-}
 
 .vendor-container {
   margin: 0 40px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .vendor-title {
   color: #0f0133;
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
   padding: 40px;
 }
 
@@ -314,4 +350,97 @@
 .label {
   text-transform: uppercase;
   color: #6a6868;
+}
+
+.purchase-orders-section {
+  margin-top: 40px;
+}
+
+.purchase-orders-section h2 {
+  text-align: center;
+  color: #ff885e;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.purchase-orders-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.purchase-orders-section th,
+.purchase-orders-section td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.purchase-orders-section th {
+  background-color: #f8f9fa;
+  color: #0f0133;
+}
+
+.purchase-orders-section tr:nth-child(even) {
+  background-color: #f3f3f3;
+}
+
+.purchase-orders-section tr:hover {
+  background-color: #f1f1f1;
+}
+
+.vendor-documents h2 {
+  font-size: 20px;
+  color: #0f0133;
+}
+
+.vendor-documents table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.vendor-documents th,
+.vendor-documents td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.vendor-documents thead {
+  background-color: #f6f6f6;
+}
+.vendor-documents tr{
+  background-color: #ffffff;
+}
+
+.vendor-documents tr:hover {
+  background-color: #f1f1f1;
+}
+
+.download-btn,
+.delete-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.download-btn {
+color: #0f0133;
+}
+
+.download-btn:hover {
+color: #ff885e;
+}
+
+.delete-btn {
+ color: #ef3939;
+}
+
+.delete-btn:hover {
+color: #d32f2f;
 }
