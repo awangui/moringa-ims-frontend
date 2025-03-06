@@ -1,19 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import {
-  FaThLarge,
-  FaUser,
-  FaClipboardList,
-  FaBox,
-  FaEnvelope,
-  FaUsers,
-  FaCog,
-  FaBars,
-  FaSignOutAlt,
-  FaBuilding,
-  FaUndoAlt,
-  FaUserFriends,
-  FaSpinner,
+  FaThLarge, FaUser, FaClipboardList, FaBox, FaEnvelope, FaUsers,
+  FaCog, FaBars, FaSignOutAlt, FaBuilding, FaUndoAlt, FaUserFriends, FaSpinner
 } from 'react-icons/fa';
 
 function Navigation({ children }) {
@@ -66,13 +55,11 @@ function Navigation({ children }) {
           {menuItems.map((item) => (
             <Link to={item.path} key={item.name} className="no-underline">
               <li
-                className={`menu-item flex items-center p-3 rounded-md transition-colors duration-200 ${
-                  isCollapsed ? 'justify-center' : 'space-x-3'
-                } ${
+                className={`menu-item flex items-center p-3 rounded-md transition-colors duration-200 gap-4 ${
                   location.pathname === item.path
                     ? 'bg-[#0D2240] text-white'
                     : 'text-[#0D2240] hover:bg-[#FF6B35] hover:text-white'
-                }`}
+                } ${isCollapsed ? 'justify-center' : ''}`}
               >
                 <item.icon className="text-lg" />
                 {!isCollapsed && <span className="text-sm font-medium">{item.name}</span>}
@@ -81,16 +68,15 @@ function Navigation({ children }) {
           ))}
         </ul>
 
-
         {/* Profile */}
-        <div className={`profile mt-8 flex items-center p-3 rounded-lg bg-gray-50 shadow-sm text-[#0D2240] ${isCollapsed ? 'justify-center' : 'space-x-4'}`}>
+        <div className={`profile mt-8 flex items-center p-3 rounded-lg bg-gray-50 shadow-sm text-[#0D2240] gap-4 ${isCollapsed ? 'justify-center' : ''}`}>
           <div className="p-2 bg-[#0D2240] rounded-full">
             <FaUser className="text-xl text-white" />
           </div>
           {!isCollapsed && (
             <div>
               {profile.name === 'Loading...' ? (
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-2">
                   <FaSpinner className="animate-spin text-xs text-gray-500" />
                   <span className="text-xs font-medium text-gray-500">Loading...</span>
                 </div>
@@ -105,19 +91,19 @@ function Navigation({ children }) {
         </div>
 
         {/* Settings & Logout */}
-        <div className={`settings mt-4 flex items-center cursor-pointer ${isCollapsed ? 'justify-center' : 'space-x-3'}`}>
+        <div className={`settings mt-4 flex items-center cursor-pointer gap-4 ${isCollapsed ? 'justify-center' : ''}`}>
           <FaCog className="text-lg text-[#0D2240] hover:text-[#FF6B35] transition-colors duration-200" />
           {!isCollapsed && <span className="text-sm font-medium text-[#0D2240] hover:text-[#FF6B35] transition-colors duration-200">Settings</span>}
         </div>
 
-        <div className={`logout mt-4 flex items-center cursor-pointer ${isCollapsed ? 'justify-center' : 'space-x-3'}`}>
+        <div className={`logout mt-4 flex items-center cursor-pointer gap-4 ${isCollapsed ? 'justify-center' : ''}`}>
           <FaSignOutAlt className="text-lg text-red-500 hover:text-[#FF6B35] transition-colors duration-200" />
           {!isCollapsed && <span className="text-sm font-medium text-red-500 hover:text-[#FF6B35] transition-colors duration-200">Logout</span>}
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 bg-gray-50 overflow-y-auto p-4">{children}</div>
+      <div className="flex-1 bg-gray-50 p-8 overflow-y-auto flex justify-between">{children}</div>
     </div>
   );
 }

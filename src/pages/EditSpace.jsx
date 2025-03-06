@@ -65,7 +65,7 @@ function EditSpace() {
 
   return (
     <Navigation>
-      <div className="p-6 bg-white shadow-md rounded-lg">
+      <div className="p-6 bg-white shadow-md rounded-lg px-4">
         <h1 className="text-2xl font-bold text-[#0D2240] mb-4">Edit Room</h1>
         
         {/* Room Details */}

@@ -83,96 +83,81 @@ const AssignRequests = () => {
   };
 
   return (
-    <Navigation>
-      <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-4">Assign Asset</h1>
+<Navigation>
+  <div className="flex justify-center items-center min-h-screen px-4">
+    <div className="p-6 max-w-md w-full">
+      <h1 className="text-2xl font-semibold mb-4">Assign Asset</h1>
 
-        {notification && (
-          <div className="bg-green-100 text-green-800 p-2 rounded mb-4">
-            {notification}
-          </div>
-        )}
-
-        {/* Debug log */}
-        {console.log('Rendering assignment form with selectedRequest:', selectedRequest)}
-
-        {/* Asset ID */}
-        <div className="mb-4">
-          <label className="block mb-2 font-semibold">Asset ID</label>
-          <p className="p-2 border rounded bg-gray-100">{selectedRequest?.asset_id}</p>
+      {notification && (
+        <div className="bg-green-100 text-green-800 p-2 rounded mb-4">
+          {notification}
         </div>
+      )}
 
-        {/* Asset Name */}
-        <div className="mb-4">
-          <label className="block mb-2 font-semibold">Asset Name</label>
-          <p className="p-2 border rounded bg-gray-100">{selectedRequest?.asset_name}</p>
-        </div>
+      {/* Debug log */}
+      {console.log('Rendering assignment form with selectedRequest:', selectedRequest)}
 
-        {/* Assigned To */}
-        <div className="mb-4">
-          <label className="block mb-2 font-semibold">
-            Assigned To (User ID: {selectedRequest?.user_id})
-          </label>
-          <p className="p-2 border rounded bg-gray-100">{selectedRequest?.user_name}</p>
-        </div>
-
-        {/* Request Status */}
-        <div className="mb-4">
-          <label className="block mb-2 font-semibold">Request Status</label>
-          <p className="p-2 border rounded bg-gray-100">{selectedRequest?.status}</p>
-        </div>
-
-        {/* Requested At */}
-        <div className="mb-4">
-          <label className="block mb-2 font-semibold">Requested At</label>
-          <p className="p-2 border rounded bg-gray-100">{selectedRequest?.requested_at}</p>
-        </div>
-
-        {/* Location Selection
-        <div className="mb-4">
-          <label className="block mb-2 font-semibold">Location</label>
-          <select
-            className="w-full p-2 border rounded"
-            value={locationId}
-            onChange={(e) => setLocationId(e.target.value)}
-          >
-            <option value="">Select Location</option>
-            {locations.map((loc) => (
-              <option key={loc.id} value={loc.id}>
-                {loc.name}
-              </option>
-            ))}
-          </select>
-        </div> */}
-
-        {/* Return Date Input */}
-        <div className="mb-4">
-          <label className="block mb-2 font-semibold">Return Date</label>
-          <input
-            type="date"
-            className="w-full p-2 border rounded"
-            value={returnDate}
-            onChange={(e) => setReturnDate(e.target.value)}
-          />
-        </div>
-
-        {/* Form Actions */}
-        <div className="flex justify-end">
-          <button
-            className="bg-gray-300 text-black px-4 py-2 rounded mr-2"
-            onClick={() => navigate(-1)}
-          >
-            Cancel
-          </button>
-          <button
-            className="bg-indigo-600 text-white px-4 py-2 rounded"
-            onClick={handleAssignment}
-          >
-            Assign
-          </button>
-        </div>
+      {/* Asset ID */}
+      <div className="mb-4">
+        <label className="block mb-2 font-semibold">Asset ID</label>
+        <p className="p-2 border rounded bg-gray-100">{selectedRequest?.asset_id}</p>
       </div>
-    </Navigation>
+
+      {/* Asset Name */}
+      <div className="mb-4">
+        <label className="block mb-2 font-semibold">Asset Name</label>
+        <p className="p-2 border rounded bg-gray-100">{selectedRequest?.asset_name}</p>
+      </div>
+
+      {/* Assigned To */}
+      <div className="mb-4">
+        <label className="block mb-2 font-semibold">
+          Assigned To (User  ID: {selectedRequest?.user_id})
+        </label>
+        <p className="p-2 border rounded bg-gray-100">{selectedRequest?.user_name}</p>
+      </div>
+
+      {/* Request Status */}
+      <div className="mb-4">
+        <label className="block mb-2 font-semibold">Request Status</label>
+        <p className="p-2 border rounded bg-gray-100">{selectedRequest?.status}</p>
+      </div>
+
+      {/* Requested At */}
+      <div className="mb-4">
+        <label className="block mb-2 font-semibold">Requested At</label>
+        <p className="p-2 border rounded bg-gray-100">{selectedRequest?.requested_at}</p>
+      </div>
+
+      {/* Return Date Input */}
+      <div className="mb-4">
+        <label className="block mb-2 font-semibold">Return Date</label>
+        <input
+          type="date"
+          className="w-full p-2 border rounded"
+          value={returnDate}
+          onChange={(e) => setReturnDate(e.target.value)}
+        />
+      </div>
+
+      {/* Form Actions */}
+      <div className="flex justify-end">
+        <button
+          className="bg-gray-300 text-black px-4 py-2 rounded mr-2"
+          onClick={() => navigate(-1)}
+        >
+          Cancel
+        </button>
+        <button
+          className="bg-indigo-600 text-white px-4 py-2 rounded"
+          onClick={handleAssignment}
+        >
+          Assign
+        </button>
+      </div>
+    </div>
+  </div>
+</Navigation>
   );
 };
 

@@ -48,7 +48,7 @@ function AddRoom() {
 
   return (
     <Navigation>
-      <div className="p-6 bg-white shadow-md rounded-lg max-w-lg mx-auto mt-8">
+      <div className="p-6 bg-white shadow-md rounded-lg max-w-lg mx-auto mt-8 px-4">
         <h1 className="text-2xl font-bold text-[#0D2240] mb-4">Add New Room</h1>
 
         {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
