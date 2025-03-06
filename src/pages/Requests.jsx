@@ -238,7 +238,7 @@ const RequestsPage = () => {
   
       <div className="bg-white rounded-lg shadow overflow-hidden w-full max-w-6xl"> {/* Full width for table */}
         <table className="w-full text-left">
-          <thead className="bg-[#FF6B35] text-white">
+          <thead className="border border-gray-200 px-4 py-2">
             <tr>
               <th className="p-4">ITEM</th>
               <th className="p-4">ASSET NAME</th>
@@ -269,18 +269,21 @@ const RequestsPage = () => {
                   </span>
                 </td>
                 <td className="p-4">
-                <button
-  className="bg-[#0D2240] text-white px-4 py-2 rounded-md hover:bg-[#FF6B35]"
-  onClick={() => approveRequest(request.id)}
->
-  Approve
-</button>
-<button
-  className="bg-[#0D2240] text-white px-4 py-2 rounded-md hover:bg-[#FF6B35]"
-  onClick={() => rejectRequest(request.id)}
->
-  Reject
-</button>
+                <div className="flex space-x-4">
+  <button
+    className="bg-[#0D2240] text-white px-6 py-3 text-lg font-semibold rounded-2xl hover:bg-[#FF6B35] transition duration-300 ease-in-out shadow-md"
+    onClick={() => approveRequest(request.id)}
+  >
+    Approve
+  </button>
+  <button
+    className="bg-[#0D2240] text-white px-6 py-3 text-lg font-semibold rounded-2xl hover:bg-[#FF6B35] transition duration-300 ease-in-out shadow-md"
+    onClick={() => rejectRequest(request.id)}
+  >
+    Reject
+  </button>
+</div>
+
 
                 </td>
               </tr>
