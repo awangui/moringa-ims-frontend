@@ -1,0 +1,51 @@
+
+  .sheetContent {
+    z-index: 1000; /* Ensure it appears above other elements */
+    position: fixed; /* Ensure it is positioned correctly */
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 400px; /* Adjust as needed */
+    background-color: white;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  
+  .sheetHeader {
+    margin-bottom: 1.5rem;
+  }
+  
+  .sheetTitle {
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+  
+  .sheetDescription {
+    color: #6b7280; /* Gray-500 */
+  }
+  
+  .selectTrigger {
+    width: 100%;
+    position: relative; 
+  }
+  .selectContent {
+    z-index: 1000; /* Ensure it appears above other elements */
+    position: absolute; /* Position it relative to the SelectTrigger */
+    background-color: white; /* Set a background color */
+    border: 1px solid #e5e7eb; /* Add a border */
+    border-radius: 0.375rem; /* Add rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a shadow for better visibility */
+    margin-top: 0.5rem; /* Add some spacing from the trigger */
+    top: 100%; /* Position it below the trigger */
+  left: 0;
+  width: 100%;
+  }
+  
+  .selectItem {
+    padding: 0.5rem 1rem; /* Add padding to the items */
+    cursor: pointer; /* Change cursor to pointer */
+  }
+  
+  .selectItem:hover {
+    background-color: #f3f4f6; /* Add a hover effect */
+  }

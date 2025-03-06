@@ -1,0 +1,90 @@
+.container {
+    display: flex;
+    height: 100vh;
+    background-color: white;
+  }
+  
+  .sidebar {
+    width: 4rem; /* 16 * 0.25rem = 4rem */
+    background-color: white;
+    border-right: 1px solid #e5e7eb; /* Gray-200 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0; /* 4 * 0.25rem = 1rem */
+    gap: 2rem; /* 8 * 0.25rem = 2rem */
+  }
+  
+  .sidebarIcon {
+    color: #6b7280; /* Gray-500 */
+    transition: color 0.2s;
+  }
+  
+  .sidebarIcon:hover {
+    color: #2563eb; /* Blue-600 */
+  }
+  
+  .sidebarIconActive {
+    color: #2563eb; /* Blue-600 */
+  }
+  
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem; /* 4 * 0.25rem = 1rem, 6 * 0.25rem = 1.5rem */
+    border-bottom: 1px solid #e5e7eb; /* Gray-200 */
+  }
+  
+  .title {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 500;
+    color: #f97316; /* Orange-500 */
+  }
+  
+  .mainContent {
+    flex: 1;
+    padding: 1.5rem; /* 6 * 0.25rem = 1.5rem */
+  }
+  
+  .maxWidth {
+    max-width: 42rem; /* 168 * 0.25rem = 42rem */
+    margin: 0 auto;
+    margin-top: 2.5rem; /* 10 * 0.25rem = 2.5rem */
+  }
+  
+  .backButton {
+    margin-bottom: 1.5rem; /* 6 * 0.25rem = 1.5rem */
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* 6 * 0.25rem = 1.5rem */
+  }
+  
+  .formLabel {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+  }
+  
+  .formInput {
+    width: 100%;
+  }
+  
+  .formTextarea {
+    width: 100%;
+    resize: vertical;
+  }
+  
+  .formButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem; /* 2 * 0.25rem = 0.5rem */
+  }

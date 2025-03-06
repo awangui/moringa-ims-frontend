@@ -1,0 +1,36 @@
+.orderSummary {
+    margin-top: 2rem;
+  }
+  
+  .orderSummaryCard {
+    padding: 1.5rem;
+  }
+  
+  .orderSummaryGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .orderSummaryTitle {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  
+  .orderSummaryLabel {
+    color: #6b7280; /* Gray-500 */
+  }
+  
+  .orderSummaryValue {
+    margin-left: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .itemsTable {
+    margin-top: 2rem;
+  }
+  
+  .chargesTable {
+    margin-top: 2rem;
+  }

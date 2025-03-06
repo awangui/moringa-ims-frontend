@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navigation from './components/Navigation';
@@ -25,6 +26,7 @@ import FixedAssets from './pages/FixedAssets';
 import AssetDetails from './pages/AssetDetails';
 import Dashboard from './pages/Dashboard';
 
+
 function App() {
   const [spaces, setSpaces] = useState([]);
 
@@ -45,6 +47,8 @@ function App() {
             <Route path="/requests" element={<RequestsPage />} />
             <Route path="/AssignRequests" element={<AssignRequests />} />
 
+
+
             {/* Vendors */}
             <Route path="/vendors" element={<Vendors />} />
             <Route path="/vendors/create-vendor" element={<MultiStepForm />} />
@@ -54,7 +58,7 @@ function App() {
 
             {/* Orders */}
             <Route path="/orders" element={<OrdersList />} />
-            <Route path="/orders/:orderId" element={<ViewOrder />} />
+          <Route path="/orders/:id" element={<ViewOrder />} />
             <Route path="/create-order" element={<CreateOrderPage />} />
             <Route path="/create-order/step1" element={<CreateOrderPage />} />
             <Route path="/create-order/step2" element={<CreateOrderStep2 />} />
@@ -76,7 +80,9 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
+
     </SidebarProvider>
+
   );
 }
 

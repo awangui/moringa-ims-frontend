@@ -1,0 +1,35 @@
+.statusBadge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+  }
+  
+  .statusPending {
+    background-color: #fef3c7; /* Yellow-100 */
+    color: #92400e; /* Yellow-800 */
+  }
+  
+  .statusApproved {
+    background-color: #d1fae5; /* Green-100 */
+    color: #065f46; /* Green-800 */
+  }
+  
+  .statusReceived {
+    background-color: #dbeafe; /* Blue-100 */
+    color: #1e40af; /* Blue-800 */
+  }
+  
+  .statusCancelled {
+    background-color: #fee2e2; /* Red-100 */
+    color: #991b1b; /* Red-800 */
+  }
+  
+  .statusPartiallyReceived {
+    background-color: #ede9fe; /* Purple-100 */
+    color: #5b21b6; /* Purple-800 */
+  }
+  
+  .statusDefault {
+    background-color: #f3f4f6; /* Gray-100 */
+    color: #374151; /* Gray-800 */
+  }

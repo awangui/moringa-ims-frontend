@@ -1,0 +1,25 @@
+.orderDetails {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .orderDetails h2 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  
+  .orderDetails div {
+    margin-bottom: 0.75rem;
+  }
+  
+  .orderDetails span {
+    color: #6b7280; /* Gray-500 */
+  }
+  
+  .orderDetails .statusBadge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+  }

@@ -1,0 +1,15 @@
+.chargesForm {
+    max-width: 28rem;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+  
+  .chargesList {
+    margin-top: 2rem;
+  }
+  
+  .chargesTable {
+    border: 1px solid #e5e7eb; /* Gray-200 */
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }

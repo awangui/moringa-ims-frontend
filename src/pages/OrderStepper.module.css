@@ -1,0 +1,36 @@
+.stepper {
+    display: flex;
+    width: 100%;
+    background-color: #f3f4f6; /* Gray-100 */
+  }
+  
+  .step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    flex: 1;
+  }
+  
+  .stepActive {
+    background-color: #3730a3; /* Indigo-900 */
+    color: white;
+  }
+  
+  .stepInactive {
+    background-color: #e5e7eb; /* Gray-200 */
+    color: #4b5563; /* Gray-600 */
+  }
+  
+  .stepDisabled {
+    opacity: 0.5;
+  }
+  
+  .cancelButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    background-color: #e5e7eb; /* Gray-200 */
+    color: #4b5563; /* Gray-600 */
+  }
