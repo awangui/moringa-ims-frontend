@@ -1,13 +1,15 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  
   Card,
   CardContent,
 } from "../components/ui/card";
-import {Button} from "../components/ui/button"
+import { Button } from "../components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
 import { ArrowLeft, Bell, Clock, Users, ShoppingCart, FileText, Package, MessageSquare, User, Settings, Plus } from "lucide-react";
+import { createOrder } from '../lib/api'; // Adjust the path as needed
+import styles from './CreateOrderStep2.module.css';
 
 const CreateOrderStep2 = () => {
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ const CreateOrderStep2 = () => {
   };
   
   const handleAddItem = () => {
-    // This would open a dialog or take you to step 3 to add items
+    // Navigate to step 3 to add items
     navigate('/create-order/step3', { 
       state: { 
         name, 
@@ -32,9 +34,31 @@ const CreateOrderStep2 = () => {
     });
   };
   
-  const handleSave = () => {
-    // Save the order and redirect to orders page
-    navigate('/orders');
+  const handleSave = async () => {
+    const orderData = {
+      order_name: name,
+      order_description: description,
+      items,
+      space: "room 102", // Replace with actual space if available
+      vat: 19.99, // Replace with actual VAT if available
+      quantity: items.reduce((sum, item) => sum + item.quantity, 0), // Calculate total quantity
+      status: "Pending",
+      date_ordered: new Date().toISOString().split('T')[0], // Today's date
+      payment_status: "Paid",
+      dispatch_status: "Processing",
+      delivery_charges: 1500, // Replace with actual delivery charges if available
+      reason: "driver lunch", // Replace with actual reason if available
+      initialiser: "Admin", // Replace with actual initialiser if available
+    };
+  
+    try {
+      const response = await createOrder(orderData);
+      console.log('Order created:', response);
+      navigate('/orders'); // Redirect to the orders list page
+    } catch (error) {
+      console.error('Failed to create order:', error);
+      alert('Failed to create order. Please try again.');
+    }
   };
   
   const formatDate = () => {
@@ -43,40 +67,40 @@ const CreateOrderStep2 = () => {
   };
 
   return (
-    <div className="flex h-screen bg-white">
+    <div className={styles.container}>
       {/* Sidebar */}
-      <div className="w-16 bg-white border-r flex flex-col items-center py-4 space-y-8">
-        <div className="text-gray-500 hover:text-blue-600">
+      <div className={styles.sidebar}>
+        <div className={styles.sidebarIcon}>
           <Clock size={24} />
         </div>
-        <div className="text-gray-500 hover:text-blue-600">
+        <div className={styles.sidebarIcon}>
           <Users size={24} />
         </div>
-        <div className="text-blue-600">
+        <div className={styles.sidebarIconActive}>
           <ShoppingCart size={24} />
         </div>
-        <div className="text-gray-500 hover:text-blue-600">
+        <div className={styles.sidebarIcon}>
           <FileText size={24} />
         </div>
-        <div className="text-gray-500 hover:text-blue-600">
+        <div className={styles.sidebarIcon}>
           <Package size={24} />
         </div>
-        <div className="text-gray-500 hover:text-blue-600">
+        <div className={styles.sidebarIcon}>
           <MessageSquare size={24} />
         </div>
-        <div className="text-gray-500 hover:text-blue-600 mt-auto">
+        <div className={`${styles.sidebarIcon} mt-auto`}>
           <User size={24} />
         </div>
-        <div className="text-gray-500 hover:text-blue-600">
+        <div className={styles.sidebarIcon}>
           <Settings size={24} />
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className={styles.content}>
         {/* Header */}
-        <div className="py-4 px-6 flex justify-between items-center border-b">
-          <div className="text-2xl font-medium text-orange-500">
+        <div className={styles.header}>
+          <div className={styles.title}>
             Create Fixed Asset Order step 2
           </div>
           <div className="flex items-center space-x-4">
@@ -87,10 +111,10 @@ const CreateOrderStep2 = () => {
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 p-6">
-          <div className="max-w-5xl mx-auto">
+        <div className={styles.mainContent}>
+          <div className={styles.maxWidth}>
             {/* Back Button */}
-            <div className="flex mb-6">
+            <div className={styles.backButton}>
               <Button 
                 variant="ghost" 
                 className="flex items-center text-gray-600"
@@ -102,27 +126,27 @@ const CreateOrderStep2 = () => {
             </div>
 
             {/* Order Header */}
-            <div className="flex justify-between items-start mb-8">
+            <div className={styles.orderHeader}>
               <div>
-                <h1 className="text-xl font-semibold mb-2">{name}</h1>
-                <div className="text-gray-600 max-w-lg">
+                <h1 className={styles.orderTitle}>{name}</h1>
+                <div className={styles.orderDescription}>
                   <div className="font-medium mb-1">Description</div>
                   <p>{description}</p>
                 </div>
               </div>
-              <div className="text-gray-600">
+              <div className={styles.orderDate}>
                 {formatDate()}
               </div>
             </div>
 
             {/* Items Section */}
-            <div className="mb-8">
-              <div className="flex justify-between items-center mb-4">
+            <div className={styles.itemsSection}>
+              <div className={styles.itemsHeader}>
                 <h2 className="text-lg font-medium">Items</h2>
               </div>
               
               {/* Items Table */}
-              <div className="border rounded-lg overflow-hidden mb-4">
+              <div className={styles.itemsTable}>
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -156,7 +180,7 @@ const CreateOrderStep2 = () => {
               </div>
               
               {/* Add Item Button */}
-              <div className="flex justify-between">
+              <div className={styles.addItemButton}>
                 <Button 
                   variant="outline" 
                   className="bg-indigo-900 text-white hover:bg-indigo-800"
@@ -172,7 +196,7 @@ const CreateOrderStep2 = () => {
             </div>
 
             {/* Amount Details Section - Empty in this case */}
-            <div className="mb-16">
+            <div className={styles.amountSection}>
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -193,14 +217,14 @@ const CreateOrderStep2 = () => {
             </div>
 
             {/* Total Section */}
-            <div className="flex justify-end mb-8">
-              <div className="font-bold text-lg">
+            <div className={styles.totalSection}>
+              <div className={styles.totalText}>
                 TOTAL: {totalAmount > 0 ? `Kshs ${totalAmount.toLocaleString()}` : ''}
               </div>
             </div>
 
             {/* Save Button */}
-            <div className="flex justify-end">
+            <div className={styles.saveButton}>
               <Button 
                 className="bg-orange-500 hover:bg-orange-600 text-white"
                 onClick={handleSave}

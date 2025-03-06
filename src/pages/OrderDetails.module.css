@@ -1,0 +1,34 @@
+.card {
+    margin-bottom: 2rem;
+  }
+  
+  .cardContent {
+    padding: 1.5rem;
+  }
+  
+  .orderDetails {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .orderDetailsTitle {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  
+  .orderDetailsContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .orderDetailsLabel {
+    color: #6b7280; /* Gray-500 */
+  }
+  
+  .orderDetailsValue {
+    margin-left: 0.5rem;
+    font-weight: 500;
+  }

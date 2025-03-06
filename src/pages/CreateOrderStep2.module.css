@@ -1,0 +1,129 @@
+.container {
+    display: flex;
+    height: 100vh;
+    background-color: white;
+  }
+  
+  .sidebar {
+    width: 4rem; /* 16 * 0.25rem = 4rem */
+    background-color: white;
+    border-right: 1px solid #e5e7eb; /* Gray-200 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0; /* 4 * 0.25rem = 1rem */
+    gap: 2rem; /* 8 * 0.25rem = 2rem */
+  }
+  
+  .sidebarIcon {
+    color: #6b7280; /* Gray-500 */
+    transition: color 0.2s;
+  }
+  
+  .sidebarIcon:hover {
+    color: #2563eb; /* Blue-600 */
+  }
+  
+  .sidebarIconActive {
+    color: #2563eb; /* Blue-600 */
+  }
+  
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem; /* 4 * 0.25rem = 1rem, 6 * 0.25rem = 1.5rem */
+    border-bottom: 1px solid #e5e7eb; /* Gray-200 */
+  }
+  
+  .title {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 500;
+    color: #f97316; /* Orange-500 */
+  }
+  
+  .mainContent {
+    flex: 1;
+    padding: 1.5rem; /* 6 * 0.25rem = 1.5rem */
+  }
+  
+  .maxWidth {
+    max-width: 80rem; /* 320 * 0.25rem = 80rem */
+    margin: 0 auto;
+  }
+  
+  .backButton {
+    margin-bottom: 1.5rem; /* 6 * 0.25rem = 1.5rem */
+  }
+  
+  .orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem; /* 8 * 0.25rem = 2rem */
+  }
+  
+  .orderTitle {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    margin-bottom: 0.5rem; /* 2 * 0.25rem = 0.5rem */
+  }
+  
+  .orderDescription {
+    color: #6b7280; /* Gray-500 */
+    max-width: 36rem; /* 144 * 0.25rem = 36rem */
+  }
+  
+  .orderDate {
+    color: #6b7280; /* Gray-500 */
+  }
+  
+  .itemsSection {
+    margin-bottom: 2rem; /* 8 * 0.25rem = 2rem */
+  }
+  
+  .itemsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem; /* 4 * 0.25rem = 1rem */
+  }
+  
+  .itemsTable {
+    border: 1px solid #e5e7eb; /* Gray-200 */
+    border-radius: 0.5rem; /* 2 * 0.25rem = 0.5rem */
+    overflow: hidden;
+    margin-bottom: 1rem; /* 4 * 0.25rem = 1rem */
+  }
+  
+  .addItemButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .amountSection {
+    margin-bottom: 4rem; /* 16 * 0.25rem = 4rem */
+  }
+  
+  .totalSection {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem; /* 8 * 0.25rem = 2rem */
+  }
+  
+  .totalText {
+    font-weight: 700;
+    font-size: 1.125rem; /* 18px */
+  }
+  
+  .saveButton {
+    display: flex;
+    justify-content: flex-end;
+  }
