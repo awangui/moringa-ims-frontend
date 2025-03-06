@@ -12,7 +12,13 @@ const Team = () => {
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedMember, setSelectedMember] = useState(null);
-    const [formData, setFormData] = useState({ name: "", email: "", phone_number: "", password: "", role_id: "" });
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        phone_number: "",
+        password: "",
+        role_id: ""
+    });
     const [searchTerm, setSearchTerm] = useState("");
 
     const API_BASE_URL = "http://172.236.2.18:5000/users";
@@ -51,13 +57,14 @@ const Team = () => {
     const handleAddUser = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(API_BASE_URL, {
+            const response = await fetch(`${API_BASE_URL}/create`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
             if (!response.ok) throw new Error("Error adding user");
             setShowAddModal(false);
+            setFormData({ name: "", email: "", phone_number: "", password: "", role_id: "" }); // Reset form
             fetchTeamMembers();
         } catch (error) {
             console.error(error);
@@ -71,7 +78,6 @@ const Team = () => {
             name: member.name,
             email: member.email,
             phone_number: member.phone_number,
-            password: "",
             role_id: member.role ? member.role.id : "",
         });
     };
@@ -82,10 +88,19 @@ const Team = () => {
             const response = await fetch(`${API_BASE_URL}/update/${selectedMember.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    email: formData.email,
+                    name: formData.name,
+                    phone_number: formData.phone_number,
+                    role: {
+                        id: formData.role_id,
+                    },
+                }),
             });
             if (!response.ok) throw new Error("Error updating user");
             setShowUpdateModal(false);
+            setSelectedMember(null);
+            setFormData({ name: "", email: "", phone_number: "", password: "", role_id: "" }); // Reset form
             fetchTeamMembers();
         } catch (error) {
             console.error(error);
@@ -165,6 +180,136 @@ const Team = () => {
                         ))}
                     </tbody>
                 </table>
+
+                {/* Add User Modal */}
+                {showAddModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                        <div className="bg-white p-6 rounded shadow-lg w-96">
+                            <span className="cursor-pointer float-right" onClick={() => setShowAddModal(false)}>&times;</span>
+                            <h2 className="text-xl mb-4">Add New User</h2>
+                            <form onSubmit={handleAddUser}>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                                    placeholder="Name"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                                    placeholder="Email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <input
+                                    type="tel"
+                                    name="phone_number"
+                                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                                    placeholder="Phone"
+                                    value={formData.phone_number}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <input
+                                    type="password"
+                                    name="password"
+                                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                                    placeholder="Password"
+                                    value={formData.password}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <select
+                                    name="role_id"
+                                    className="w-full p-2 border border-gray-300 rounded mb-4"
+                                    value={formData.role_id}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="">Select Role</option>
+                                    {roles.map((role) => (
+                                        <option key={role.id} value={role.id}>{role.name}</option>
+                                    ))}
+                                </select>
+                                <button type="submit" className="bg-[#0F013A] text-white px-4 py-2 rounded">Add</button>
+                                <button type="button" className="bg-red-500 text-white px-4 py-2 rounded ml-2" onClick={() => setShowAddModal(false)}>Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                )}
+
+                {/* Edit User Modal */}
+                {showUpdateModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                        <div className="bg-white p-6 rounded shadow-lg w-96">
+                            <span className="cursor-pointer float-right" onClick={() => setShowUpdateModal(false)}>&times;</span>
+                            <h2 className="text-xl mb-4">Edit User</h2>
+                            <form onSubmit={handleUpdateUser}>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <input
+                                    type="tel"
+                                    name="phone_number"
+                                    className="w-full p-2 border border-gray-300 rounded mb-2"
+                                    value={formData.phone_number}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <select
+                                    name="role_id"
+                                    className="w-full p-2 border border-gray-300 rounded mb-4"
+                                    value={formData.role_id}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="">Select Role</option>
+                                    {roles.map((role) => (
+                                        <option key={role.id} value={role.id}>{role.name}</option>
+                                    ))}
+                                </select>
+                                <button type="submit" className="bg-[#0F013A] text-white px-4 py-2 rounded">Update</button>
+                                <button type="button" className="bg-red-500 text-white px-4 py-2 rounded ml-2" onClick={() => setShowUpdateModal(false)}>Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                )}
+
+                {/* Delete User Confirmation Modal */}
+                {showDeleteModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                        <div className="bg-white p-6 rounded shadow-lg w-96">
+                            <span className="cursor-pointer float-right" onClick={() => setShowDeleteModal(false)}>&times;</span>
+                            <h2 className="text-xl mb-4">Are you sure you want to delete this user?</h2>
+                            <div className="flex justify-end">
+                                <button className="bg-[#8B0000] text-white px-4 py-2 rounded mr-2" onClick={handleDelete}>
+                                    Delete
+                                </button>
+                                <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={() => setShowDeleteModal(false)}>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </Navigation>
     );
