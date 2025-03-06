@@ -71,13 +71,18 @@ function App() {
             <Route path="/create-order/step3/charges" element={<OrderCharges />} />
             <Route path="/create-order/step3/review" element={<OrderReview />} />
 
-            {/* Wrap the Users and Team components with ErrorBoundary */}
+            {/* Users and Team */}
             <Route path="/team" element={
               <ErrorBoundary>
                 <Team />
               </ErrorBoundary>
             } />
             <Route path="/users" element={
+              <ErrorBoundary>
+                <Users />
+              </ErrorBoundary>
+            } />
+            <Route path="/users/:id/permissions" element={
               <ErrorBoundary>
                 <Users />
               </ErrorBoundary>
