@@ -43,6 +43,7 @@ function Navigation({ children }) {
       {/* Sidebar */}
       <div className={`sidebar ${isCollapsed ? 'w-20' : 'w-64'} bg-[#FDF6F0] p-4 transition-all duration-300`}>
         <div className="logo text-center mb-6">
+          <img src="/images/moringa.png" alt="moringa-logo" width="60" />
           <button
             onClick={toggleSidebar}
             className="p-2 bg-[#0D2240] text-white rounded-md hover:bg-[#FF6B35] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF6B35]"
