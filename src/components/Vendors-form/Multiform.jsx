@@ -80,16 +80,15 @@ const MultiStepForm = () => {
         </div>
 
         {/* Render Step Component */}
-        {step === 5 ? (
-          <Confirmation prevStep={prevStep} values={values} />
-        ) : (
-          React.createElement([Step1, Step2, Step3, Step4][step - 1], {
-            nextStep,
-            prevStep,
-            handleChange,
-            values: values,
-          })
-        )}
+{step === 5 ? (
+  <Confirmation prevStep={prevStep} values={values} />
+) : (
+  (() => {
+    const StepComponent = [Step1, Step2, Step3, Step4][step - 1];
+    return <StepComponent nextStep={nextStep} prevStep={prevStep} handleChange={handleChange} values={values} />;
+  })()
+)}
+
       </div>
     </Navigation>
   );

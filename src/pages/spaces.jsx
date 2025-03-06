@@ -1,7 +1,7 @@
 import Navigation from '../components/Navigation';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiSearch } from 'react-icons/fi'; 
+// import { FiSearch } from 'react-icons/fi'; 
 
 function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
@@ -69,7 +69,7 @@ function SpacesPage() {
               onChange={handleSearch}
               className="border border-[#FF6B35] rounded-md p-2 pl-10 focus:ring-[#FF6B35] focus:outline-none"
             />
-            <FiSearch className="absolute right-3 top-3 text-gray-500" />
+            
           </div>
           <button className="bg-[#0D2240] text-white px-4 py-2 rounded-md hover:bg-[#FF6B35]">
             <Link to={`/AddRoom`} >+ Add Room </Link>
@@ -106,7 +106,7 @@ function SpacesPage() {
                     Edit Room
                   </Link>
                   <button 
-                    className="text-red-600 hover:text-[#FF6B35] font-semibold" 
+                    className="bg-red-600 text-red-600 hover:text-[#FF6B35] font-semibold rounded-md hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-700 font-semibold"
                     onClick={() => {
                       setSelectedId(space.id);
                       setShowConfirm(true);
@@ -114,6 +114,7 @@ function SpacesPage() {
                   >
                     Delete Room
                   </button>
+
                 </td>
               </tr>
             ))}

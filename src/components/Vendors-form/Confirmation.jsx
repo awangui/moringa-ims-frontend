@@ -63,9 +63,7 @@ const Confirmation = ({ prevStep, values }) => {
   
 
   return (
-    <div className="confirmation-container">
-      <h3>Confirm Vendor Details</h3>
-      
+    <div className="confirmation-container">      
       {/* Display the details being submitted */}
       <ul className="confirmation-list">
         {Object.entries(values).map(([key, value]) => (
