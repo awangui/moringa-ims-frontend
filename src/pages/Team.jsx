@@ -1,6 +1,7 @@
+// src/pages/Team.js
 import React, { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaUserFriends, FaEdit, FaTrash } from 'react-icons/fa';
 
 const Team = () => {
   const [teamMembers, setTeamMembers] = useState([]);
@@ -186,8 +187,8 @@ const Team = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredMembers.map((member, index) => (
-              <tr key={index} className="hover:bg-gray-100">
+            {filteredMembers.map((member) => (
+              <tr key={member.id} className="hover:bg-gray-100">
                 <td className="border-b border-gray-300 p-2">{member.name}</td>
                 <td className="border-b border-gray-300 p-2">{member.email}</td>
                 <td className="border-b border-gray-300 p-2">{member.phone_number}</td>
@@ -196,7 +197,7 @@ const Team = () => {
                   <button className="text-red-500 mr-4" onClick={() => handleEdit(member)}>
                     <FaEdit />
                   </button>
-                  <button className="text-red-500" onClick={() => handleDeleteConfirmation(member)}>
+                  <button className="text-[#8B0000]" onClick={() => handleDeleteConfirmation(member)}>
                     <FaTrash />
                   </button>
                 </td>
@@ -259,8 +260,18 @@ const Team = () => {
               <span className="cursor-pointer float-right" onClick={() => setShowDeleteModal(false)}>&times;</span>
               <h2 className="text-xl mb-4">Are you sure you want to delete this user?</h2>
               <div className="flex justify-end">
-                <button className="bg-red-500 text-white px-4 py-2 rounded mr-2" onClick={handleDelete}>Delete</button>
-                <button className="bg-orange-500 text-white px-4 py-2 rounded" onClick={() => setShowDeleteModal(false)}>Cancel</button>
+                <button
+                  className="bg-[#8B0000] text-white px-4 py-2 rounded mr-2"
+                  onClick={handleDelete}
+                >
+                  Delete
+                </button>
+                <button
+                  className="bg-orange-500 text-white px-4 py-2 rounded"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
