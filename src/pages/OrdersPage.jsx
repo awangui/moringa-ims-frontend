@@ -94,6 +94,7 @@ const StatusChangeSheet = ({ order, onStatusChange }) => {
 };
 
 const OrdersList = () => {
+  //state variables
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -131,18 +132,29 @@ const OrdersList = () => {
   };
 
   const handleViewOrder = (orderId) => {
-    navigate(`/orders/${orderId}`);
+    const order = orders.find((o) => o.id === orderId);
+    if (order) {
+      navigate(`/orders/${orderId}`, { state: order }); //Pases the order object as state to the next page so the order details are available there
+    }
   };
 
   const handleStatusChange = async (orderId, newStatus) => {
+    //Checks if the status is partially received
     if (newStatus === 'Partially Received') {
+      //finds the order in the orders by ID
       const order = orders.find((o) => o.id === orderId);
+      //stores it 
       setSelectedOrderForPartialReceive(order);
+      //opens a dialog (sheet) to handle partially receiving
       setIsPartiallyReceivedDialogOpen(true);
     } else {
+      //if status is anything else
       try {
+        //call the api
         const updatedOrder = await updateOrderStatus(orderId, newStatus);
+        //map over orders
         const updatedOrders = orders.map((order) =>
+          //update the state of the specific order
           order.id === orderId ? { ...order, status: updatedOrder.status } : order
         );
         setOrders(updatedOrders);
@@ -155,10 +167,14 @@ const OrdersList = () => {
 
   const handlePartiallyReceivedConfirm = async () => {
     try {
+      const formattedDate = new Date().toISOString().split('T')[0]; // Ensures yyyy-mm-dd format
+  
       const updatedOrder = await updateOrderStatus(
         selectedOrderForPartialReceive.id,
-        'Partially Received'
+        'Partially Received',
+        formattedDate
       );
+  
       const updatedOrders = orders.map((order) => {
         if (order.id === selectedOrderForPartialReceive.id) {
           return {
@@ -168,11 +184,15 @@ const OrdersList = () => {
               ...item,
               receivedQuantity: partiallyReceivedQuantities[item.id] || 0,
             })),
+            date_received: formattedDate, // Ensure it's correctly stored in state
           };
         }
         return order;
       });
+  
       setOrders(updatedOrders);
+      
+      // Close the dialog and reset the received quantities
       setIsPartiallyReceivedDialogOpen(false);
       setPartiallyReceivedQuantities({});
     } catch (err) {
@@ -180,6 +200,7 @@ const OrdersList = () => {
       setError('Failed to update order status. Please try again.');
     }
   };
+  
 
   const resetFilters = () => {
     setStartDate(null);
@@ -190,9 +211,11 @@ const OrdersList = () => {
 
   const applyFilters = (orderList) => {
     return orderList.filter((order) => {
+      //convert the order.date to a date object >
       const orderDate = new Date(order.date);
       const dateInRange = (!startDate || orderDate >= startDate) &&
         (!endDate || orderDate <= endDate);
+      //"paid" &/or "unpaid" Only include orders where orderDetails?.isPaid is true/false for unpaid.>
       const isPaidFilter = paymentStatus === 'all' ||
         (paymentStatus === 'paid' && order.orderDetails?.isPaid) ||
         (paymentStatus === 'unpaid' && !order.orderDetails?.isPaid);
@@ -211,8 +234,9 @@ const OrdersList = () => {
   const filteredOrders = applyFilters(
     (orders || []).filter((order) =>
       (order?.name?.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (order?.id?.toLowerCase().includes(searchQuery.toLowerCase())))
-  );
+      (String(order?.id || '').toLowerCase().includes(searchQuery.toLowerCase()))
+    )
+  );  
 
   const handlePageChange = (page, pageSize = itemsPerPage) => {
     setCurrentPage(page);
@@ -250,7 +274,7 @@ const OrdersList = () => {
 
               <div className={styles.header}>
                 <div className={styles.searchContainer}>
-                  <Search className={styles.searchIcon} />
+                  {/* <Search className={styles.searchIcon} /> */}
                   <Input
                     type="text"
                     placeholder="Search orders"
@@ -458,6 +482,7 @@ const OrdersList = () => {
 // View Single Order
 const ViewOrder = () => {
   const location = useLocation();
+  //get the order ID from the URL
   const { id } = useParams();
   console.log("Order ID from useParams:", id);
   const navigate = useNavigate();
@@ -466,14 +491,18 @@ const ViewOrder = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    //If order is already available (e.g., from location.state), no need to fetch data again.
     if (!order) {
       const fetchOrder = async () => {
         try {
+          //Retrieves orders from localStorage and tries to find an order with the matching id.
           const storedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
           const foundOrder = storedOrders.find((o) => o.id === id);
+          //If found, it sets order using setOrder(foundOrder).
           if (foundOrder) {
             setOrder(foundOrder);
           } else {
+            //If not found in localStorage, it calls getOrderById(id) to fetch the order.
             const data = await getOrderById(id);
             setOrder(data);
           }
@@ -501,7 +530,7 @@ const ViewOrder = () => {
       </div>
     );
   }
-
+ //if an error occured or order is null >>
   if (error || !order) {
     return (
       <div className={styles.container}>
@@ -523,7 +552,8 @@ const ViewOrder = () => {
       </div>
     );
   }
-
+  //If order is available, displayOrder is assigned the order object.>>
+  // if null, defaults to empty object
   const displayOrder = order || {};
 
   return (
@@ -567,6 +597,12 @@ const ViewOrder = () => {
                             </div>
                           </CardContent>
                         </Card>
+                        <Button
+                className="bg-orange-500 text-white hover:bg-orange-600"
+                onClick={() => navigate('/orders')}
+              >
+                Back to Orders
+              </Button>
                       </div>
                     </div>
                     </div>

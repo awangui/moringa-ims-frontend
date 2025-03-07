@@ -79,9 +79,14 @@ export const getOrderById = async (orderId) => {
   
 
 // Function to update order status
-export const updateOrderStatus = async (orderId, newStatus) => {
+export const updateOrderStatus = async (orderId, receivedQuantity, dateReceived) => {
   try {
-    const response = await api.patch(`/orders/${orderId}/status`, { status: newStatus });
+    const response = await api.post('/received', { 
+      order_id: orderId, 
+      received_quantity: receivedQuantity, 
+      date_received: dateReceived 
+    });
+
     return response.data; // Assuming the response contains the updated order
   } catch (error) {
     console.error('Failed to update order status:', error);

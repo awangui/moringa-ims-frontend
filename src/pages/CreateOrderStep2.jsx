@@ -64,8 +64,11 @@ const CreateOrderStep2 = () => {
   
   const formatDate = () => {
     const date = new Date();
-    return `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
-  };
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensures two digits
+    const day = String(date.getDate()).padStart(2, '0'); // Ensures two digits
+    return `${year}-${month}-${day}`;
+  };  
 
   return (
     <div className={styles.container}>

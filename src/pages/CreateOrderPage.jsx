@@ -11,10 +11,11 @@ import SideBar from '@/components/SideBar';
 
 const CreateOrderPage = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('Fix Assets Order');
+  const [name, setName] = useState('Fixed Assets Order');
   const [description, setDescription] = useState('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
 
   const handleSubmit = (e) => {
+    //Prevents the default form submission behavior (which would reload the page).>>
     e.preventDefault();
     // Navigate to step 2 with the form data
     navigate('/create-order/step2', { 
