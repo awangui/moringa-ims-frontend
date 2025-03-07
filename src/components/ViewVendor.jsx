@@ -12,7 +12,6 @@ const ViewVendor = () => {
   const { id } = useParams();
   const [vendor, setVendor] = useState(null);
   const [orders, setOrders] = useState([]);
-  const [activeTab, setActiveTab] = useState("all");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -143,9 +142,7 @@ const ViewVendor = () => {
 
           {/* Vendor Documents */}
           <div className="vendor-documents" style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "16px",
+                backgroundColor: "#f9f9f9",
               }}>
             <h2>Vendor Documents</h2>
             <button className="add-document-btn" onClick={viewDocuments}>+ Add Document</button>
@@ -154,7 +151,6 @@ const ViewVendor = () => {
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>URL</th>
                   <th>Actions</th>
                 </tr>
@@ -163,7 +159,6 @@ const ViewVendor = () => {
                 {vendor.documents?.map((doc) => (
                   <tr key={doc.id}>
                     <td>{doc.filename}</td>
-                    <td>{doc.type}</td>
                     <td>{doc.file_url}</td>
                     <td>
                     <div style={{ display: "flex" }}>
@@ -184,10 +179,6 @@ const ViewVendor = () => {
           {/* Vendor Purchase Orders */}
           <div className="purchase-orders-section">
             <h2>Vendor Purchase Orders</h2>
-            <div>
-              <button onClick={() => setActiveTab("all")}>All</button>
-              <button onClick={() => setActiveTab("pending")}>Pending</button>
-            </div>
             <table>
               <thead>
                 <tr>

@@ -187,7 +187,7 @@ const EditVendor = () => {
               <button type="submit" className="btn btn-primary">Update Vendor</button>
             </div>
           </form>
-          <button type="button" onClick={() => navigate("/vendors")}>Cancel</button>
+          <button type="button" className="backButton" onClick={() => navigate("/vendors")}>Cancel</button>
         </div>
         </div>
       </>
