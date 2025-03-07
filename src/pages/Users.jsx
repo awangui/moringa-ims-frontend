@@ -85,7 +85,7 @@ const Users = () => {
                         </div>
                         <div className="flex justify-between">
                             <button type="submit" className="bg-[#0F0A1A] text-white px-4 py-2 rounded">
-                                Save
+                                Add Permission
                             </button>
                             <button type="button" style={{ backgroundColor: '#8B0000' }} className="text-white px-4 py-2 rounded">
                                 Cancel
