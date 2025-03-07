@@ -1,4 +1,5 @@
-import Navigation from '../components/Navigation';
+// import Navigation from '../components/Navigation';
+import SideBar from '@/components/SideBar';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -64,7 +65,9 @@ function EditSpace() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <Navigation>
+    // <Navigation>
+    <div className="wrapper" style={{ display: "flex", gap: "100px"}}>
+      <SideBar/>
       <div className="p-6 bg-white shadow-md rounded-lg px-4">
         <h1 className="text-2xl font-bold text-[#0D2240] mb-4">Edit Room</h1>
         
@@ -162,7 +165,8 @@ function EditSpace() {
           </div>
         </div>
       )}
-    </Navigation>
+      </div>
+    // </Navigation>
   );
 }
 

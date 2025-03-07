@@ -1,4 +1,5 @@
-import Navigation from '../components/Navigation';
+// import Navigation from '../components/Navigation';
+import SideBar from '@/components/SideBar';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // import { FiSearch } from 'react-icons/fi'; 
@@ -55,7 +56,9 @@ function SpacesPage() {
   };
 
   return (
-    <Navigation>
+    // <Navigation>
+    <div className="wrapper" style={{ display: "flex", gap: "100px"}}>
+      <SideBar/>
 <div className={`p-6 bg-white shadow-md rounded-lg px-4 ${showConfirm ? 'blur-sm' : ''}`}>
   <h1 className="text-2xl font-bold text-[#0D2240] mb-4">ROOMS</h1>
   
@@ -161,7 +164,8 @@ function SpacesPage() {
           </div>
         </div>
       )}
-    </Navigation>
+      </div>
+    // </Navigation>
   );
 }
 

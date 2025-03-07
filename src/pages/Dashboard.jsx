@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 // import Chart from "chart.js/auto";
 import dash from "../styles/Dashboard.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import SideBar from "@/components/SideBar";
 
 Chart.register(...registerables);
 
@@ -12,7 +13,7 @@ const Dashboard = () => {
     const ordersChartRef = useRef(null);
     const expensesChartInstance = useRef(null);
     const ordersChartInstance = useRef(null);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     
     useEffect(() => {
         // Destroy existing instances before creating new ones
@@ -79,27 +80,28 @@ const Dashboard = () => {
         };
     }, []);
 
-    const links = [
-        { icon: "dashboard", dataTooltip: "Dashboard", path: "/" },
-        { icon: "people", dataTooltip: "Vendors", path: "/vendors" },
-        { icon: "description", dataTooltip: "Orders", path: "/orders" },
-        { icon: "content_paste", dataTooltip: "Items", path: "/items" },
-        { icon: "mark_unread_chat_alt", dataTooltip: "Requests", path: "/requests" },
-        { icon: "person", dataTooltip: "Users", path: "/users" },
-        { icon: "undo", dataTooltip: "Returns", path: "/returns" },
-        { icon: "apartment", dataTooltip: "Spaces", path: "/spaces" },
-        { icon: "settings", dataTooltip: "Settings", path: "/settings" },
-        { icon: "logout", dataTooltip: "Logout", path: "/logout" },
-    ];
+    // const links = [
+    //     { icon: "dashboard", dataTooltip: "Dashboard", path: "/" },
+    //     { icon: "people", dataTooltip: "Vendors", path: "/vendors" },
+    //     { icon: "description", dataTooltip: "Orders", path: "/orders" },
+    //     { icon: "content_paste", dataTooltip: "Items", path: "/items" },
+    //     { icon: "mark_unread_chat_alt", dataTooltip: "Requests", path: "/requests" },
+    //     { icon: "person", dataTooltip: "Users", path: "/users" },
+    //     { icon: "undo", dataTooltip: "Returns", path: "/returns" },
+    //     { icon: "apartment", dataTooltip: "Spaces", path: "/spaces" },
+    //     { icon: "settings", dataTooltip: "Settings", path: "/settings" },
+    //     { icon: "logout", dataTooltip: "Logout", path: "/logout" },
+    // ];
 
-    const handleLogout = () => {
-        localStorage.removeItem("access_token"); // Remove token from local storage
-        navigate("/login"); // Redirect to login page
-    };
+    // const handleLogout = () => {
+    //     localStorage.removeItem("access_token"); // Remove token from local storage
+    //     navigate("/login"); // Redirect to login page
+    // };
 
   return (
     <div className={dash["dashboard-container"]}>
-      <aside className={dash["sidebar"]}>
+      <SideBar/>
+      {/* <aside className={dash["sidebar"]}>
         <div className="logo">
           <img src="/images/moringa.png" alt="moringa-logo" width="60" />
         </div>
@@ -128,15 +130,6 @@ const Dashboard = () => {
                     }
                 })}
             </ul>
-          {/* <ul>
-            {links.map((link, index) => (
-                <Link to={link.path} key={index}>
-                    <li data-tooltip={link.dataTooltip}>
-                        <span className="material-icons">{link.icon}</span>
-                    </li>
-                </Link>
-            ))}
-          </ul> */}
           <div className="profile">
             <img
               src="/images/no-image.jpg"
@@ -146,7 +139,7 @@ const Dashboard = () => {
             />
           </div>
         </nav>
-      </aside>
+      </aside> */}
 
       <main className={dash["main-content"]}>
         <section className={dash["cards"]}>

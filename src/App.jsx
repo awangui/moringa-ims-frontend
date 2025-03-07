@@ -31,7 +31,7 @@ function App() {
   const [spaces, setSpaces] = useState([]);
 
   return (
-    <SidebarProvider>
+    // <SidebarProvider>
       <Router>
         <Routes>
           {/* Public Routes */}
@@ -81,7 +81,7 @@ function App() {
         </Routes>
       </Router>
 
-    </SidebarProvider>
+    // </SidebarProvider>
 
   );
 }

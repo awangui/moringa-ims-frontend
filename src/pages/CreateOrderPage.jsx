@@ -7,6 +7,7 @@ import { Textarea } from "../components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { ArrowLeft, Bell, Clock, Users, ShoppingCart, FileText, Package, MessageSquare, User, Settings } from "lucide-react";
 import styles from './CreateOrderPage.module.css';
+import SideBar from '@/components/SideBar';
 
 const CreateOrderPage = () => {
   const navigate = useNavigate();
@@ -31,7 +32,8 @@ const CreateOrderPage = () => {
   return (
     <div className={styles.container}>
       {/* Sidebar */}
-      <div className={styles.sidebar}>
+      <SideBar/>
+      {/* <div className={styles.sidebar}>
         <div className={styles.sidebarIcon}>
           <Clock size={24} />
         </div>
@@ -56,7 +58,7 @@ const CreateOrderPage = () => {
         <div className={styles.sidebarIcon}>
           <Settings size={24} />
         </div>
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <div className={styles.content}>

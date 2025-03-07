@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navigation from "../components/Navigation";
+// import Navigation from "../components/Navigation";
+import SideBar from "@/components/SideBar";
 
 function AddRoom() {
   const navigate = useNavigate();
@@ -47,7 +48,9 @@ function AddRoom() {
   };
 
   return (
-    <Navigation>
+    // <Navigation>
+    <div className="wrapper" style={{ display: "flex"}}>
+      <SideBar/>
       <div className="p-6 bg-white shadow-md rounded-lg max-w-lg mx-auto mt-8 px-4">
         <h1 className="text-2xl font-bold text-[#0D2240] mb-4">Add New Room</h1>
 
@@ -95,7 +98,8 @@ function AddRoom() {
           </div>
         </form>
       </div>
-    </Navigation>
+      </div>
+    // </Navigation>
   );
 }
 

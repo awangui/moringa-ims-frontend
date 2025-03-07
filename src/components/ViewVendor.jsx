@@ -4,7 +4,8 @@ import vendorImage from "../assets/vendor.svg";
 import locationImage from "../assets/location.svg";
 import profileImage from "../assets/profile.svg";
 import paymentImage from "../assets/credit-card.svg";
-import Navigation from "../components/Navigation";
+// import Navigation from "../components/Navigation";
+import SideBar from "./SideBar";
 import { FaTrash, FaDownload } from "react-icons/fa";
 
 const ViewVendor = () => {
@@ -65,8 +66,10 @@ const ViewVendor = () => {
   if (!vendor) return <p>Loading vendor details...</p>;
 
   return (
-    <Navigation>
-      <div className="vendor-container">
+    // <Navigation>
+    <div className="wrapper" style={{ display: "flex", gap: "100px"}}>
+      <SideBar/>
+      <div className="vendor-container" style={{ height: "100vh", overflowY: "auto", scrollbarWidth: "none",  msOverflowStyle: "none", }}>
         <h2 className="vendor-title">Vendors / {vendor.name}</h2>
         <div className="vendor-card">
           {/* Vendor Profile */}
@@ -208,7 +211,8 @@ const ViewVendor = () => {
           </div>
         </div>
         </div>
-        </Navigation>
+      </div>
+        // </Navigation>
       );
     };
 

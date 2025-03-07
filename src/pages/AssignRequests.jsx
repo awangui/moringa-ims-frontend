@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; // assuming React Router is used
 import Navigation from '../components/Navigation';
+import SideBar from '@/components/SideBar';
 
 const AssignRequests = () => {
   // Get the selected request passed from the previous page
@@ -15,6 +16,7 @@ const AssignRequests = () => {
   const [notification, setNotification] = useState('');
 
   // If no selectedRequest is available, you may choose to redirect back or show an error.
+
   useEffect(() => {
     if (!selectedRequest) {
       // For example, redirect back to the requests page
@@ -83,8 +85,10 @@ const AssignRequests = () => {
   };
 
   return (
-<Navigation>
-  <div className="flex justify-center items-center min-h-screen px-4">
+    <> 
+    <div className="wrapper" style={{ display: "flex", gap: "100px"}}>
+      <SideBar/>
+      <div className="flex justify-center items-center min-h-screen px-4">
     <div className="p-6 max-w-md w-full">
       <h1 className="text-2xl font-semibold mb-4">Assign Asset</h1>
 
@@ -157,7 +161,8 @@ const AssignRequests = () => {
       </div>
     </div>
   </div>
-</Navigation>
+  </div>
+    </>
   );
 };
 

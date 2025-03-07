@@ -1,4 +1,5 @@
-import Navigation from '../components/Navigation';
+// import Navigation from '../components/Navigation';
+import SideBar from '@/components/SideBar';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -48,7 +49,9 @@ function ViewRoom() {
   if (!room) return <p className="text-center text-red-500">Room not found</p>;
 
   return (
-    <Navigation>
+    // <Navigation>
+    <div className="wrapper" style={{ display: "flex", gap: "20px"}}>
+      <SideBar/>
       <div className="min-h-screen bg-gray-100 flex items-start justify-center py-8 px-4">
         <div className="w-full max-w-4xl p-8 bg-white shadow-lg rounded-2xl">
           <h1 className="text-4xl font-extrabold text-[#0D2240] text-center mb-8">
@@ -160,7 +163,8 @@ function ViewRoom() {
           </div>
         )}
       </div>
-    </Navigation>
+      </div>
+    // </Navigation>
   );
 }
 

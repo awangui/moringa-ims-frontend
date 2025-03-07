@@ -8,7 +8,8 @@ import viewStyles from './ViewOrder.module.css';
 import sheetStyles from './StatusChangeSheet.module.css';
 
 import Header from "../components/ui/header";
-import { Sidebar } from "../components/ui/sidebar";
+// import { Sidebar } from "../components/ui/sidebar";
+import SideBar from '@/components/SideBar';
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "../components/ui/table";
@@ -40,7 +41,7 @@ import {
 } from "../components/ui/select";
 import { DatePicker } from "../components/ui/date-picker";
 import { Search, ArrowLeft, Filter, Download, MoreVertical } from 'lucide-react';
-import Navigation from "../components/Navigation";
+// import Navigation from "../components/Navigation";
 import { getAllOrders, getOrderById, updateOrderStatus } from "../lib/api"; // Import API functions
 
 // Constants
@@ -229,9 +230,11 @@ const OrdersList = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <Navigation>
+    // <Navigation>
+    <div className="wrapper" style={{ display: "flex", gap: "100px"}}>
+      <SideBar/>
       <div className={styles.container}>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className={styles.content}>
           <div className={styles.mainContent}>
             <div className={styles.maxWidth}>
@@ -447,7 +450,8 @@ const OrdersList = () => {
           </div>
         </div>
       </div>
-    </Navigation>
+      </div>
+    // </Navigation>
   );
 };
 
@@ -487,7 +491,7 @@ const ViewOrder = () => {
   if (loading) {
     return (
       <div className={styles.container}>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className={styles.content}>
           <Header title="Loading Order..." />
           <div className={styles.mainContent}>
@@ -501,7 +505,7 @@ const ViewOrder = () => {
   if (error || !order) {
     return (
       <div className={styles.container}>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className={styles.content}>
           <Header title="Order Not Found" />
           <div className={styles.mainContent}>
@@ -523,9 +527,11 @@ const ViewOrder = () => {
   const displayOrder = order || {};
 
   return (
-    <Navigation>
+    // <Navigation>
+    <div className="wrapper" style={{ display: "flex", gap: "100px"}}>
+      <SideBar/>
       <div className={styles.container}>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className={styles.content}>
           <Header title={`Order ${displayOrder.id}`} />
           <div className={styles.mainContent}>
@@ -565,7 +571,8 @@ const ViewOrder = () => {
                     </div>
                     </div>
                   </div>
-                </Navigation>
+                  {/* </Navigation> */}
+                  </div>
               );
             };
             

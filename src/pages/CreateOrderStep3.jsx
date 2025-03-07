@@ -48,7 +48,8 @@ import {
   ChevronRight,
   ChevronLeft
 } from "lucide-react";
-import { Sidebar } from '@/components/ui/sidebar';
+// import { Sidebar } from '@/components/ui/sidebar';
+import SideBar from '@/components/SideBar';
 import { createOrder } from '../lib/api'; // Adjust the path as needed
 
 
@@ -223,8 +224,8 @@ const ChooseItems = () => {
 
   return (
     <div className={styles.container}>
-      <Sidebar />
-
+      {/* <Sidebar /> */}
+      <SideBar/>
       {/* Main Content */}
       <div className={styles.content}>
         <Header title="Creating Order Step 3" />
@@ -376,7 +377,8 @@ const ChooseVendor = () => {
 
   return (
     <div className={styles.container}>
-      <Sidebar />
+      {/* <Sidebar /> */}
+      <SideBar/>
       <div className={styles.content}>
         <Header title="Choose Vendor" />
         <div className={styles.mainContent}>
@@ -468,7 +470,8 @@ const OrderDetails = () => {
 
   return (
     <div className={styles.container}>
-      <Sidebar />
+      {/* <Sidebar /> */}
+      <SideBar/>
 
       {/* Main Content */}
       <div className={styles.content}>
@@ -607,7 +610,8 @@ const OrderCharges = () => {
 
   return (
     <div className={styles.container}>
-      <Sidebar />
+      {/* <Sidebar /> */}
+      <SideBar/>
 
       {/* Main Content */}
       <div className={styles.content}>
@@ -835,7 +839,8 @@ const OrderReview = () => {
   
   return (
     <div className={styles.container}>
-      <Sidebar />
+      {/* <Sidebar /> */}
+      <SideBar/>
       {/* Main Content */}
       <div className={styles.content}>
         <Header title="View Order" />

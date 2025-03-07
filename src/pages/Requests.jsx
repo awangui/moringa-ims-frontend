@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navigation from '../components/Navigation';
+// import Navigation from '../components/Navigation';
+import SideBar from '@/components/SideBar';
 import { FiFilter } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
 
@@ -155,7 +156,9 @@ const RequestsPage = () => {
   };
 
   return (
-    <Navigation>
+    // <Navigation>
+    <div className="wrapper" style={{ display: "flex", gap: "100px"}}>
+    <SideBar/>
     <div className="flex flex-col items-center justify-start bg-gray-50 min-h-screen w-full px-4"> {/* Full width and no padding */}
       <h1 className="text-2xl font-semibold mb-6 text-gray-800">REQUESTS</h1>
   
@@ -292,7 +295,8 @@ const RequestsPage = () => {
         </table>
       </div>
     </div>
-  </Navigation>
+    </div>
+  // </Navigation>
   );
 };
 

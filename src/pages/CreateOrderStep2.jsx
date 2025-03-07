@@ -10,6 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { ArrowLeft, Bell, Clock, Users, ShoppingCart, FileText, Package, MessageSquare, User, Settings, Plus } from "lucide-react";
 import { createOrder } from '../lib/api'; // Adjust the path as needed
 import styles from './CreateOrderStep2.module.css';
+import SideBar from '@/components/SideBar';
 
 const CreateOrderStep2 = () => {
   const navigate = useNavigate();
@@ -69,7 +70,8 @@ const CreateOrderStep2 = () => {
   return (
     <div className={styles.container}>
       {/* Sidebar */}
-      <div className={styles.sidebar}>
+      <SideBar/>
+      {/* <div className={styles.sidebar}>
         <div className={styles.sidebarIcon}>
           <Clock size={24} />
         </div>
@@ -94,7 +96,7 @@ const CreateOrderStep2 = () => {
         <div className={styles.sidebarIcon}>
           <Settings size={24} />
         </div>
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <div className={styles.content}>
