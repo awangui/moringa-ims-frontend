@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../styles/FixedAssets.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import DateInput from "../components/DateInput";
+import SideBar from "@/components/SideBar";
 
 const FixedAssets = () => {
   const [tableData, setTableData] = useState([]);
@@ -46,18 +47,18 @@ const FixedAssets = () => {
     setCurrentPage(1); // Reset to first page when searching
   };
 
-  const links = [
-    { icon: "dashboard", dataTooltip: "Dashboard", path: "/" },
-    { icon: "people", dataTooltip: "Vendors", path: "/vendors" },
-    { icon: "description", dataTooltip: "Orders", path: "/orders" },
-    { icon: "content_paste", dataTooltip: "Items", path: "/items" },
-    { icon: "mark_unread_chat_alt", dataTooltip: "Requests", path: "/requests" },
-    { icon: "person", dataTooltip: "Users", path: "/users" },
-    { icon: "undo", dataTooltip: "Returns", path: "/returns" },
-    { icon: "apartment", dataTooltip: "Spaces", path: "/spaces" },
-    { icon: "settings", dataTooltip: "Settings", path: "/settings" },
-    { icon: "logout", dataTooltip: "Logout", path: "/logout" },
-  ];
+  // const links = [
+  //   { icon: "dashboard", dataTooltip: "Dashboard", path: "/" },
+  //   { icon: "people", dataTooltip: "Vendors", path: "/vendors" },
+  //   { icon: "description", dataTooltip: "Orders", path: "/orders" },
+  //   { icon: "content_paste", dataTooltip: "Items", path: "/items" },
+  //   { icon: "mark_unread_chat_alt", dataTooltip: "Requests", path: "/requests" },
+  //   { icon: "person", dataTooltip: "Users", path: "/users" },
+  //   { icon: "undo", dataTooltip: "Returns", path: "/returns" },
+  //   { icon: "apartment", dataTooltip: "Spaces", path: "/spaces" },
+  //   { icon: "settings", dataTooltip: "Settings", path: "/settings" },
+  //   { icon: "logout", dataTooltip: "Logout", path: "/logout" },
+  // ];
 
   const operations = [
     { icon: "add", dataTooltip: "Add Asset" },
@@ -186,61 +187,14 @@ const FixedAssets = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("access_token"); // Remove token from local storage
-    navigate("/login"); // Redirect to login page
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("access_token"); // Remove token from local storage
+  //   navigate("/login"); // Redirect to login page
+  // };
   return (
     <>
       <div className={styles["dashboard-container"]}>
-        <div className={styles["sidebar"]}>
-          <div className="logo">
-            <img src="/images/moringa.png" alt="Moringa Logo" width="60" />
-          </div>
-          <nav>
-          <ul>
-            {links.map((link, index) => {
-              if (link.dataTooltip === "Logout") {
-                return (
-                  <li
-                    key={index}
-                    data-tooltip="Logout"
-                    onClick={handleLogout}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <span className="material-icons">{link.icon}</span>
-                  </li>
-                );
-              } else {
-                return (
-                  <Link to={link.path} key={index}>
-                    <li data-tooltip={link.dataTooltip}>
-                      <span className="material-icons">{link.icon}</span>
-                    </li>
-                  </Link>
-                );
-              }
-            })}
-          </ul>
-            {/* <ul>
-              {links.map((link, index) => (
-                <Link to={link.path} key={index}>
-                  <li data-tooltip={link.dataTooltip}>
-                    <span className="material-icons">{link.icon}</span>
-                  </li>
-                </Link>
-              ))}
-            </ul> */}
-          </nav>
-          <div className="profile">
-            <img
-              src="/images/no-image.jpg"
-              alt="User Profile"
-              width="60"
-              className="profile-img"
-            />
-          </div>
-        </div>
+        <SideBar/>
 
         <main className={styles["main-content"]}>
           <header>

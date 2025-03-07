@@ -14,11 +14,12 @@ const SideBar = () => {
     { icon: "dashboard", dataTooltip: "Dashboard", path: "/" },
     { icon: "people", dataTooltip: "Vendors", path: "/vendors" },
     { icon: "description", dataTooltip: "Orders", path: "/orders" },
-    { icon: "content_paste", dataTooltip: "Items", path: "/items" },
+    { icon: "content_paste", dataTooltip: "Fixed Assets", path: "/items" },
     { icon: "mark_unread_chat_alt", dataTooltip: "Requests", path: "/requests" },
     { icon: "person", dataTooltip: "Users", path: "/users" },
     { icon: "undo", dataTooltip: "Returns", path: "/returns" },
     { icon: "apartment", dataTooltip: "Spaces", path: "/spaces" },
+    { icon: "handshake", dataTooltip: "Teams", path: "/teams" },
     { icon: "settings", dataTooltip: "Settings", path: "#" },
     { icon: "logout", dataTooltip: "Logout", path: "/logout" },
   ];
