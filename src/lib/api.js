@@ -3,13 +3,26 @@ import axios from 'axios';
 
 // Create an Axios instance with the base URL
 const api = axios.create({
-    baseURL: 'http://172.236.2.18:5376', // Replace with your backend URL
-    headers: {
-      'Content-Type': 'application/json',
-      'API-Key': 'OMpqVWAH.UC80wyXTtPwhDgAUdCTx6', // Add the API key to headers
-      'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MTI4NjM0OSwianRpIjoiOGYwN2Q4ODYtNjZhNC00ODlmLTg0Y2QtMWRhODYzM2FhMTdiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjgiLCJuYmYiOjE3NDEyODYzNDksImNzcmYiOiI1ZDJiZGEwMy1kMjkxLTQwMDUtOTA0MS1mZjc2ZDBmNWVhYTgiLCJleHAiOjE3NDEyODcyNDl9.aLcIGfikODRyyiiH5efFHui_0d6wlmDlse8QS7THwwc`
-    },
-  });
+  baseURL: 'http://172.236.2.18:5376', // Replace with your backend URL
+  headers: {
+    'Content-Type': 'application/json',
+     //'API-Key': 'OMpqVWAH.UC80wyXTtPwhDgAUdCTx6', // Add the API key to headers
+  },
+});
+
+// Add an interceptor to dynamically set the Authorization header
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('access_token'); // Retrieve token from localStorage
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 
 

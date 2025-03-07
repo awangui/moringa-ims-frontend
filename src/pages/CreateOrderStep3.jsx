@@ -427,51 +427,50 @@ const OrderDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { name, description, items = [], space, vendor } = location.state || {};
-  
+
   const [orderDetails, setOrderDetails] = useState({
     vat: "",
     vatInclusive: false,
     status: "Pending",
     receivingDate: "22/03/2022",
     isPaid: false,
-    sent: false
+    sent: false,
   });
-  
+
   const handleBack = () => {
-    navigate('/create-order/step3/vendor', { 
-      state: { 
-        name, 
-        description, 
+    navigate('/create-order/step3/vendor', {
+      state: {
+        name,
+        description,
         items,
-        space
-      } 
+        space,
+      },
     });
   };
-  
+
   const handleContinue = () => {
-    navigate('/create-order/step3/charges', { 
-      state: { 
-        name, 
-        description, 
+    navigate('/create-order/step3/charges', {
+      state: {
+        name,
+        description,
         items,
         space,
         orderDetails,
-        vendor
-      } 
+        vendor,
+      },
     });
   };
-  
+
   const handleChange = (field, value) => {
     setOrderDetails({
       ...orderDetails,
-      [field]: value
+      [field]: value,
     });
   };
 
   return (
     <div className={styles.container}>
       {/* <Sidebar /> */}
-      <SideBar/>
 
       {/* Main Content */}
       <div className={styles.content}>
@@ -489,52 +488,98 @@ const OrderDetails = () => {
             <OrderStepper currentStep={2} />
 
             {/* Order Details Form */}
-            <div className={detailsStyles.card}>
-              <CardContent className={detailsStyles.cardContent}>
-                <div className={detailsStyles.orderDetails}>
-                  <div>
-                    <h2 className={detailsStyles.orderDetailsTitle}>Order Details</h2>
-                    <div className={detailsStyles.orderDetailsContent}>
-                      <div>
-                        <span className={detailsStyles.orderDetailsLabel}>Name:</span>
-                        <span className={detailsStyles.orderDetailsValue}>{name}</span>
-                      </div>
-                      <div>
-                        <span className={detailsStyles.orderDetailsLabel}>Description:</span>
-                        <span className={detailsStyles.orderDetailsValue}>{description}</span>
-                      </div>
-                      <div>
-                        <span className={detailsStyles.orderDetailsLabel}>Space:</span>
-                        <span className={detailsStyles.orderDetailsValue}>{space?.name || 'Not specified'}</span>
-                      </div>
-                      <div>
-                        <span className={detailsStyles.orderDetailsLabel}>Status:</span>
-                        <span className={detailsStyles.orderDetailsValue}>{orderDetails?.status || 'Pending'}</span>
-                      </div>
-                      <div>
-                        <span className={detailsStyles.orderDetailsLabel}>Receiving Date:</span>
-                        <span className={detailsStyles.orderDetailsValue}>{orderDetails?.receivingDate || 'Not specified'}</span>
-                      </div>
-                    </div>
-                  </div>
+            <div className="py-8 max-w-md mx-auto">
+              <div className="space-y-6">
+                {/* VAT Input */}
+                <div>
+                  <Label htmlFor="vat">VAT</Label>
+                  <Input
+                    id="vat"
+                    placeholder="Enter VAT"
+                    value={orderDetails.vat}
+                    onChange={(e) => handleChange('vat', e.target.value)}
+                    className="mt-1"
+                  />
                 </div>
-              </CardContent>
-            </div>
 
-            {/* Navigation Buttons */}
-            <div className="mt-12">
-              <Button 
-                className="w-full bg-indigo-900 text-white hover:bg-indigo-800"
-                onClick={handleContinue}
-              >
-                Continue <ChevronRight className="ml-1 h-4 w-4" />
-              </Button>
+                {/* VAT Inclusive Checkbox */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="vatInclusive"
+                    checked={orderDetails.vatInclusive}
+                    onCheckedChange={(checked) => handleChange('vatInclusive', checked)}
+                  />
+                  <Label htmlFor="vatInclusive">VAT Inclusive</Label>
+                </div>
+
+                {/* Status Dropdown */}
+                <div>
+                  <Label htmlFor="status">Status</Label>
+                  <Select
+                    value={orderDetails.status}
+                    onValueChange={(value) => handleChange('status', value)}
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Pending">Pending</SelectItem>
+                      <SelectItem value="Approved">Approved</SelectItem>
+                      <SelectItem value="Cancelled">Cancelled</SelectItem>
+                      <SelectItem value="Received">Received</SelectItem>
+                      <SelectItem value="Partially Received">Partially Received</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Receiving Date Input */}
+                <div>
+                  <Label htmlFor="receivingDate">Receiving Date</Label>
+                  <Input
+                    id="receivingDate"
+                    placeholder="Enter receiving date"
+                    value={orderDetails.receivingDate}
+                    onChange={(e) => handleChange('receivingDate', e.target.value)}
+                    className="mt-1"
+                  />
+                </div>
+
+                {/* Is Paid Checkbox */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="isPaid"
+                    checked={orderDetails.isPaid}
+                    onCheckedChange={(checked) => handleChange('isPaid', checked)}
+                  />
+                  <Label htmlFor="isPaid">Is Paid</Label>
+                </div>
+
+                {/* Sent Checkbox */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="sent"
+                    checked={orderDetails.sent}
+                    onCheckedChange={(checked) => handleChange('sent', checked)}
+                  />
+                  <Label htmlFor="sent">Sent</Label>
+                </div>
+              </div>
+
+              {/* Navigation Buttons */}
+              <div className="mt-12">
+                <Button
+                  className="w-full bg-indigo-900 text-white hover:bg-indigo-800"
+                  onClick={handleContinue}
+                >
+                  Continue <ChevronRight className="ml-1 h-4 w-4" />
+                </Button>
+              </div>
             </div>
 
             {/* Back Button */}
             <div className="mt-4">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="flex items-center text-gray-600"
                 onClick={handleBack}
               >
