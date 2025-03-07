@@ -65,7 +65,7 @@ const Users = () => {
          <SideBar/>
             <div className="flex items-center justify-center min-h-screen bg-gray-100">
                 <div className="bg-white p-6 rounded-lg shadow-md w-96">
-                    <h2 className="text-lg font-semibold mb-4">Manage User Permissions</h2>
+                    <h2 className="text-lg font-semibold mb-4">Role Permissions</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
                             {permissions.map((permission) => (
